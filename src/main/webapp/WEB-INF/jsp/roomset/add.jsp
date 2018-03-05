@@ -175,7 +175,7 @@
 			   	  <label class="labelroomnumber marginrightone">房态：</label>
 			      <select name="roomStateID" class="cboone inputone">
 		            <c:forEach items="${listTwo}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==1}" >selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==1}" >selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -196,7 +196,7 @@
 			   	  <label class="labelroomnumber">客房等级：</label>
 			      <select name="guestRoomLevelID" class="cboone inputone">
 		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==8}">selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==8}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 

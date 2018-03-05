@@ -15,6 +15,25 @@ public class Room {
     private String firstDuration ; //'首段时长（小时）',
     private Float firstPrice ; //'首段价格',
 
+    private String roomName; //房态
+    private String guestRoomLevelName;//客房等级名字
+
+    public String getGuestRoomLevelName() {
+        return guestRoomLevelName;
+    }
+
+    public void setGuestRoomLevelName(String guestRoomLevelName) {
+        this.guestRoomLevelName = guestRoomLevelName;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
     public Integer getRoomId() {
         return roomId;
     }

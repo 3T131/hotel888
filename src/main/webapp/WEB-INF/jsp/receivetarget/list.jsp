@@ -72,9 +72,13 @@
   <div class="container" >
     <div class="span5">
 	    <div class="row-fluid">
-		    <label class="labelroomnumber">团队名称：</label>
-		    <form action="${ctx}/ReceiveTarget/tolist.do" method="post" style="float: left;">
-			   <input id="txtnameid" name="txtname" class="textone roomnumberwidth" style="border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;" type="text" placeholder="请输入关键字" value="${txtname}">
+		    <label  class="labelroomnumber">团队名称：</label>
+		    <form  id="form22" action="${ctx}/ReceiveTarget/tolist.do" method="post" style="float: left;">
+                <input id="currentPage" type="hidden" name="currentPage" value="${list.pageNo}">
+                <input id="txtnameid" name="teamName" class="textone roomnumberwidth"
+                      style="border-radius:0px; border-top-left-radius:4px;
+                      border-bottom-left-radius:4px;height:26px;" type="text"
+                      placeholder="请输入关键字" value="${receiveTarget.teamName}">
 			   <div class="input-append">  
 			      <button type="submit" class="btn-success textone" style="margin-left:-4px;height:26px;"><li class="icon-search icon-white"></li>搜索</button>
 			   </div>
@@ -109,14 +113,14 @@
 	        </tr>
 	      </thead>
 	      <tbody id="tbody">
-	        <c:forEach items="${list.result}" var="item">
+	        <c:forEach items="${list.datas}" var="item">
 		        <tr>
-		          <td><input type="checkbox" name="id" value="${item.id}"></td>
+		          <td><input type="checkbox" name="id" value="${item.receivetargetId}"></td>
 		          <td>${item.targetTypeName}</td>
 		          <td>${item.teamName}</td>
 		          <td>${item.teamCode}</td>
 		          <td>${item.principal}</td>
-		          <td>${item.registerTime}</td>
+		          <td><fmt:formatDate value="${item.registerTime}" pattern="yyyy-MM-dd" /></td>
 		          <td>${item.contactPhoneNUmber}</td>
 		        </tr>
 	        </c:forEach>
@@ -139,7 +143,7 @@
    function addfunction(){
      parent.document.getElementById('Mainid').src='${ctx}/ReceiveTarget/toadd.do';
    }
-   
+
    function updatefunction(){
    var chk_value=[];
   	$('input[name="id"]:checked').each(function(){
@@ -155,7 +159,7 @@
 	  alert("请选择一条数据进行修改");
 	}
   }
-  
+
    function deletefunction(){
    var chk_value=[];
   	$('input[name="id"]:checked').each(function(){
@@ -169,25 +173,35 @@
   	}else{
 	  alert("请选择一条或多条数据进行删除");
 	}
-	
+
   }
-  
-  
-  
-  
-   
-   
-   
-  /* 分页要用的 */
-  $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage},
-     current:${list.currentPage},
-     backFn:function(p){
-     var txtname=document.getElementById("txtnameid").value;
-     location.href="${ctx}/ReceiveTarget/tolist.do?currentPage="+p+"&txtname="+txtname;
-     }
+
+
+
+
+
+
+
+   /* 分页要用的 */
+   $(".tcdPageCode").createPage({
+       pageCount:${list.totalPage},
+       current:${list.pageNo},
+       backFn:function(p){
+           var c = document.getElementById("currentPage");
+           c.value=p;
+           var f = document.getElementById("form22");
+           f.submit()
+       }
    });
-  
+   /* 分页要用的 */
+   <%--$(".tcdPageCode").createPage({--%>
+       <%--pageCount:${list.totalPage},--%>
+       <%--current:${list.pageNo},--%>
+       <%--backFn:function(p){--%>
+           <%--var txtname=document.getElementById("txtnameid").value;--%>
+           <%--location.href="${ctx}/Predetermine/tolist.do?currentPage="+p+"&txtname="+txtname;--%>
+       <%--}--%>
+   <%--});--%>
  </script>
    
   </body>

@@ -159,7 +159,7 @@
     </div>
     
     <form action="${ctx}/RoomSet/update.do" method="post" onsubmit="return verify()">
-	   <input type="hidden" name="id" value="${listPo.id}">
+	   <input type="hidden" name="roomId" value="${listPo.roomId}">
 	    <div class="span12 margin-top-two">
 	      <div class="row-fluid">
 		      <div class="span5">
@@ -174,7 +174,7 @@
 			   	  <label class="labelroomnumber marginrightone">房态：</label>
 			      <select name="roomStateID" class="cboone inputone">
 		            <c:forEach items="${listTwo}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==listPo.roomStateID}" >selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==listPo.roomStateID}" >selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -196,7 +196,7 @@
 			   	  <label class="labelroomnumber">客房等级：</label>
 			      <select name="guestRoomLevelID" class="cboone inputone">
 		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==listPo.guestRoomLevelID}">selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==listPo.guestRoomLevelID}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -245,7 +245,8 @@
 			      <div class="input-prepend"  style="float:left;">
 			        <span class="add-on" style="margin-top: 12px; height: 16px;">&yen;</span>
 			      </div>
-			      <input id="maxDurationId" name="maxDuration" class="textone inputthree radiusone" onblur="onchangeOne()" value="${listPo.maxDuration}"
+			      <input id="maxDurationId" name="maxDuration"
+						 class="textone inputthree radiusone" onblur="onchangeOne()" value="${listPo.maxDuration}"
 			      style="float:left;border-radius:0px; border-top-right-radius:4px; border-bottom-right-radius:4px; height:26px;" type="text">
 			      <div id="divFive" hidden>
 			         <label class="yansered" style="margin-top:18px;">*</label>
@@ -260,7 +261,8 @@
 			      <div class="input-prepend"  style="float:left;">
 			        <span class="add-on" style="margin-top: 12px; height: 16px;">&yen;</span>
 			      </div>
-			      <input id="firstPriceId" name="firstPrice" class="textone inputthree radiusone" onblur="onchangeOne()" value="${listPo.firstPrice}"
+			      <input id="firstPriceId" name="firstPrice"
+						 class="textone inputthree radiusone" onblur="onchangeOne()" value="${listPo.firstPrice}"
 			      style="float:left;border-radius:0px; border-top-right-radius:4px; border-bottom-right-radius:4px; height:26px;" type="text">
 			      <div id="divSix" hidden>
 			         <label class="yansered" style="margin-top:18px;">*</label>
