@@ -35,7 +35,7 @@ function verify(){
 }
 
 function deletefunction(){
-    parent.document.getElementById('Mainid').src='${ctx}/Commodity/tolist.do';
+    parent.document.getElementById('Mainid').src=getRootPath()+'/Commodity/tolist.do';
 }
 
 function onchangeOne(){

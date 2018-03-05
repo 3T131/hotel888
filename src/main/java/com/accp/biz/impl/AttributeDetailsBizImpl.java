@@ -18,4 +18,22 @@ public class AttributeDetailsBizImpl implements AttributeDetailsBiz {
     public List<AttributeDetails> listByAttributeName(int attributeID) {
         return attributeDetailsDao.listByAttributeName(attributeID);
     }
+
+    /**
+     * 新增商品类别信息
+     * @param attributeDetails
+     * @return
+     */
+    public Integer insert(AttributeDetails attributeDetails) {
+        return attributeDetailsDao.add(attributeDetails);
+    }
+
+    /**
+     * 删除商品类别信息
+     * @param attributedetailsId
+     * @return
+     */
+    public Integer deleteAttributeDetails(String[] attributedetailsId) {
+        return attributeDetailsDao.deleteAttributeDetails(attributedetailsId);
+    }
 }

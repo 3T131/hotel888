@@ -14,4 +14,18 @@ public interface AttributeDetailsBiz {
      */
     List<AttributeDetails> listByAttributeName(@Param("attributeID") int attributeID);
 
+    /**
+     * 新增商品类别信息
+     * @param attributeDetails
+     * @return
+     */
+    Integer insert(AttributeDetails attributeDetails);
+
+    /**
+     * 删除商品信息
+     * @param attributedetailsId
+     * @return
+     */
+    Integer deleteAttributeDetails(String[] attributedetailsId);
+
 }

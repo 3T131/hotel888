@@ -13,4 +13,19 @@ public interface AttributeDetailsDao {
      * @return
      */
     List<AttributeDetails> listByAttributeName(@Param("attributeID") int attributeID);
+
+
+    /**
+     * 新增商品类别信息
+     * @param attributeDetails
+     * @return
+     */
+    Integer add(AttributeDetails attributeDetails);
+
+    /**
+     * 删除商品类别信息
+     * @param attributedetailsId
+     * @return
+     */
+    Integer deleteAttributeDetails(String[] attributedetailsId);
 }

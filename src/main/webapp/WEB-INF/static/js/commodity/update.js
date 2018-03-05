@@ -38,6 +38,7 @@ function verify(){
     }
 }
 
+
 function deletefunction(){
     parent.document.getElementById('Mainid').src='${ctx}/Commodity/tolist.do';
 }

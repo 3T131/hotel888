@@ -159,7 +159,7 @@
     </div>
     
     <form action="${ctx}/Commodity/update.do" method="post" onsubmit="return verify()">
-	    <input type="hidden" name="id" value="${listPo.id}">
+	    <input type="hidden" name="commodityId" value="${listPo.commodityId}">
 	    <div class="span12">
 	      <div class="row-fluid">
 		      <div class="span5">
@@ -174,7 +174,7 @@
 			   	  <label class="labelroomnumber">商品类别：</label>
 			      <select name="commodityTypeID" class="cboone inputone">
 		            <c:forEach items="${listTwo}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==listPo.commodityTypeID}" >selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==listPo.commodityTypeID}" >selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -199,7 +199,7 @@
 			   	  <label class="labelroomnumber">计量单位：</label>
 			      <select name="uOMID" class="cboone inputone">
 		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==listPo.uOMID}">selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==listPo.uOMID}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
