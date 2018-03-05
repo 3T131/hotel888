@@ -208,10 +208,7 @@
 	    <div class="span12">
 	      <div class="row-fluid">
 
-		     <div class="span3">
-		        <label>证件有效期：</label>
-		        <input name="papersValidity" type="text" style="width:100%;height:26px;" placeholder="年-月-日 至 年-月-日" value="${list.papersValidity}">
-		      </div>
+
 		  </div>
 	    </div>
 	    <!--  ———————————————————————————————————————————————————————————————————————————————————————— -->
