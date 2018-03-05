@@ -73,10 +73,14 @@
     <div class="span5">
 	    <div class="row-fluid">
 		    <label class="labelroomnumber">房间号：</label>
-		    <form action="${ctx}/RoomSet/tolist.do" method="post" style="float: left;">
-			   <input id="txtnameid" name="txtname" class="textone roomnumberwidth" style="border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;" type="text" placeholder="请输入关键字" value="${txtname}">
+		    <form id="form22" action="${ctx}/RoomSet/tolist.do" method="post" style="float: left;">
+				<input id="currentPage" type="hidden" name="currentPage" value="${list.pageNo}">
+
+				<input id="txtnameid" name="roomNumber" class="textone roomnumberwidth" style="border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;"
+					   type="text" placeholder="请输入关键字" value="${room.roomNumber}">
 			   <div class="input-append">  
-			      <button type="submit" class="btn-success textone" style="margin-left:-4px;height:26px;"><li class="icon-search icon-white"></li>搜索</button>
+			      <button type="submit" class="btn-success textone" style="margin-left:-4px;height:26px;">
+					  <li class="icon-search icon-white"></li>搜索</button>
 			   </div>
 		    </form>
 	    </div>
@@ -116,9 +120,9 @@
 	        </tr>
 	      </thead>
 	      <tbody id="tbody">
-	        <c:forEach items="${list.result}" var="item">
+	        <c:forEach items="${list.datas}" var="item">
 		        <tr>
-		          <td><input type="checkbox" name="id" value="${item.id}"></td>
+		          <td><input type="checkbox" name="roomId" value="${item.roomId}"></td>
 		          <td>${item.roomNumber}</td>
 		          <td>${item.guestRoomLevelName}</td>
 		          
@@ -173,7 +177,7 @@
    
    function updatefunction(){
    var chk_value=[];
-  	$('input[name="id"]:checked').each(function(){
+  	$('input[name="roomId"]:checked').each(function(){
   		chk_value.push($(this).val());
   	});
   	if(chk_value!=""){
@@ -189,7 +193,7 @@
   
    function deletefunction(){
    var chk_value=[];
-  	$('input[name="id"]:checked').each(function(){
+  	$('input[name="roomId"]:checked').each(function(){
   		chk_value.push($(this).val());
   	});
   	if(chk_value!=""){
@@ -202,9 +206,6 @@
 	}
 	
   }
-  
-  
-  
   /* function selectFunction(){
     var tbody = document.getElementById("tbody");
     var name=document.getElementById("txtnameid").value;
@@ -255,19 +256,19 @@
            }
       });
    } */
-   
-   
-   
+
    /* 分页要用的 */
    $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage},
-     current:${list.currentPage},
-     backFn:function(p){
-     var txtname=document.getElementById("txtnameid").value;
-     location.href="${ctx}/RoomSet/tolist.do?currentPage="+p+"&txtname="+txtname;
-     }
+       pageCount:${list.totalPage},
+       current:${list.pageNo},
+       backFn:function(p){
+           var c = document.getElementById("currentPage");
+           c.value=p;
+           var f = document.getElementById("form22");
+           f.submit();
+       }
    });
-  
+
  </script>
    
   </body>

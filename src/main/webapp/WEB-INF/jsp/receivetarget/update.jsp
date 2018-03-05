@@ -163,14 +163,14 @@
     </div>
     
     <form action="${ctx}/ReceiveTarget/update.do" method="post" onsubmit="return verify()">
-        <input name="id" value="${list.id}" type="hidden">
+        <input name="receivetargetId" value="${list.receivetargetId}" type="hidden">
 	    <div class="span12">
 	      <div class="row-fluid">
 			  <div class="span5 ">
 			   	  <label class="labelroomnumber">对象类别：</label>
 			      <select name="targetTypeID" class="cboone inputone">
 		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==list.targetTypeID}" >selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==list.targetTypeID}" >selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -210,8 +210,9 @@
 	      <div class="row-fluid">
 	        <div class="span5">
 	           <label class="labelroomnumber">登记时间：</label>
-		       <input id="registerTimeId" name="registerTime" class="textone inputone" style="height:26px;" id="date" class="Wdate" type="text" value="${list.registerTime}"
-		       onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" onchange="onchangeOne()"/>
+		       <input id="registerTimeId" name="registerTime" class="textone inputone" style="height:26px;" id="date" class="Wdate" type="text"
+					  value="<fmt:formatDate value="${list.registerTime}" pattern="yyyy-MM-dd"/>"
+		       onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd',maxDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" onchange="onchangeOne()"/>
 		       <div id="divFour" hidden>
 			         <label class="yansered" style="margin-top:18px;">*</label>
 			   </div>
@@ -249,12 +250,13 @@
       </div>
        
     </div>
-  
- 
- 
- 
- 
- <script type="text/javascript">
+
+
+  </div>
+
+
+
+  <script type="text/javascript">
    var Name=document.getElementById("teamCodeId").value;
    
    
@@ -378,6 +380,6 @@
    }
        
  </script>
-   
   </body>
+
 </html>
