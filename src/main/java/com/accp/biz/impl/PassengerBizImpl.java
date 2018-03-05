@@ -14,6 +14,10 @@ public class PassengerBizImpl implements PassengerBiz {
     @Resource
     private PassengerDao passengerDao;
 
+    public List<Passenger> listByIds(String[] ids) {
+        return passengerDao.listByIds(ids);
+    }
+
     public int last_insert_id() {
         return passengerDao.last_insert_id();
     }

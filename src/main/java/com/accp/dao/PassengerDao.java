@@ -55,4 +55,11 @@ public interface PassengerDao {
      * @return
      */
     int totalRow(Pager<Passenger>pager);
+
+    /**
+     * 按id数组查询旅客(zeliang)
+     * @param ids
+     * @return
+     */
+    List<Passenger> listByIds(String[] ids);
 }

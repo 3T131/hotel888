@@ -13,40 +13,7 @@ function getRootPath(){
     function verify(){
     }
 
-    function deletefunction(){
-        var LvKeLeiXingId=document.getElementById("LvKeLeiXingId").value;
-        parent.document.getElementById('Mainid').src='${ctx}/StayRegister/tolist.do?LvKeLeiXingId='+LvKeLeiXingId;
-    }
 
-    function souSuo(){
-        var tbody = document.getElementById("tbody");
-        var name=document.getElementById("txtnameid").value;
-        var i=0;
-        $("#tbody").empty();
-        $.ajax({
-            cache:false,
-            type: "post",
-            url: getRootPath()+'/StayRegister/selectPassenger.do',
-            data:"name="+name,
-            async:false,
-            dataType:"json",
-            success: function (data) {
-                var tr='';
-                for(var i=0,l=data.length;i<l;i++){
-                     tr+='   <tr>\n' +
-                        '      <td><input type="checkbox" name="xxxid" value="'+data[i].pId+'"></td>\n' +
-                        '      <td>'+data[i].name+'</td>\n' +
-                        '      <td>'+data[i].genderName+'</td>\n' +
-                        '      <td>'+data[i].papersName+'</td>\n' +
-                        '      <td>'+data[i].papersNumber+'</td>\n' +
-                        '      </tr>';
-                }
-                $("#tbody").html(tr);
-            },
-            error: function(data) {
-            }
-        });
-    }
 
     var xingMing="";
     var xingBie="";
@@ -66,21 +33,209 @@ function getRootPath(){
     var lianXiDianHua="";
     var beiZhu="";
 
+
+
+function souSuo(){
+    var tbody = document.getElementById("tbody");
+    var name=document.getElementById("txtnameid").value;
+    var i=0;
+    $("#tbody").empty();
+    $.ajax({
+        cache:false,
+        type: "post",
+        url: getRootPath()+'/StayRegister/selectPassenger.do',
+        data:"name="+name,
+        async:false,
+        dataType:"json",
+        success: function (data) {
+            var tr='';
+            for(var i=0,l=data.length;i<l;i++){
+                tr+='   <tr>\n' +
+                    '      <td><input type="checkbox" name="xxxid" value="'+data[i].pId+'"></td>\n' +
+                    '      <td>'+data[i].name+'</td>\n' +
+                    '      <td>'+data[i].genderName+'</td>\n' +
+                    '      <td>'+data[i].papersName+'</td>\n' +
+                    '      <td>'+data[i].papersNumber+'</td>\n' +
+                    '      </tr>';
+            }
+            $("#tbody").html(tr);
+        },
+        error: function(data) {
+        }
+    });
+}
+
+function tijiaoRegister(){
+    if(document.getElementById("nameId").value==""){
+        alert("姓名  是必填项，不能为空哦！");
+        document.getElementById("nameId").focus();
+        return false;
+    }else if(document.getElementById("papersNumberId").value==""){
+        alert("证件号码  是必填项，不能为空哦！");
+        document.getElementById("papersNumberId").focus();
+        return false;
+    }else if(document.getElementById("nameId").value.length>10){
+        alert("你输入的   姓名  太过长了  请不要超出  10  位长度");
+        document.getElementById("nameId").focus();
+        return false;
+    }else if(document.getElementById("remarksId").value.length>50){
+        alert("你输入的   备注  太过长了  请不要超出  50 位长度");
+        document.getElementById("remarksId").focus();
+        return false;
+    }
+
+    var tbody2 =$("#tbody2");
+
+    $.ajax({
+        type: "POST",//方法类型
+        dataType: "json",//预期服务器返回的数据类型
+        url: getRootPath()+"/StayRegister/register.do" ,//url
+        data: $('#form1').serialize(),
+        success: function (data) {
+            var tr='<tr>\n' +
+                '  <td><input type="checkbox" name="id" value="'+data.pId+'"></td>\n' +
+                '  <td>'+data.name+'</td>\n' +
+                '  <td>'+data.genderName+'</td>\n' +
+                '  <td>'+data.birthDate+'</td>\n' +
+                '  <td>'+data.nationName+'</td>\n' +
+                '  <td>'+data.passengerLevelName+'</td>\n' +
+                '  <td>'+data.papersName+'</td>\n' +
+                '  <td>'+data.papersNumber+'</td>\n' +
+                '  <td>'+data.phoneNumber+'</td>\n' +
+                '  </tr>';
+            tbody2.append(tr);
+            var ids=$("#passengerIds").val();
+            var array1= [];
+            array1=ids.split(",");
+            array1.push(data.pId);
+            $("#passengerIds").val(array1.join(','));
+        },
+        error : function() {
+            alert("异常！");
+        }
+    });
+}
+
+ Array.prototype.unique = function (isStrict) {
+     if (this.length < 2)
+         return [this[0]] || [];
+     var tempObj = {}, newArr = [];
+     for (var i = 0; i < this.length; i++) {
+         var v = this[i];
+         var condition = isStrict ? (typeof tempObj[v] != typeof v) : false;
+         if ((typeof tempObj[v] == "undefined") || condition) {
+             tempObj[v] = v;
+             newArr.push(v);
+         }
+     }
+     return newArr;
+ };
+Array.prototype.indexOf = function(val) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == val) return i;
+    }
+    return -1;
+};
+Array.prototype.remove = function(val) {
+    var index = this.indexOf(val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+};
+
+
+function removefunction(){
+    var chk_value=[];
+    $('input[name="sssid"]:checked').each(function(){
+        chk_value.push($(this).val());
+    });
+
+    var ids=$("#passengerIds").val();
+    var array1= ids.split(",");
+
+    for(var i=0,l=chk_value.length;i<l;i++) {
+        array1.remove(chk_value[i])
+    }
+
+    var array2 = array1.sort().unique();
+
+    $("#passengerIds").val(array2.join(','));
+
+    if(chk_value!=""){
+        $.ajax({
+            cache:false,
+            type: "POST",
+            url: getRootPath()+'/StayRegister/confirmPassenger.do',
+            data:"ids="+array2,
+            async:false,
+            dataType:"json",
+            success: function (data) {
+                var tr='';
+                for(var i=0,l=data.length;i<l;i++) {
+                    tr += '<tr>\n' +
+                        '  <td><input type="checkbox" name="sssid" value="' + data[i].pId + '"></td>\n' +
+                        '  <td>' + data[i].name + '</td>\n' +
+                        '  <td>' + data[i].genderName + '</td>\n' +
+                        '  <td>' + data[i].birthDate + '</td>\n' +
+                        '  <td>' + data[i].nationName + '</td>\n' +
+                        '  <td>' + data[i].passengerLevelName + '</td>\n' +
+                        '  <td>' + data[i].papersName + '</td>\n' +
+                        '  <td>' + data[i].papersNumber + '</td>\n' +
+                        '  <td>' + data[i].phoneNumber + '</td>\n' +
+                        '  </tr>';
+                }
+                $("#tbody2").html(tr);
+            },
+            error: function(data) {
+            }
+        });
+
+    }else{
+        alert("你还没有选择旅客哦！");
+    }
+}
+
     function confirmfunction(){
         var chk_value=[];
         $('input[name="xxxid"]:checked').each(function(){
             chk_value.push($(this).val());
         });
-        alert(chk_value);
+
+        var ids=$("#passengerIds").val();
+        var array1= ids.split(",");
+
+        for(var i=0,l=chk_value.length;i<l;i++) {
+            array1.push(chk_value[i]);
+        }
+
+        var array2 = array1.sort().unique();
+
+        $("#passengerIds").val(array2.join(','));
+
         if(chk_value!=""){
                 $.ajax({
                     cache:false,
                     type: "POST",
-                    url: '${ctx}/StayRegister/confirmPassenger.do',
-                    data:"id="+chk_value,
+                    url: getRootPath()+'/StayRegister/confirmPassenger.do',
+                    data:"ids="+array2,
                     async:false,
-                    success: function (result) {
-
+                    dataType:"json",
+                    success: function (data) {
+                        var tr='';
+                        for(var i=0,l=data.length;i<l;i++) {
+                            tr += '<tr>\n' +
+                                '  <td><input type="checkbox" name="sssid" value="' + data[i].pId + '"></td>\n' +
+                                '  <td>' + data[i].name + '</td>\n' +
+                                '  <td>' + data[i].genderName + '</td>\n' +
+                                '  <td>' + data[i].birthDate + '</td>\n' +
+                                '  <td>' + data[i].nationName + '</td>\n' +
+                                '  <td>' + data[i].passengerLevelName + '</td>\n' +
+                                '  <td>' + data[i].papersName + '</td>\n' +
+                                '  <td>' + data[i].papersNumber + '</td>\n' +
+                                '  <td>' + data[i].phoneNumber + '</td>\n' +
+                                '  </tr>';
+                        }
+                        $("#tbody2").html(tr);
                     },
                     error: function(data) {
                     }
@@ -254,53 +409,7 @@ function getRootPath(){
     }
 
 
-    function tijiaoRegister(){
-        if(document.getElementById("nameId").value==""){
-            alert("姓名  是必填项，不能为空哦！");
-            document.getElementById("nameId").focus();
-            return false;
-        }else if(document.getElementById("papersNumberId").value==""){
-            alert("证件号码  是必填项，不能为空哦！");
-            document.getElementById("papersNumberId").focus();
-            return false;
-        }else if(document.getElementById("nameId").value.length>10){
-            alert("你输入的   姓名  太过长了  请不要超出  10  位长度");
-            document.getElementById("nameId").focus();
-            return false;
-        }else if(document.getElementById("remarksId").value.length>50){
-            alert("你输入的   备注  太过长了  请不要超出  50 位长度");
-            document.getElementById("remarksId").focus();
-            return false;
-        }
 
-        var tbody2 =$("#tbody2");
-
-        $.ajax({
-            type: "POST",//方法类型
-            dataType: "json",//预期服务器返回的数据类型
-            url: getRootPath()+"/StayRegister/register.do" ,//url
-            data: $('#form1').serialize(),
-            success: function (data) {
-               var tr='<tr>\n' +
-                   '  <td><input type="checkbox" name="id" value="'+data.pId+'"></td>\n' +
-                   '  <td>'+data.name+'</td>\n' +
-                   '  <td>'+data.genderName+'</td>\n' +
-                   '  <td>'+data.birthDate+'</td>\n' +
-                   '  <td>'+data.nationName+'</td>\n' +
-                   '  <td>'+data.passengerLevelName+'</td>\n' +
-                   '  <td>'+data.papersName+'</td>\n' +
-                   '  <td>'+data.papersNumber+'</td>\n' +
-                   '  <td>'+data.phoneNumber+'</td>\n' +
-                   '  </tr>';
-                tbody2.html(tr);
-            },
-            error : function() {
-                alert("异常！");
-            }
-        });
-
-
-    }
 
 
 

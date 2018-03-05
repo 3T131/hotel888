@@ -27,22 +27,7 @@
   <script type="text/javascript" src="/static/My97DatePicker/WdatePicker.js"></script>
   
  
-  <!-- 右键功能  start  .css -->
-  <%-- <link rel="stylesheet" href="${ctx}/css/youjian/default.css" type="text/css"></link>
-  <link rel="stylesheet" href="${ctx}/css/youjian/font-awesome.css" type="text/css"></link>
-  <link rel="stylesheet" href="${ctx}/css/youjian/github-light.css" type="text/css"></link>
-  <link rel="stylesheet" href="${ctx}/css/youjian/highlight-8.6.default.min.css" type="text/css"></link>
-  <link rel="stylesheet" href="${ctx}/css/youjian/normalize.css" type="text/css"></link>
-  <link rel="stylesheet" href="${ctx}/css/youjian/styles.css" type="text/css"></link>
-  <link rel="stylesheet" href="${ctx}/css/youjian/toastr.css" type="text/css"></link> --%>
-  <!-- 右键功能  end  .css -->
-  
-  <!-- 右键功能  start  .js -->
-  <%-- <script type="text/javascript" src="${ctx}/js/youjian/BootstrapMenu.min.js"></script>
-  <script type="text/javascript" src="${ctx}/js/youjian/highlight-8.6.default.min.js"></script>
-  <script type="text/javascript" src="${ctx}/js/youjian/scale.fix.js"></script>
-  <script type="text/javascript" src="${ctx}/js/youjian/toastr.js"></script> --%>
-  <!-- 右键功能  end  .js -->
+
   
    
    <style>

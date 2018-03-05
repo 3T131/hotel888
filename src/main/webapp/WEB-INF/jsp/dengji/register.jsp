@@ -174,9 +174,9 @@
 			  </tr>
 			  </thead>
 			  <tbody id="tbody2">
-
 			  </tbody>
 		  </table>
+		  <input type="hidden" id="passengerIds" name="passengerIds" value=""/>
 	  </div>
     <div class="span11" style=" border: solid; border-color: #DDDDDD;">
     <div class="span9 margin-top-one">
@@ -287,9 +287,9 @@
 						 style="width:100%;height:27px;" type="text" onchange="onchangeOne()">
 			  </div>
 			  <div class="span3" style="padding-top: 35px;">
-				  <button class="btn btn-warning" type="button" onclick="deletefunction()">
+				  <button class="btn btn-warning" type="reset" >
 				  <li class="icon-remove icon-white"></li>清空</button>
-				  <button class="btn btn-warning" style="margin-left: 10px;" type="button" onclick="tijiao()">
+				  <button class="btn btn-warning" style="margin-left: 10px;" type="button" onclick="removefunction()">
 					  <li class="icon-remove icon-white"></li>移除</button>
 					  <button class="btn btn-success" style="margin-left: 10px;" type="button" onclick="tijiaoRegister()">
 					  <li class="icon-remove icon-white"></li>添加</button>
@@ -297,19 +297,6 @@
 
 	      </div>
 	    </div>
-		<%--<div class="span12">--%>
-			<%--<div class="row-fluid">--%>
-			<%--<div class="span5 "  >--%>
-				<%--<button class="btn btn-warning" type="button" onclick="deletefunction()">--%>
-					<%--<li class="icon-remove icon-white"></li>取消</button>--%>
-			<%--</div>--%>
-
-			<%--<div class="span5 "  >--%>
-				<%--<button class="btn btn-success" type="button" onclick="tijiao()">--%>
-					<%--<li class="icon-remove icon-white"></li>提交</button>--%>
-			<%--</div>--%>
-			<%--</div>--%>
-		<%--</div>--%>
 
       </form>
       

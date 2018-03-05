@@ -26,6 +26,14 @@
             INNER JOIN attributedetails papers ON passenger.papersid=papers.attributedetailsId
        </sql>
 
+    <select id="listByIds" resultMap="listMap" parameterType="java.lang.String">
+        <include refid="queryPassenger"></include>
+        WHERE pId in
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <!--得到最新insert的一行数据的自动增长-->
     <select id="last_insert_id" resultType="int">
         select last_insert_id();

@@ -3,8 +3,6 @@ package com.accp.controller;
 import com.accp.biz.*;
 import com.accp.entity.*;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.support.spring.FastJsonJsonView;
-import com.sun.tracing.dtrace.ModuleAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -113,7 +111,12 @@ public class StayRegisterController {
         return JSON.toJSONString(passenger1);
     }
 
-
+    /**
+     * 查询所有旅客
+     * @param passenger
+     * @param model
+     * @return
+     */
     @RequestMapping("/selectPassenger.do")
     @ResponseBody
     public String selectPassenger(Passenger passenger,Model model){
@@ -124,6 +127,13 @@ public class StayRegisterController {
         passengerBiz.listPage(pager);
         List<Passenger> datas = pager.getDatas();
         return JSON.toJSONString(datas);
+    }
+
+    @RequestMapping("/confirmPassenger.do")
+    @ResponseBody
+    public String confirmPassenger(String ids[]){
+        List<Passenger> passengerList = passengerBiz.listByIds(ids);
+        return JSON.toJSONString(passengerList);
     }
 
     /**

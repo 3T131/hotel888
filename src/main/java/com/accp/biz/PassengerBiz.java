@@ -10,6 +10,13 @@ import java.util.List;
 public interface PassengerBiz {
 
     /**
+     * 按id数组查询旅客(zeliang)
+     * @param ids
+     * @return
+     */
+    List<Passenger> listByIds( String[] ids);
+
+    /**
      * 得到最新insert的一行数据的自动增长
      * @return
      */
