@@ -8,4 +8,11 @@ public interface DepoitBiz {
 
     boolean updateDepositMoney(Depoit depoit);
 
+    /**
+     * 新增
+     * @param depoit
+     * @return
+     */
+    int insertDepoit(Depoit depoit);
+
 }

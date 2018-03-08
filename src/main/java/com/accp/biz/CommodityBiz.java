@@ -4,8 +4,22 @@ import com.accp.entity.Commodity;
 import com.accp.entity.Pager;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface CommodityBiz {
 
+    /**
+     * 按id数组查询集合
+     * @param ids
+     * @return
+     */
+    List<Commodity> listByIds(String[] ids);
+    /**
+     * 按参数动态查询
+     * @param commodity
+     * @return
+     */
+    List<Commodity> listByParam(Commodity commodity);
     /**
      * (分页)
      * @param pager

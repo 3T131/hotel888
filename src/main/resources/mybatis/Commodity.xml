@@ -14,6 +14,39 @@
     <result column="uOM" property="uOM"/>
 </resultMap>
 
+    <select id="listByIds" resultMap="CommodityMap">
+        SELECT commodity.*,
+        uOM.attributeDetailsName uOM,
+        commodityType.attributeDetailsName commodityType
+        FROM commodity
+        LEFT JOIN attributedetails uOM ON commodity.uOMID=uOM.attributeDetailsId
+        LEFT JOIN attributedetails commodityType ON commodity.commodityTypeId=commodityType.attributedetailsId
+
+        where commodityId IN
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+             #{item}
+        </foreach>
+
+    </select>
+
+    <!--按条件动态查询-->
+    <select id="listByParam" resultMap="CommodityMap">
+        SELECT commodity.*,
+        uOM.attributeDetailsName uOM,
+        commodityType.attributeDetailsName commodityType
+        FROM commodity
+        LEFT JOIN attributedetails uOM ON commodity.uOMID=uOM.attributeDetailsId
+        LEFT JOIN attributedetails commodityType ON commodity.commodityTypeId=commodityType.attributedetailsId
+        <where>
+            <if test="commodityTypeID!=null and commodityTypeID>0">
+                and commodityTypeID = #{commodityTypeID}
+            </if>
+            <if test="commodityName!=null and commodityName!=''">
+                and commodityName like concat('%',#{commodityName},'%')
+            </if>
+        </where>
+    </select>
+
     <!--按商品名查询信息-->
     <select id="queryByCommodityName" resultMap="CommodityMap">
         SELECT commodity.*,

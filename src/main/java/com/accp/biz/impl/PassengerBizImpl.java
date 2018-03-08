@@ -15,7 +15,10 @@ public class PassengerBizImpl implements PassengerBiz {
     private PassengerDao passengerDao;
 
     public List<Passenger> listByIds(String[] ids) {
-        return passengerDao.listByIds(ids);
+        if(ids!=null&&ids.length>0){
+            return passengerDao.listByIds(ids);
+        }
+        return null;
     }
 
     public int last_insert_id() {

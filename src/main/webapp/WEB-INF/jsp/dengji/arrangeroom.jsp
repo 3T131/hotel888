@@ -25,7 +25,7 @@
   <%--<link rel="stylesheet" href="${ctx}/bootstrap/css/bootstrap.min.css" type="text/css"></link>--%>
   
   <script type="text/javascript" src="/static/My97DatePicker/WdatePicker.js"></script>
-  
+	  <script src="/static/refre/js/arrangeroom.js"></script>
  
 
   
@@ -160,25 +160,53 @@
  
   <body > 
   <div class="container" style="height:630px;overflow-x:auto;">
-  
+
+	  <div class="dgvone">
+		  <table class="table table-condensed table-bordered table-striped" id="tableid">
+			  <thead class="theadone">
+			  <tr>
+				  <th  style="width: 5%">选择</th>
+				  <th style="width: 7%">房间号</th>
+				  <th  style="width: 10%">客房等级</th>
+				  <th  style="width: 5%">房态</th>
+				  <th  style="width: 7%">床位数</th>
+				  <th  style="width: 10%">标准客房/天</th>
+				  <th style="width: 10%">标准房价/小时</th>
+				  <th style="width: 12%">首段时长(小时)</th>
+				  <th style="width: 24%">旅客</th>
+				  <th style="width: 10%">操作</th>
+			  </tr>
+
+			  </thead>
+			  <tbody id="tbody15">
+			  </tbody>
+		  </table>
+	  </div>
+
+
+
     <div class="span11" style=" border: solid; border-color: #DDDDDD;">
     <div class="span9 margin-top-one">
       <div class="row-fluid">
         <h3 style="text-align: center;">安排房间</h3>
-        
       </div>
     </div>
-    
-    <form id="form1" method="post" onsubmit="return verify()">
-          <input type="hidden" name="receiveTargetID" value="${tuanDuiID}"/>
-          <input id="roomId" name="roomID" type="hidden" >
-          <input id="LvKeLeiXingId" type="hidden" value="${LvKeLeiXingId}">
-          
+    <form id="form1228" action="${ctx}/StayRegister/kaifang.do" method="post" >
+		<input type="hidden" id="roomIds" name="roomIds" value=""/>
+		<input type="hidden" id="passengerIds" name="passengerIds" value=""/>
+		<input type="hidden" id="commodityIds" name="commodityIds" value=""/>
+		<input type="hidden" id="commodityNumber" name="commodityNumber" value=""/>
+
+		<input type="hidden" id="passengerIdRoomId" name="passengerIdRoomId" value=""/>
+		<input type="hidden" id="selectRoomId" value=""/>
+
+		<input type="hidden" id="moneyDay" name="moneyDay" value="0"/>
+		<input type="hidden" id="moneyTime" name="moneyTime" value="0"/>
 		  <div class="span6" style="text-align:center;">
 		      <div class="row-fluid">
 			      <div class="span12" style="margin-bottom: 8px;">
-				   	 <button class="btn btn-primary" type="button" onclick="tijiaoroom()">
-				   	 <li class="icon-check icon-white"></li>保存</button>
+				   	 <button class="btn btn-primary" type="reset" >
+				   	 <li class="icon-check icon-white"></li>清空</button>
 				  </div> 
 			  </div>
 	      </div>
@@ -187,30 +215,43 @@
 	      <div class="row-fluid">
 			   <div class="span4"  style="margin-bottom: 8px;"> 
 			   	 <button class="btn btn-warning" type="button" onclick="deletefunction()">
-			   	  <li class="icon-remove icon-white"></li>取消</button>
+			   	  <li class="icon-remove icon-white"></li>移除</button>
 			   </div>
 		  </div>
       </div>
     <!--  ———————————————————————————————————————————————————————————————————————————————————————— -->
 	    <div class="span12">
 	      <div class="row-fluid">
+		     <%--<div class="span3">--%>
+		        <%--<label>房间号：</label>--%>
+		        <%--<input id="roomNameId" name="roomName" type="text" style="width:100%;height:27px;" readonly="readonly"> --%>
+		     <%--</div>--%>
+				 <div class="span3">
+					 <label>接待对象：</label>
+					 <select name="receiveTargetID" style="width:100%;height:27px;">
+						 <c:forEach items="${listReceiveTarget}" var="item">
+							 <option value="${item.receivetargetId}" <c:if test="${item.receivetargetId==1}">selected="selected"</c:if>>
+									 ${item.principal}
+							 </option>
+						 </c:forEach>
+					 </select>
+				 </div>
 		     <div class="span3">
-		        <label>房间号：</label>
-		        <input id="roomNameId" name="roomName" type="text" style="width:100%;height:27px;" readonly="readonly"> 
-		     </div>
-		     <div class="span3">
-		        <label>开房时间：</label>
-		        <input id="registerTimeId" name="registerTime" id="date" style="width:97%; height:27px;float:left;" class="Wdate" type="text" 
-		        onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" onchange="onchangeOne()"/>
+				 <jsp:useBean id="time" class="java.util.Date"/>
+				 <label>开房时间：</label>
+		        <input id="registerTime" name="registerTime" id="date" style="width:97%; height:27px;float:left;" class="Wdate" type="text"
+		        onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" onchange="onchangeOne()"
+					   value="<fmt:formatDate value="<%=time%>" pattern="yyyy-MM-dd HH:mm:ss"/>"
+				/>
 		        <div id="divOne">
 			         <label class="yansered" style="margin-top:12px;">*</label>
 			    </div>
 		     </div>
 		     <div class="span3">
 		        <label>出租方式：</label>
-		        <select name="rentOutTypeID" style="width:100%;height:27px;">
+		        <select name="rentOutTypeID" onchange="changeRoomMoney()" id="rentOutTypeID" style="width:100%;height:27px;">
 		            <c:forEach items="${listRentOutType}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==26}">selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==26}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -220,7 +261,7 @@
 		        <label>旅客类别：</label>
 		         <select name="passengerTypeID" style="width:100%;height:27px;">
 		            <c:forEach items="${listPassengerType}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==29}">selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==29}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -229,32 +270,12 @@
 		  </div>
 	    </div>
 	    <!--  ———————————————————————————————————————————————————————————————————————————————————————— -->
-	    <div class="span12">
-	      <div class="row-fluid">
-		     <div class="span3">
-		        <label>标准房价：</label>
-		        <input id="biaoZhunFangJiaId" type="text" style="width:100%;height:27px;" readonly="readonly"> 
-		     </div>
-		     <div class="span3">
-		        <label> /小时：</label>
-		        <input id="zhongDianFangId" type="text" style="width:100%;height:27px;" readonly="readonly"> 
-		      </div>
-		     <div class="span3">
-		        <label>首段价格：</label>
-		        <input id="shouDuanJiaGeId" type="text" style="width:100%;height:27px;" readonly="readonly"> 
-		     </div>
-		     <div class="span3">
-		        <label>首段时长：</label>
-		        <input id="shouDuanShiChangId" type="text" style="width:100%;height:27px;" readonly="readonly"> 
-		     </div>
-		  </div>
-	    </div>
 	    <!--  ———————————————————————————————————————————————————————————————————————————————————————— -->
 	     <div class="span12">
 	      <div class="row-fluid">
 		     <div class="span3">
 		        <label>住店天数/小时：</label>
-		       <input id="stayNumberId" name="stayNumber" type="text" onchange="onchangeOne()"
+		       <input id="stayNumberId" value="1" name="stayNumber" type="text" onchange="onchangeStayNumberId()"
 		       style="width:97%;height:27px;float:left;" placeholder="最低时间参考首段时长"> 
 		        <div id="divTwo">
 			       <label class="yansered" style="margin-top:12px;">*</label>
@@ -262,7 +283,7 @@
 		     </div>
 		     <div class="span3">
 		        <label>押金：</label>
-		        <input id="depositId" name="deposit" type="text" onchange="onchangeOne()"
+		        <input id="depositId" value="200" name="depoit.depositMoney" type="text" onchange="onchangeOne()"
 		        style="width:97%;height:27px;float:left;"> 
 		        <div id="divThree">
 			       <label class="yansered" style="margin-top:12px;">*</label>
@@ -272,7 +293,7 @@
 		        <label>结账单位：</label>
 		         <select name="billUnitID" style="width:100%;height:27px;">
 		            <c:forEach items="${listBillUnit}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==27}">selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==27}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -280,15 +301,22 @@
 		     </div>
 		     <div class="span3">
 		        <label>支付方式：</label>
-		        <select name="depositPayWayID" style="width:100%;height:27px;">
+		        <select name="payWayID" style="width:100%;height:27px;">
 		            <c:forEach items="${listPayWay}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==21}">selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==21}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
 		          </select>
 		      </div>
 		  </div>
+			 <div class="row-fluid">
+				 <div class="span12">
+					 <label>备注：</label>
+					 <input id="remarks"  name="remarks" type="text"
+							style="width:97%;height:27px;float:left;">
+				 </div>
+			 </div>
 	    </div>
       </form>
       
@@ -410,284 +438,48 @@
          </c:forEach>
          </div>
        </div>
-      
-     
-       
     </div>
-  
- 
- 
- 
- 
- <script type="text/javascript">
-   var shijian="";
-   var guestRoomLevelID=0;
-    function verify(){
-   }
 
-    function deletefunction(){
-     var LvKeLeiXingId=document.getElementById("LvKeLeiXingId").value;
-     parent.document.getElementById('Mainid').src='${ctx}/StayRegister/tolist.do?LvKeLeiXingId='+LvKeLeiXingId;
-   }
-
-   function suibian(ss){
-     if(ss.children[1].value==1){
-   		var parentNodes=ss.parentNode.children;
-   		for(var i=0;i<parentNodes.length;i++){
-   			parentNodes[i].style.borderColor="#666666";
-   		}
-   		ss.style.borderColor="#00FFFF";
-   		document.getElementById("roomId").value=ss.children[0].value;
-   		document.getElementById("roomNameId").value=ss.children[2].textContent;
-   		document.getElementById("biaoZhunFangJiaId").value=ss.children[5].textContent;
-   		document.getElementById("zhongDianFangId").value='￥'+ss.children[6].value;
-   		document.getElementById("shouDuanJiaGeId").value='￥'+ss.children[7].value;
-   		document.getElementById("shouDuanShiChangId").value=ss.children[8].value;
-	 }else{
-	    alert("不是空房不可以安排房间的哦！");
-	 }
-
-
-   		var roomid=ss.children[0].value;  //获取这个
-   }
-
-   function tijiaoroom(){
-       if(document.getElementById("registerTimeId").value==""){
-	     alert("登记时间  是必填项，不能为空哦！");
-	     document.getElementById("registerTimeId").focus();
-	     return false;
-      }else if(document.getElementById("stayNumberId").value==""){
-	     alert("住店天数/小时  是必填项，不能为空哦！");
-	     document.getElementById("stayNumberId").focus();
-	     return false;
-      }else if(document.getElementById("depositId").value==""){
-	     alert("押金  是必填项，不能为空哦！");
-	     document.getElementById("depositId").focus();
-	     return false;
-      }else if(document.getElementById("registerTimeId").value.length>20){
-	     alert("你输入的    登记时间   太过长了  请不要超出  20 位长度");
-	     document.getElementById("registerTimeId").focus();
-	     return false;
-      }else if(document.getElementById("stayNumberId").value.length>10){
-	     alert("你输入的    住店天数/小时   太过长了  请不要超出  10 位长度");
-	     document.getElementById("stayNumberId").focus();
-	     return false;
-      }else if(document.getElementById("depositId").value.length>8){
-	     alert("你输入的   押金  太过长了  请不要超出  8 位长度  ");
-	     document.getElementById("depositId").focus();
-	     return false;
-      }
-      if(document.getElementById("roomNameId").value==""){
-         alert("还没有选择房间哦！");
-         return false;
-      }
-      var LvKeLeiXingId=document.getElementById("LvKeLeiXingId").value;
-      form1.action="${ctx}/StayRegister/arrangeroom.do?LvKeLeiXingId="+LvKeLeiXingId;
-      form1.submit();
-   }
+	  <div class="modal hide fade" id="lvke" style="text-align: center;">
+		  <div class="span5" style="width:98%;height:480px; overflow-x:auto;">
+			  <div class="row-fluid">
+				  <div class="span8">
+					  <label class="labelroomnumber">旅客姓名：</label>
+					  <input id="txtnameid" name="txtname" class="textone" style="width:55%; border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:27px;" type="text" placeholder="请输入关键字" value="${txtname}">
+					  <div class="input-append">
+						  <button onclick="souSuo()" class="btn-success textone" style="margin-left:-4px;height:27px;"><li class="icon-search icon-white"></li>搜索</button>
+					  </div>
+				  </div>
+				  <div class="span4">
+					  <button data-dismiss="modal" class="btn btn-info btn-small textone" type="button" onclick="passengerQd()"><li class="icon-plus icon-white"></li>确定选择</button>
+				  </div>
+			  </div>
+			  <div class="dgvone" style="width:93%;">
+				  <table class="table table-condensed table-bordered table-striped" >
+					  <thead class="theadone">
+					  <tr>
+						  <th style="width: 10%" >选择</th>
+						  <th style="width: 20%">姓名</th>
+						  <th style="width: 10%" >性别</th>
+						  <th  style="width: 20%">证件类型</th>
+						  <th style="width: 40%">证件号码</th>
+					  </tr>
+					  </thead>
+					  <tbody id="tbody">
+					  <tr>
+						  <td><input type="radio" name="id" value=""></td>
+						  <td></td>
+						  <td></td>
+						  <td></td>
+						  <td></td>
+					  </tr>
+					  </tbody>
+				  </table>
+			  </div>
+		  </div>
+	  </div>
 
 
-
-   function pickedFunc() {
-            shijian = $dp.cal.getNewDateStr();
-        }
-
-   function allroomfunction(){
-     guestRoomLevelID=0;
-     tenfunction();
-   }
-
-   function onefunction(){
-      guestRoomLevelID=8;
-      tenfunction();
-   }
-
-   function twofunction(){
-      guestRoomLevelID=9;
-      tenfunction();
-   }
-
-   function threefunction(){
-      guestRoomLevelID=10;
-      tenfunction();
-   }
-
-   function fourfunction(){
-      guestRoomLevelID=11;
-      tenfunction();
-   }
-
-   function fivefunction(){
-      guestRoomLevelID=12;
-      tenfunction();
-   }
-
-   function sixfunction(){
-      guestRoomLevelID=13;
-      tenfunction();
-   }
-
-   function sevenfunction(){
-      guestRoomLevelID=14;
-      tenfunction();
-   }
-
-   function tenfunction(){
-      $("#div1").empty();
-      $.ajax({
-          cache:false,                                             //是否使用缓存提交 如果为TRUE 会调用浏览器的缓存 而不会提交
-          type: "POST",                                           //上面3行都是必须要的
-          url: '${ctx}/StayRegister/guestRoomLevelSelectRoom.do',       //地址 type 带参数
-          data:"guestRoomLevelID="+guestRoomLevelID,                         // IDCardValue 自定义的。相当于name把值赋予给 他可以在servlet 获取
-          async:false,                                          // 是否 异步 提交
-          success: function (result) {                          // 不出现异常 进行立面方
-             for (var key in result) {
-                var item = result[key];
-                if(item.roomStateID==1){
-                var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#99FF99;'>"+
-			      "<input style='display: none;' value="+item.id+" />"+
-			      "<input style='display: none;' value="+item.roomStateID+" />"+
-			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
-			      "<input style='display: none;' value="+item.standardPrice+" />"+
-			      "<input style='display: none;' value="+item.firstPrice+" />"+
-			      "<input style='display: none;' value="+item.firstDuration+" />"+
-			     "</button>")
-    			 $("#div1").append(btn);
-                }
-                if(item.roomStateID==2){
-                var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#DDDDDD;'>"+
-			      "<input style='display: none;' value="+item.id+" />"+
-			      "<input style='display: none;' value="+item.roomStateID+" />"+
-			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
-			      "<input style='display: none;' value="+item.standardPrice+" />"+
-			      "<input style='display: none;' value="+item.firstPrice+" />"+
-			      "<input style='display: none;' value="+item.firstDuration+" />"+
-			     "</button>")
-    			 $("#div1").append(btn);
-                }
-                if(item.roomStateID==4){
-                var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#99FFFF;'>"+
-			      "<input style='display: none;' value="+item.id+" />"+
-			      "<input style='display: none;' value="+item.roomStateID+" />"+
-			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
-			      "<input style='display: none;' value="+item.standardPrice+" />"+
-			      "<input style='display: none;' value="+item.firstPrice+" />"+
-			      "<input style='display: none;' value="+item.firstDuration+" />"+
-			     "</button>")
-    			 $("#div1").append(btn);
-                }
-                if(item.roomStateID==5){
-                var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#BBBB00;'>"+
-			      "<input style='display: none;' value="+item.id+" />"+
-			      "<input style='display: none;' value="+item.roomStateID+" />"+
-			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
-			      "<input style='display: none;' value="+item.standardPrice+" />"+
-			      "<input style='display: none;' value="+item.firstPrice+" />"+
-			      "<input style='display: none;' value="+item.firstDuration+" />"+
-			     "</button>")
-    			 $("#div1").append(btn);
-                }
-                if(item.roomStateID==6){
-                var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#FF7744;'>"+
-			      "<input style='display: none;' value="+item.id+" />"+
-			      "<input style='display: none;' value="+item.roomStateID+" />"+
-			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
-			      "<input style='display: none;' value="+item.standardPrice+" />"+
-			      "<input style='display: none;' value="+item.firstPrice+" />"+
-			      "<input style='display: none;' value="+item.firstDuration+" />"+
-			     "</button>")
-    			 $("#div1").append(btn);
-                }
-                if(item.roomStateID==7){
-                var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#FF0088;'>"+
-			      "<input style='display: none;' value="+item.id+" />"+
-			      "<input style='display: none;' value="+item.roomStateID+" />"+
-			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
-			      "<input style='display: none;' value="+item.standardPrice+" />"+
-			      "<input style='display: none;' value="+item.firstPrice+" />"+
-			      "<input style='display: none;' value="+item.firstDuration+" />"+
-			     "</button>")
-    			 $("#div1").append(btn);
-                }
-                if(item.roomStateID==65){
-                var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#FF00FF;'>"+
-			      "<input style='display: none;' value="+item.id+" />"+
-			      "<input style='display: none;' value="+item.roomStateID+" />"+
-			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
-			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
-			      "<input style='display: none;' value="+item.standardPrice+" />"+
-			      "<input style='display: none;' value="+item.firstPrice+" />"+
-			      "<input style='display: none;' value="+item.firstDuration+" />"+
-			     "</button>")
-    			 $("#div1").append(btn);
-                }
-             }
-          },
-          error: function(data) {
-
-           }
-
-      });
-   }
-
-
-
-   function onchangeOne(){
-     //登记时间
-     if(document.getElementById("registerTimeId").value!=""){
-       document.getElementById("divOne").style.display="none";
-     }else{
-       document.getElementById("divOne").style.display="block"; //显示
-     }
-     //住店天数/小时
-     if(document.getElementById("stayNumberId").value!=""){
-       document.getElementById("divTwo").style.display="none";
-       if(!document.getElementById("stayNumberId").value.trim().match("^[0-9]*[1-9][0-9]*$"))
-       {
-          document.getElementById("stayNumberId").focus();
-          document.getElementById("stayNumberId").value="";
-          document.getElementById("divTwo").style.display="block"; //显示
-          alert("住店天数/小时:请输入正整数");
-       }
-     }else{
-       document.getElementById("divTwo").style.display="block"; //显示
-     }
-     //押金
-     if(document.getElementById("depositId").value!=""){
-       document.getElementById("divThree").style.display="none";
-       if(!document.getElementById("depositId").value.trim().match("^[0-9]+(\\.[0-9]+)?$"))
-       {
-          document.getElementById("depositId").focus();
-          document.getElementById("depositId").value="";
-          document.getElementById("divThree").style.display="block"; //显示
-          alert("押金 :请输入正数");
-       }
-     }else{
-       document.getElementById("divThree").style.display="block"; //显示
-     }
-   }
-
- </script>
   </div>
   </body>
 </html>

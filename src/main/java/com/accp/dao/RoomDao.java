@@ -8,6 +8,19 @@ import java.util.List;
 
 public interface RoomDao {
 
+
+    /**
+     * 按id数组查询集合
+     * @param ids
+     * @return
+     */
+    List<Room> listByIds(String[] ids);
+    /**
+     * 按条件动态查询(zeliang)
+     * @param room
+     * @return
+     */
+    List<Room> listByParam(Room room);
     /**
      * 分页查询&&模糊查询
      * @param pager

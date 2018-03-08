@@ -7,6 +7,12 @@ import java.util.List;
 public interface ConsumptionDetailsDao {
 
     /**
+     * 新增
+     * @param consumptionDetails
+     * @return
+     */
+    int insertConsumptionDetails(ConsumptionDetails consumptionDetails);
+    /**
      * 按条件查询
      * @param consumptionDetails
      * @return

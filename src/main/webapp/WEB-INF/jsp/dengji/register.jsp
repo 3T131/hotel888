@@ -176,7 +176,7 @@
 			  <tbody id="tbody2">
 			  </tbody>
 		  </table>
-		  <input type="hidden" id="passengerIds" name="passengerIds" value=""/>
+
 	  </div>
     <div class="span11" style=" border: solid; border-color: #DDDDDD;">
     <div class="span9 margin-top-one">
@@ -184,7 +184,7 @@
         <h3 style="text-align: center;">旅客登记</h3>
       </div>
     </div>
-    <a href="#lvke" style="margin-left:20px;margin-top:10px;" data-toggle="modal" class="btn btn-info btn-small" onclick="souSuo()"><li class="icon-plus icon-white"></li>选择旅客</a>
+    <%--<a href="#lvke" style="margin-left:20px;margin-top:10px;" data-toggle="modal" class="btn btn-info btn-small" onclick="souSuo()"><li class="icon-plus icon-white"></li>选择旅客</a>--%>
     <form id="form1" method="post" onsubmit="return verify()">
     <!--  ———————————————————————————————————————————————————————————————————————————————————————— -->
 	    
@@ -196,7 +196,7 @@
 		     <div class="span3">
 		        <label>姓名：</label>
 		        <input id="nameId" name="name" onblur="nameOne(this.value)"
-		        type="text" style="width:97%;height:27px;" onchange="onchangeOne()">
+		        type="text" style="width:97%;height:27px;" onchange="onchangeTTT()">
 		        <div id="divOne" style="float:right;">
 			         <label class="yansered" style="margin-top:7px;">*</label>
 			    </div> 
@@ -241,7 +241,7 @@
 			  <div class="span3">
 				  <label>出生日期：</label>
 				  <input id="birthDateId" name="birthDate"  type="text" style="width:100%;height:27px;" class="Wdate"
-						 onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" onchange="onchangeOne()">
+						 onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" onchange="onchangeTTT()">
 			  </div>
 		     <div class="span3">
 		        <label>证件类型：</label>
@@ -257,17 +257,20 @@
 		     <div class="span3">
 		        <label>证件号码：</label>
 		        <input id="papersNumberId" name="papersNumber" onblur="papersNumberOne(this.value)"
-		        type="text" style="width:97%;height:27px;" onchange="onchangeOne()">
+		        type="text" style="width:97%;height:27px;" onchange="onchangeTTT()">
 		        <div id="divTwo" style="float:right;">
 			         <label class="yansered" style="margin-top:7px;">*</label>
 			    </div> 
 		     </div>
 			  <div class="span3">
+				  <jsp:useBean id="time" class="java.util.Date"/>
 				  <label>登记时间：</label>
 				  <input id="createDate" name="createDate"
 						 class="Wdate"
 						 onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})"
-						 type="text" style="width:100%;height:27px;"  >
+						 type="text" style="width:100%;height:27px;"
+						 value="<fmt:formatDate value="<%=time%>" pattern="yyyy-MM-dd HH:mm:ss"/>"
+				  >
 			  </div>
 		  </div>
 	    </div>
@@ -279,18 +282,16 @@
 		    <div class="span3">
 		   	   <label class="labelroomnumber" style="font-size:15px">联系电话：</label>
 	           <input id="contactPhoneNUmberId" name="phoneNumber" onblur="contactPhoneNUmberOne(this.value)"
-	           style="width:100%;height:27px;" type="text" onchange="onchangeOne()">
+	           style="width:100%;height:27px;" type="text" onchange="onchangeTTT()">
 			</div>
 			  <div class="span6">
 				  <label class="labelroomnumber" style="font-size:15px">备注：</label>
 				  <input id="remarksId" name="remarks" onblur="contactPhoneNUmberOne(this.value)"
-						 style="width:100%;height:27px;" type="text" onchange="onchangeOne()">
+						 style="width:100%;height:27px;" type="text" onchange="onchangeTTT()">
 			  </div>
 			  <div class="span3" style="padding-top: 35px;">
 				  <button class="btn btn-warning" type="reset" >
 				  <li class="icon-remove icon-white"></li>清空</button>
-				  <button class="btn btn-warning" style="margin-left: 10px;" type="button" onclick="removefunction()">
-					  <li class="icon-remove icon-white"></li>移除</button>
 					  <button class="btn btn-success" style="margin-left: 10px;" type="button" onclick="tijiaoRegister()">
 					  <li class="icon-remove icon-white"></li>添加</button>
 			  </div>
@@ -299,48 +300,6 @@
 	    </div>
 
       </form>
-      
-      
-      <div class="modal hide fade" id="lvke" style="text-align: center;">
-      <div class="span5" style="width:98%;height:480px; overflow-x:auto;">
-         <div class="row-fluid">
-		   <div class="span8">
-		      <label class="labelroomnumber">旅客姓名：</label>
-			   <input id="txtnameid" name="txtname" class="textone" style="width:55%; border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:27px;" type="text" placeholder="请输入关键字" value="${txtname}">
-			   <div class="input-append">  
-			      <button onclick="souSuo()" class="btn-success textone" style="margin-left:-4px;height:27px;"><li class="icon-search icon-white"></li>搜索</button>
-			   </div>
-	       </div>
-	       <div class="span4">
-	          <button data-dismiss="modal" class="btn btn-info btn-small textone" type="button" onclick="confirmfunction()"><li class="icon-plus icon-white"></li>确定选择</button>
-	       </div>
-	    </div>
-	     <div class="dgvone" style="width:93%;">
-       <table class="table table-condensed table-bordered table-striped" id="tableid">
-	      <thead class="theadone">
-	        <tr>
-	          <th style="width: 10%" >选择</th>
-	          <th style="width: 20%">姓名</th>
-	          <th style="width: 10%" >性别</th>
-	          <th  style="width: 20%">证件类型</th>
-	          <th style="width: 40%">证件号码</th>
-	        </tr>
-	      </thead>
-	      <tbody id="tbody">
-		        <tr>
-		          <td><input type="radio" name="id" value=""></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		        </tr>
-	      </tbody>
-	    </table>
-    </div>
-    </div>
-    </div>
-      
-      
 
        
     </div>

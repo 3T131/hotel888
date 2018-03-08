@@ -10,10 +10,10 @@ import java.util.List;
 public class StayRegister {
 
     private Integer stayRegisterId; //住宿登记ID
-    private Integer deputyID; //副ID
     private Date registerTime; //登记时间
     private Integer stayNumber; //住店天数/小时
     private Float sumConst; //总费用
+    private Float sumConst2;//总费用
     private String changingRoomNumber; //换房次数
     private Float changRoomMoney; //换房费
     private String remarks; //备注
@@ -51,6 +51,24 @@ public class StayRegister {
 
     private List<Passenger> passengerList=new ArrayList<Passenger>();//旅客集合
     private List<ConsumptionDetails> consumptionDetailsList=new ArrayList<ConsumptionDetails>();//消费集合
+
+    public Float getSumConst2() {
+        if(rentOutTypeID==26){
+            sumConst2=room.getStandardPriceDay()*this.stayNumber;
+        }
+        if(rentOutTypeID==25){
+            sumConst2=room.getStandardPrice()*this.stayNumber;
+        }
+        if(this.changRoomMoney!=null){
+            sumConst2+=this.changRoomMoney;
+        }
+        sumConst2+=this.otherConsumer;
+        return sumConst2;
+    }
+
+    public void setSumConst2(Float sumConst2) {
+        this.sumConst2 = sumConst2;
+    }
 
     public Float getAccommodation() {
         if(rentOutTypeID==26){
@@ -140,14 +158,6 @@ public class StayRegister {
         this.stayRegisterId = stayRegisterId;
     }
 
-    public Integer getDeputyID() {
-        return deputyID;
-    }
-
-    public void setDeputyID(Integer deputyID) {
-        this.deputyID = deputyID;
-    }
-
     public Date getRegisterTime() {
         return registerTime;
     }
@@ -165,17 +175,6 @@ public class StayRegister {
     }
 
     public Float getSumConst() {
-
-        if(rentOutTypeID==26){
-            sumConst=room.getStandardPriceDay()*this.stayNumber;
-        }
-        if(rentOutTypeID==25){
-            sumConst=room.getStandardPrice()*this.stayNumber;
-        }
-        if(this.changRoomMoney!=null){
-            sumConst+=this.changRoomMoney;
-        }
-            sumConst+=this.otherConsumer;
         return sumConst;
     }
 

@@ -2,7 +2,9 @@ package com.accp.biz.impl;
 
 import com.accp.biz.DepoitBiz;
 import com.accp.dao.DepoitDao;
+import com.accp.dao.PassengerDao;
 import com.accp.entity.Depoit;
+import com.accp.entity.Passenger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -12,6 +14,9 @@ import java.util.List;
 public class DepoitBizImpl implements DepoitBiz {
     @Resource
     private DepoitDao depoitDao;
+
+    @Resource
+    private PassengerDao passengerDao;
 
     /**
      * 按Id查询单个押金
@@ -41,5 +46,17 @@ public class DepoitBizImpl implements DepoitBiz {
         }
         depoit.setDepositMoney(depoit1.getDepositMoney()+depoit.getDepositMoney());
         return depoitDao.updateDepositMoney(depoit)>0;
+    }
+
+    /**
+     * 新增并且返回新增id
+     * @param depoit
+     * @return
+     */
+    public int insertDepoit(Depoit depoit) {
+        if(depoitDao.insertDepoit(depoit)>0){
+            return passengerDao.last_insert_id();
+        }
+        return -1;
     }
 }

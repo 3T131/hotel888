@@ -8,7 +8,7 @@ public class ConsumptionDetails {
     private Integer consumptionDetailsId; //'消费明细ID',
     private Integer stayRegisterID; //'住宿登记ID',
     private Integer cID; //'商品ID',
-    private String consumptionNumber; //'消费数量',
+    private Integer consumptionNumber; //'消费数量',
     private Float consumptionMoney; //'消费金额',
     private Date consumptionTime; //'消费时间',
 
@@ -46,11 +46,11 @@ public class ConsumptionDetails {
         this.cID = cID;
     }
 
-    public String getConsumptionNumber() {
+    public Integer getConsumptionNumber() {
         return consumptionNumber;
     }
 
-    public void setConsumptionNumber(String consumptionNumber) {
+    public void setConsumptionNumber(Integer consumptionNumber) {
         this.consumptionNumber = consumptionNumber;
     }
 

@@ -110,7 +110,6 @@
 	          <th rowspan="2">床位数</th>
 	          <th rowspan="2">标准客房/天</th>
 	          <th colspan="4">钟点房价设置</th>
-	          
 	        </tr>
 	        <tr>
 	          <th >标准房价/小时</th>

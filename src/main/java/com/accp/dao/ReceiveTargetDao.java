@@ -7,6 +7,13 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ReceiveTargetDao {
+
+    /**
+     * 动态查询所有
+     * @param receiveTarget
+     * @return
+     */
+    List<ReceiveTarget> listByParam(ReceiveTarget receiveTarget);
     /**
      * 分页查询&&模糊查询
      * @param pager

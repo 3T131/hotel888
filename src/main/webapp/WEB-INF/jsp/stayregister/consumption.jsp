@@ -228,7 +228,7 @@
 		       </div>
 		    </div>
 	     <div class="dgvone" style="width:93%;">
-       <table class="table table-condensed table-bordered table-striped" id="tableid">
+       <table class="table table-condensed table-bordered table-striped" id="tableid2">
 	      <thead class="theadone">
 	        <tr>
 	          <th >选择</th>

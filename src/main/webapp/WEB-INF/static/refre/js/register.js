@@ -35,35 +35,7 @@ function getRootPath(){
 
 
 
-function souSuo(){
-    var tbody = document.getElementById("tbody");
-    var name=document.getElementById("txtnameid").value;
-    var i=0;
-    $("#tbody").empty();
-    $.ajax({
-        cache:false,
-        type: "post",
-        url: getRootPath()+'/StayRegister/selectPassenger.do',
-        data:"name="+name,
-        async:false,
-        dataType:"json",
-        success: function (data) {
-            var tr='';
-            for(var i=0,l=data.length;i<l;i++){
-                tr+='   <tr>\n' +
-                    '      <td><input type="checkbox" name="xxxid" value="'+data[i].pId+'"></td>\n' +
-                    '      <td>'+data[i].name+'</td>\n' +
-                    '      <td>'+data[i].genderName+'</td>\n' +
-                    '      <td>'+data[i].papersName+'</td>\n' +
-                    '      <td>'+data[i].papersNumber+'</td>\n' +
-                    '      </tr>';
-            }
-            $("#tbody").html(tr);
-        },
-        error: function(data) {
-        }
-    });
-}
+
 
 function tijiaoRegister(){
     if(document.getElementById("nameId").value==""){
@@ -92,23 +64,26 @@ function tijiaoRegister(){
         url: getRootPath()+"/StayRegister/register.do" ,//url
         data: $('#form1').serialize(),
         success: function (data) {
-            var tr='<tr>\n' +
-                '  <td><input type="checkbox" name="id" value="'+data.pId+'"></td>\n' +
-                '  <td>'+data.name+'</td>\n' +
-                '  <td>'+data.genderName+'</td>\n' +
-                '  <td>'+data.birthDate+'</td>\n' +
-                '  <td>'+data.nationName+'</td>\n' +
-                '  <td>'+data.passengerLevelName+'</td>\n' +
-                '  <td>'+data.papersName+'</td>\n' +
-                '  <td>'+data.papersNumber+'</td>\n' +
-                '  <td>'+data.phoneNumber+'</td>\n' +
-                '  </tr>';
+            if(data!=null) {
+                var tr = '<tr>\n' +
+                    '  <td><input type="checkbox" name="id" value="' + data.pId + '"></td>\n' +
+                    '  <td>' + data.name + '</td>\n' +
+                    '  <td>' + data.genderName + '</td>\n' +
+                    '  <td>' + data.birthDate + '</td>\n' +
+                    '  <td>' + data.nationName + '</td>\n' +
+                    '  <td>' + data.passengerLevelName + '</td>\n' +
+                    '  <td>' + data.papersName + '</td>\n' +
+                    '  <td>' + data.papersNumber + '</td>\n' +
+                    '  <td>' + data.phoneNumber + '</td>\n' +
+                    '  </tr>';
+                // var ids=$("#passengerIds").val();
+                // var array1= [];
+                // array1=ids.split(",");
+                // array1.push(data.pId);
+                // $("#passengerIds").val(array1.join(','));
+            }
             tbody2.append(tr);
-            var ids=$("#passengerIds").val();
-            var array1= [];
-            array1=ids.split(",");
-            array1.push(data.pId);
-            $("#passengerIds").val(array1.join(','));
+
         },
         error : function() {
             alert("异常！");
@@ -144,107 +119,111 @@ Array.prototype.remove = function(val) {
 };
 
 
-function removefunction(){
-    var chk_value=[];
-    $('input[name="sssid"]:checked').each(function(){
-        chk_value.push($(this).val());
-    });
+// function removefunction(){
+//     var chk_value=[];
+//     $('input[name="sssid"]:checked').each(function(){
+//         chk_value.push($(this).val());
+//     });
+//
+//     if(chk_value!=""){
+//
+//         var ids=$("#passengerIds").val();
+//         var array1= ids.split(",");
+//
+//         for(var i=0,l=chk_value.length;i<l;i++) {
+//             array1.remove(chk_value[i])
+//         }
+//
+//         var array2 = array1.sort().unique();
+//         array2.remove("");
+//         $("#passengerIds").val(array2.join(','));
+//
+//         $.ajax({
+//             cache:false,
+//             type: "POST",
+//             url: getRootPath()+'/StayRegister/confirmPassenger.do',
+//             data:"ids="+array2,
+//             async:false,
+//             dataType:"json",
+//             success: function (data) {
+//                 var tr='';
+//                 if(data!=null) {
+//                     for (var i = 0, l = data.length; i < l; i++) {
+//                         tr += '<tr>\n' +
+//                             '  <td><input type="checkbox" name="sssid" value="' + data[i].pId + '"></td>\n' +
+//                             '  <td>' + data[i].name + '</td>\n' +
+//                             '  <td>' + data[i].genderName + '</td>\n' +
+//                             '  <td>' + data[i].birthDate + '</td>\n' +
+//                             '  <td>' + data[i].nationName + '</td>\n' +
+//                             '  <td>' + data[i].passengerLevelName + '</td>\n' +
+//                             '  <td>' + data[i].papersName + '</td>\n' +
+//                             '  <td>' + data[i].papersNumber + '</td>\n' +
+//                             '  <td>' + data[i].phoneNumber + '</td>\n' +
+//                             '  </tr>';
+//                     }
+//                 }
+//                 $("#tbody2").html(tr);
+//             },
+//             error: function(data) {
+//             }
+//         });
+//
+//     }else{
+//         alert("你还没有选择旅客哦！");
+//     }
+// }
 
-    var ids=$("#passengerIds").val();
-    var array1= ids.split(",");
-
-    for(var i=0,l=chk_value.length;i<l;i++) {
-        array1.remove(chk_value[i])
-    }
-
-    var array2 = array1.sort().unique();
-
-    $("#passengerIds").val(array2.join(','));
-
-    if(chk_value!=""){
-        $.ajax({
-            cache:false,
-            type: "POST",
-            url: getRootPath()+'/StayRegister/confirmPassenger.do',
-            data:"ids="+array2,
-            async:false,
-            dataType:"json",
-            success: function (data) {
-                var tr='';
-                for(var i=0,l=data.length;i<l;i++) {
-                    tr += '<tr>\n' +
-                        '  <td><input type="checkbox" name="sssid" value="' + data[i].pId + '"></td>\n' +
-                        '  <td>' + data[i].name + '</td>\n' +
-                        '  <td>' + data[i].genderName + '</td>\n' +
-                        '  <td>' + data[i].birthDate + '</td>\n' +
-                        '  <td>' + data[i].nationName + '</td>\n' +
-                        '  <td>' + data[i].passengerLevelName + '</td>\n' +
-                        '  <td>' + data[i].papersName + '</td>\n' +
-                        '  <td>' + data[i].papersNumber + '</td>\n' +
-                        '  <td>' + data[i].phoneNumber + '</td>\n' +
-                        '  </tr>';
-                }
-                $("#tbody2").html(tr);
-            },
-            error: function(data) {
-            }
-        });
-
-    }else{
-        alert("你还没有选择旅客哦！");
-    }
-}
-
-    function confirmfunction(){
-        var chk_value=[];
-        $('input[name="xxxid"]:checked').each(function(){
-            chk_value.push($(this).val());
-        });
-
-        var ids=$("#passengerIds").val();
-        var array1= ids.split(",");
-
-        for(var i=0,l=chk_value.length;i<l;i++) {
-            array1.push(chk_value[i]);
-        }
-
-        var array2 = array1.sort().unique();
-
-        $("#passengerIds").val(array2.join(','));
-
-        if(chk_value!=""){
-                $.ajax({
-                    cache:false,
-                    type: "POST",
-                    url: getRootPath()+'/StayRegister/confirmPassenger.do',
-                    data:"ids="+array2,
-                    async:false,
-                    dataType:"json",
-                    success: function (data) {
-                        var tr='';
-                        for(var i=0,l=data.length;i<l;i++) {
-                            tr += '<tr>\n' +
-                                '  <td><input type="checkbox" name="sssid" value="' + data[i].pId + '"></td>\n' +
-                                '  <td>' + data[i].name + '</td>\n' +
-                                '  <td>' + data[i].genderName + '</td>\n' +
-                                '  <td>' + data[i].birthDate + '</td>\n' +
-                                '  <td>' + data[i].nationName + '</td>\n' +
-                                '  <td>' + data[i].passengerLevelName + '</td>\n' +
-                                '  <td>' + data[i].papersName + '</td>\n' +
-                                '  <td>' + data[i].papersNumber + '</td>\n' +
-                                '  <td>' + data[i].phoneNumber + '</td>\n' +
-                                '  </tr>';
-                        }
-                        $("#tbody2").html(tr);
-                    },
-                    error: function(data) {
-                    }
-                });
-
-        }else{
-            alert("你还没有选择旅客哦！");
-        }
-    }
+    // function confirmfunction(){
+    //     var chk_value=[];
+    //     $('input[name="xxxid"]:checked').each(function(){
+    //         chk_value.push($(this).val());
+    //     });
+    //
+    //     if(chk_value!=""){
+    //         var ids=$("#passengerIds").val();
+    //         var array1= ids.split(",");
+    //
+    //         for(var i=0,l=chk_value.length;i<l;i++) {
+    //             array1.push(chk_value[i]);
+    //         }
+    //
+    //         var array2 = array1.sort().unique();
+    //         array2.remove("");
+    //         $("#passengerIds").val(array2.join(','));
+    //             $.ajax({
+    //                 cache:false,
+    //                 type: "POST",
+    //                 url: getRootPath()+'/StayRegister/confirmPassenger.do',
+    //                 data:"ids="+array2,
+    //                 async:false,
+    //                 dataType:"json",
+    //                 success: function (data) {
+    //                     var tr='';
+    //                     if(data!=null) {
+    //                         for (var i = 0, l = data.length; i < l; i++) {
+    //                             tr += '<tr>\n' +
+    //                                 '  <td><input type="checkbox" name="sssid" value="' + data[i].pId + '"></td>\n' +
+    //                                 '  <td>' + data[i].name + '</td>\n' +
+    //                                 '  <td>' + data[i].genderName + '</td>\n' +
+    //                                 '  <td>' + data[i].birthDate + '</td>\n' +
+    //                                 '  <td>' + data[i].nationName + '</td>\n' +
+    //                                 '  <td>' + data[i].passengerLevelName + '</td>\n' +
+    //                                 '  <td>' + data[i].papersName + '</td>\n' +
+    //                                 '  <td>' + data[i].papersNumber + '</td>\n' +
+    //                                 '  <td>' + data[i].phoneNumber + '</td>\n' +
+    //                                 '  </tr>';
+    //                         }
+    //                     }
+    //                     $("#tbody2").html(tr);
+    //                 },
+    //                 error: function(data) {
+    //                 }
+    //             });
+    //
+    //     }else{
+    //         alert("你还没有选择旅客哦！");
+    //     }
+    // }
 
     function nameOne(value){
         if(value!=xingMing){
@@ -392,13 +371,6 @@ function removefunction(){
         }
     }
 
-    function passengerLevel(value){
-        if(value!=lvKeJiBie){
-            document.getElementById("passengerLevelId").style.color='black';
-        }else{
-            document.getElementById("passengerLevelId").style.color='blue';
-        }
-    }
 
     function thingReason(value){
         if(value!=shiYou){
@@ -414,7 +386,7 @@ function removefunction(){
 
 
 
-    function onchangeOne(){
+    function onchangeTTT(){
         //姓名
         if(document.getElementById("nameId").value!=""){
             document.getElementById("divOne").style.display="none";

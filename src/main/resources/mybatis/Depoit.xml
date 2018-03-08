@@ -4,6 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accp.dao.DepoitDao">
 
+    <!--新增-->
+<insert id="insertDepoit">
+    INSERT INTO `depoit`(`depoitId`,`payID`,`registerDate`,`depositMoney`,`remarks`)
+  VALUES(DEFAULT,21,NOW(),#{depositMoney},#{remarks})
+</insert>
+
 <!--按条件查询-->
      <select id="listByParam" resultMap="DepositMap">
         SELECT depoit.*,pay.attributeDetailsName payFs FROM depoit

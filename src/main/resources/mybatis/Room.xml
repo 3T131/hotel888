@@ -8,10 +8,37 @@
     <result property="roomName" column="roomName"></result>
     <result property="guestRoomLevelName" column="guestRoomLevelName"/>
 </resultMap>
+    <!--按id数组查询集合-->
+    <select id="listByIds" resultMap="roomList">
+         SELECT room.*,roomName.attributeDetailsName roomName,
+        guestRoomLevelName.attributeDetailsName guestRoomLevelName
+        FROM room
+        INNER JOIN attributedetails roomName ON room.`roomStateID`=roomName.attributedetailsId
+        INNER JOIN attributedetails guestRoomLevelName ON room.guestRoomLevelID =guestRoomLevelName.attributedetailsId
+        where roomId IN
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
     <!--修改房屋状态-->
     <update id="updateState">
         UPDATE room set roomStateID=#{state} WHERE roomId=#{roomId}
     </update>
+
+    <select id="listByParam" resultMap="roomList">
+         SELECT room.*,roomName.attributeDetailsName roomName,
+        guestRoomLevelName.attributeDetailsName guestRoomLevelName
+        FROM room
+        INNER JOIN attributedetails roomName ON room.`roomStateID`=roomName.attributedetailsId
+        INNER JOIN attributedetails guestRoomLevelName ON room.guestRoomLevelID =guestRoomLevelName.attributedetailsId
+        <where>
+            <if test="guestRoomLevelID!=null and guestRoomLevelID>0">
+                AND guestRoomLevelID = #{guestRoomLevelID}
+            </if>
+        </where>
+    </select>
+
     <!--模糊查询&&分页查询-->
     <select id="listPage" resultMap="roomList">
         SELECT room.*,roomName.attributeDetailsName roomName,

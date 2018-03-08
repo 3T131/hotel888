@@ -13,6 +13,28 @@ import java.util.List;
 public class RoomBizImpl implements RoomBiz {
     @Resource
     private RoomDao roomDao;
+
+    /**
+     * 按id数组查询集合
+     * @param ids
+     * @return
+     */
+    public List<Room> listByIds(String[] ids) {
+        if(ids!=null&&ids.length>0) {
+            return roomDao.listByIds(ids);
+        }
+        return null;
+    }
+
+    /**
+     * 按条件动态查询
+     * @param room
+     * @return
+     */
+    public List<Room> listByParam(Room room) {
+        return roomDao.listByParam(room);
+    }
+
     /**
      * 分页查询$$模糊查询
      * @param pager

@@ -7,11 +7,23 @@ import com.accp.entity.Pager;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service("commodityBiz")
 public class CommodityBizImpl implements CommodityBiz {
     @Resource
     private CommodityDao commodityDao;
+
+    public List<Commodity> listByIds(String[] ids) {
+        if(ids!=null&&ids.length>0){
+            return commodityDao.listByIds(ids);
+        }
+        return null;
+    }
+
+    public List<Commodity> listByParam(Commodity commodity) {
+        return commodityDao.listByParam(commodity);
+    }
 
     /**
      * 查询商品信息(分页)

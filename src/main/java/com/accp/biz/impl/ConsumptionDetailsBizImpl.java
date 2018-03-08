@@ -14,6 +14,10 @@ public class ConsumptionDetailsBizImpl implements ConsumptionDetailsBiz {
     @Resource
     private ConsumptionDetailsDao consumptionDetailsDao;
 
+    public boolean insertConsumptionDetails(ConsumptionDetails consumptionDetails) {
+        return consumptionDetailsDao.insertConsumptionDetails(consumptionDetails)>0;
+    }
+
     /**
      * 按stayRegisterId查询
      * @param stayRegisterId

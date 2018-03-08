@@ -236,10 +236,14 @@ $(document).ready(function() {
 
 
     function payfunction(sId) {
-
        parent.document.getElementById('Mainid').src = getRootPath()+'/StayRegister/topay.do?stayRegisterId=' + sId ;
-
     }
+
+function tuiFangfunction(sId) {
+
+    parent.document.getElementById('Mainid').src = getRootPath()+'/StayRegister/topay.do?stayRegisterId=' + sId ;
+
+}
 
     function volumeroomfunction() {
         var tuanDuiID = document.getElementById("tuanDuiId").value;
@@ -342,9 +346,17 @@ $(document).ready(function() {
 
     function deletefunction() {
         var chk_value = [];
+        var table = document.getElementById("tbody");
+        var selectedIndex = "";
+        var TOF = 0;
         $('input[name="id"]:checked').each(function () {
             chk_value.push($(this).val());
+            selectedIndex = this.parentNode.parentNode.rowIndex;
+            TOF = table.rows[selectedIndex - 1].cells[10].innerHTML;
         });
+        if(TOF!=69){
+            alert("该条记录未结账或未退房，不能删除")
+        }
         if (chk_value != "") {
             var flag = window.confirm("注意：您确定要永久删除该信息吗?");
             if (flag) {

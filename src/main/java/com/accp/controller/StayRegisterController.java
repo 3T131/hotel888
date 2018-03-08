@@ -3,13 +3,16 @@ package com.accp.controller;
 import com.accp.biz.*;
 import com.accp.entity.*;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/StayRegister")
@@ -28,6 +31,96 @@ public class StayRegisterController {
 
     @Resource
     private PassengerBiz passengerBiz;
+
+    @Resource
+    private RoomBiz roomBiz;
+
+    @Resource
+    private ReceiveTargetBiz receiveTargetBiz;
+
+    @Resource
+    public CommodityBiz commodityBiz;
+
+
+    @RequestMapping("/kaifang.do")
+    @ResponseBody
+    public String toArrangeRoom(String passengerIdRoomId
+            ,String commodityNumber
+            ,StayRegister stayRegister,Model model){
+        int dId = depoitBiz.insertDepoit(stayRegister.getDepoit());
+        stayRegister.setDpId(dId);
+        Map map = new HashMap();
+        if(commodityNumber!=""){
+            try {
+                map = JSON.parseObject(commodityNumber, Map.class);
+            }catch (Exception e){
+                System.out.println("格式错误！");
+            }
+        }
+        JSONArray jsonArray=new JSONArray();
+        if(passengerIdRoomId!=""){
+            try {
+                jsonArray = JSON.parseArray(passengerIdRoomId);
+            }catch (Exception e){
+                System.out.println("格式错误！");
+            }
+        }
+        if(stayRegisterBiz.insertStayRegisters(stayRegister,map,jsonArray)){
+            return "<script language=\"javascript\">alert('操作成功！');window.location.href='/StayRegister/tolist.do'</script>";
+        }else{
+            return "<script language=\"javascript\">alert('操作失败！');window.location.href='/StayRegister/toStay.do'</script>";
+        }
+    }
+
+
+    /**
+     * ajax添加商品
+     * @param ids
+     * @return
+     */
+    @RequestMapping("/consumptionByIds.do")
+    @ResponseBody
+    public String consumptionByIds(String[] ids){
+        List<Commodity> commodityList = commodityBiz.listByIds(ids);
+        String s = JSON.toJSONString(commodityList);
+        return s;
+    }
+
+    /**
+     * ajax查询商品动态查询
+     * @param commodity
+     * @return
+     */
+    @RequestMapping("/tianJiaShangPin.do")
+    @ResponseBody
+    public String tianJiaShangPin(Commodity commodity){
+        List<Commodity> commodityList = commodityBiz.listByParam(commodity);
+        return JSON.toJSONString(commodityList);
+    }
+
+    /**
+     * 用id集合查询房屋集合
+     * @param roomIds
+     * @return
+     */
+    @RequestMapping("/confirmRoom.do")
+    @ResponseBody
+    public String confirmRoom(String[] roomIds){
+        List<Room> roomList = roomBiz.listByIds(roomIds);
+        return JSON.toJSONString(roomList);
+    }
+
+    /**
+     * 查询房屋按状态查询
+     * @param room
+     * @return
+     */
+    @RequestMapping("/guestRoomLevelSelectRoom.do")
+    @ResponseBody
+    public String guestRoomLevelSelectRoom(Room room){
+        List<Room> roomList = roomBiz.listByParam(room);
+        return JSON.toJSONString(roomList);
+    }
 
     /**
      * 查询，分页查询
@@ -77,11 +170,6 @@ public class StayRegisterController {
     }
 
 
-    @RequestMapping("/toarrangeroom.do")
-    public String toArrangeRoom(){
-        return "stayregister/arrangeroom";
-    }
-
     /**
      * 住宿登记
      * @param model
@@ -93,6 +181,13 @@ public class StayRegisterController {
         model.addAttribute("listNation", attributeDetailsBiz.listByAttributeName(9));
         model.addAttribute("listPassengerLevel", attributeDetailsBiz.listByAttributeName(13));
         model.addAttribute("listPapers", attributeDetailsBiz.listByAttributeName(10));
+
+        model.addAttribute("listRentOutType",attributeDetailsBiz.listByAttributeName(5));
+        model.addAttribute("listPassengerType",attributeDetailsBiz.listByAttributeName(7));
+        model.addAttribute("listBillUnit",attributeDetailsBiz.listByAttributeName(6));
+        model.addAttribute("listPayWay",attributeDetailsBiz.listByAttributeName(4));
+        model.addAttribute("listReceiveTarget",receiveTargetBiz.listByParam(new ReceiveTarget()));
+        model.addAttribute("listCommodity",attributeDetailsBiz.listByAttributeName(3));
         return "dengji/dengji";
     }
 
@@ -129,13 +224,17 @@ public class StayRegisterController {
         return JSON.toJSONString(datas);
     }
 
+    /**
+     * 得到选中的旅客
+     * @param ids
+     * @return
+     */
     @RequestMapping("/confirmPassenger.do")
     @ResponseBody
     public String confirmPassenger(String ids[]){
         List<Passenger> passengerList = passengerBiz.listByIds(ids);
         return JSON.toJSONString(passengerList);
     }
-
     /**
      * 旅客消费
      * @param stayRegister
@@ -149,6 +248,13 @@ public class StayRegisterController {
         return "stayregister/consumption";
     }
 
+    /**
+     * 删除商品
+     * @param id
+     * @param consumptionStayRegisterID
+     * @param model
+     * @return
+     */
     @RequestMapping("/consumptionDelete.do")
     public String consumptionDelete(String[] id,int consumptionStayRegisterID,Model model){
         consumptionDetailsBiz.deleteByIds(id);
@@ -182,6 +288,7 @@ public class StayRegisterController {
             return "{\"success\":\"false\"}";
         }
     }
+
 
 
 }

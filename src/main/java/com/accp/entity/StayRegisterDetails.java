@@ -12,6 +12,11 @@ public class StayRegisterDetails {
     private StayRegister stayRegister;//住宿登记
     private Passenger passenger;//旅客
 
+    public StayRegisterDetails(Integer stayRegisterID, Integer passengerID) {
+        this.stayRegisterID = stayRegisterID;
+        this.passengerID = passengerID;
+    }
+
     public Integer getStayRegisterDetailsId() {
         return stayRegisterDetailsId;
     }

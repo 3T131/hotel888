@@ -312,7 +312,7 @@
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">结账金额：</label>
-		        <label class="yangse">${stayRegister2.sumConst}</label>
+		        <label class="yangse">${stayRegister2.sumConst2}</label>
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">押金：</label>

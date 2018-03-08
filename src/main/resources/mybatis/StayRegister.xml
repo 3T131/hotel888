@@ -4,6 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accp.dao.StayRegisterDao">
 
+    <!--新增旅客与登记关系-->
+    <insert id="insertStayRegisterDetails">
+        INSERT INTO `stayregisterdetails`(`stayregisterdetailsId`,`stayRegisterID`,`passengerID`)
+        VALUES(DEFAULT,#{stayRegisterID},#{passengerID})
+    </insert>
+
+    <!--新增-->
+    <insert id="insertStayRegisters">
+        INSERT  INTO `stayregister`(`stayregisterId`,`predetermineID`,`rentOutTypeID`
+          ,`roomID`,`payWayID`,`billUnitID`,`passengerTypeID`,`receiveTargetID`
+          ,`isBillID`,`registerTime`,`stayNumber`,`sumConst`
+          ,`ChangingRoomNumber`,`changRoomMoney`,`remarks`,`payTime`
+          ,`changRoomTime`,`remind`,`LvKeLeiXingId`,`dpId`)
+        VALUES (DEFAULT,#{predetermineID},#{rentOutTypeID},#{roomID},#{payWayID},#{billUnitID}
+                ,#{passengerTypeID},#{receiveTargetID},#{isBillID}
+                ,now(),#{stayNumber},#{sumConst},#{changingRoomNumber},#{changRoomMoney},#{remarks}
+                ,#{payTime},#{changRoomTime},0,#{LvKeLeiXingId},#{dpId})
+    </insert>
 
 <!--分页条件查询列表-->
     <select id="listByPager" resultMap="StayRegisterMap">
@@ -97,7 +115,7 @@
            <id property="roomId" column="roomId"/>
        </association>
        <association property="receiveTarget" autoMapping="true" javaType="ReceiveTarget">
-           <id property="receiveTargetId" column="receiveTargetId"/>
+           <id property="receivetargetId" column="receiveTargetId"/>
        </association>
        <association property="depoit" autoMapping="true" javaType="Depoit">
            <id property="depoitId" column="depoitId"/>
@@ -139,8 +157,8 @@
             <if test="passengerTypeID!=null">
                 passengerTypeID=#{passengerTypeID},
             </if>
-            <if test="receiveTargetID!=null">
-                receiveTargetID=#{receiveTargetID},
+            <if test="receivetargetId!=null">
+                receiveTargetID=#{receivetargetId},
             </if>
             <if test="deputyID!=null">
                 deputyID=#{deputyID},

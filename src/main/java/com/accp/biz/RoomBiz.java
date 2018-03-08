@@ -7,6 +7,21 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface RoomBiz {
+
+
+    /**
+     * 按id查询集合
+     * @param ids
+     * @return
+     */
+    List<Room> listByIds(String[] ids);
+    /**
+     * 按条件动态查询
+     * @param room
+     * @return
+     */
+    List<Room> listByParam(Room room);
+
     /**
      * 分页查询$$模糊查询
      * @param pager

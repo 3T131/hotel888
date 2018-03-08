@@ -7,6 +7,13 @@
     <resultMap id="listMap" type="ReceiveTarget">
         <result property="targetTypeName" column="targetTypeName"/>
     </resultMap>
+
+    <!--动态查询所有-->
+    <select id="listByParam" resultMap="listMap">
+         SELECT receivetarget.*,targetTypeName.`attributeDetailsName` targetTypeName FROM receivetarget
+        INNER JOIN `attributedetails` targetTypeName ON receivetarget.targettypeid=targetTypeName.`attributedetailsId`
+
+    </select>
     <!--分页查询&&模糊查询-->
 <select id="list" resultMap="listMap">
     SELECT receivetarget.*,targetTypeName.`attributeDetailsName` targetTypeName FROM receivetarget

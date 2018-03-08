@@ -13,5 +13,17 @@ public interface DepoitDao {
      */
     List<Depoit> listByParam(Depoit depoit);
 
+    /**
+     * 修改押金金额
+     * @param depoit
+     * @return
+     */
     int updateDepositMoney(Depoit depoit);
+
+    /**
+     * 新增
+     * @param depoit
+     * @return
+     */
+    int insertDepoit(Depoit depoit);
 }

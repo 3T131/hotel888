@@ -13,6 +13,10 @@ public class ReceiveTargetBizImpl implements ReceiveTargetBiz {
     @Resource
     private ReceiveTargetDao receiveTargetDao;
 
+    public List<ReceiveTarget> listByParam(ReceiveTarget receiveTarget) {
+        return receiveTargetDao.listByParam(receiveTarget);
+    }
+
     /**
      * 分页
      * @param pager

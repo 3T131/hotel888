@@ -127,28 +127,20 @@
       <div class="tab-content">
 
         <div class="tab-pane active" id="tab1">
-		    <div class="span1" style="margin-right: 4px;">
-		      <button class="btn btn-info btn-small" type="button" onclick="registerfunction()"><li class="icon-plus icon-white"></li>登记</button>
-		    </div>
-		    <button class="btn btn-info btn-small" type="button" onclick="arrangefunction()"><li class="icon-plus icon-white"></li>安排房间</button>
             <button class="btn btn-info btn-small" type="button" onclick="depositfunction()"><li class="icon-eye-open icon-white"></li>押金记录</button>
             <button class="btn btn-info btn-small" type="button" onclick="consumptionfunction()"><li class="icon-gift icon-white"></li>旅客消费</button>
-            <button class="btn btn-info btn-small" type="button" onclick="shiftteamfunction()"><li class="icon-refresh icon-white"></li>转入团队 / 房间信息</button>
+            <button class="btn btn-info btn-small" type="button" onclick="updatefunction()"><li class="icon-refresh icon-white"></li>修改记录</button>
+			<button class="btn btn-info btn-small" type="button" onclick="deletefunction()"><li class="icon-refresh icon-white"></li>删除记录</button>
         </div>
         <div class="tab-pane" id="tab2">
        
 
          <div class="span12" style="margin-left:0px;">
           <div class="row-fluid">
-
-            <a href="#duixiang" data-toggle="modal" class="btn btn-info btn-small" onclick="selectTarget()"><li class="icon-plus icon-white"></li>选择对象</a>
-		    <button class="btn btn-info btn-small" type="button" onclick="teamRegisterfunction()"><li class="icon-plus icon-white"></li>登记</button>
-		    <button class="btn btn-info btn-small" type="button" onclick="teamArrangefunction()"><li class="icon-plus icon-white"></li>安排房间</button>
-		    <button class="btn btn-info btn-small" type="button" onclick="volumeroomfunction()"><li class="icon-plus icon-white"></li>批量安排房间</button>
-            <button class="btn btn-info btn-small" type="button" onclick="teamDepositfunction()"><li class="icon-eye-open icon-white"></li>押金记录</button>
-            <button class="btn btn-info btn-small" type="button" onclick="teamConsumptionfunction()"><li class="icon-gift icon-white"></li>旅客消费</button>
-
-            <button class="btn btn-info btn-small" type="button" onclick="shiftpersonagefunction()"><li class="icon-refresh icon-white"></li>转为散客</button>
+			  <button class="btn btn-info btn-small" type="button" onclick="depositfunction()"><li class="icon-eye-open icon-white"></li>押金记录</button>
+			  <button class="btn btn-info btn-small" type="button" onclick="consumptionfunction()"><li class="icon-gift icon-white"></li>旅客消费</button>
+			  <button class="btn btn-info btn-small" type="button" onclick="updatefunction()"><li class="icon-refresh icon-white"></li>修改记录</button>
+			  <button class="btn btn-info btn-small" type="button" onclick="deletefunction()"><li class="icon-refresh icon-white"></li>删除记录</button>
           </div>
           </div>
         </div>
@@ -196,12 +188,7 @@
 						<td><fmt:formatDate value="${item.changRoomTime}" pattern="yyyy-MM-dd"/> </td>
 						<td>
 							<c:if test="${item.isBillID!=69}">
-								<c:if test="${item.lvKeLeiXingId==55}">
-									<button class="btn btn-info btn-small" type="button" onclick="payfunction(${item.stayRegisterId})"><li class="icon-heart icon-white"></li>结账</button>
-								</c:if>
-								<c:if test="${item.lvKeLeiXingId==56}">
-									<button class="btn btn-info btn-small" type="button" onclick="teampayfunction()"><li class="icon-heart icon-white"></li>结账</button>
-								</c:if>
+								<button class="btn btn-info btn-small" type="button" onclick="payfunction(${item.stayRegisterId})"><li class="icon-heart icon-white"></li>结账</button>
 							</c:if>
 						</td>
 			          <td hidden>${item.isBillID}</td>
@@ -227,18 +214,15 @@
 			          <td>${item.changRoomMoney}</td>
 						<td><fmt:formatDate value="${item.changRoomTime}" pattern="yyyy-MM-dd"/> </td>
 						<td>
-							<c:if test="${item.isBillID!=69}">
-								<c:if test="${item.lvKeLeiXingId==55}">
-									<button class="btn btn-info btn-small" type="button" onclick="changroomfunction()"><li class="icon-refresh icon-white"></li>换房</button>
-									&nbsp;&nbsp;
-									<button class="btn btn-info btn-small" type="button" onclick="payfunction()"><li class="icon-heart icon-white"></li>结账</button>
-								</c:if>
-								<c:if test="${item.lvKeLeiXingId==56}">
-									<button class="btn btn-info btn-small" type="button" onclick="teamChangroomfunction()"><li class="icon-refresh icon-white"></li>换房</button>
-									&nbsp;&nbsp;
-									<button class="btn btn-info btn-small" type="button" onclick="teampayfunction()"><li class="icon-heart icon-white"></li>结账</button>
-								</c:if>
-
+							<c:if test="${item.isBillID==68}">
+								<button class="btn btn-info btn-small" type="button" onclick="changroomfunction()"><li class="icon-refresh icon-white"></li>换房</button>
+								&nbsp;&nbsp;
+								<button class="btn btn-info btn-small" type="button" onclick="payfunction()"><li class="icon-heart icon-white"></li>结账</button>
+							</c:if>
+							<c:if test="${item.isBillID==73}">
+								<button class="btn btn-info btn-small" type="button" onclick="changroomfunction()"><li class="icon-refresh icon-white"></li>换房</button>
+								&nbsp;&nbsp;
+								<button class="btn btn-info btn-small" type="button" onclick="tuiFangfunction()"><li class="icon-heart icon-white"></li>退房</button>
 							</c:if>
 						</td>
 			          <td hidden>${item.isBillID}</td>
