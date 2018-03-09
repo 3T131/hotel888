@@ -130,12 +130,12 @@ function addfunction(){
     var id= document.getElementById("lvkeorteamId").value;
     var teamId= document.getElementById("teamId").value;
 
-    form1.action="${ctx}/Predetermine/add.do?id="+id+"&type="+teamId+"&roomIdShuZu="+roomIdShuZu;
+    form1.action=getRootPath()+"/Predetermine/add.do?id="+id+"&type="+teamId+"&roomIdShuZu="+roomIdShuZu;
     form1.submit();
 }
 
 function lastStep(){
-    parent.document.getElementById('Mainid').src='${ctx}/Predetermine/tolist.do';
+    parent.document.getElementById('Mainid').src=getRootPath()+'/Predetermine/tolist.do';
 }
 
 

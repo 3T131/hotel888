@@ -51,4 +51,9 @@ public interface RoomBiz {
      * @return
      */
     int updateRoom(Room room);
+    /**
+     * 查询所有的房间
+     * @return
+     */
+    List<Room> selectRoom();
 }

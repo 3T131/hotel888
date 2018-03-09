@@ -61,4 +61,12 @@ public class ReceiveTargetBizImpl implements ReceiveTargetBiz {
     public int updateReceiveTarget(ReceiveTarget receiveTarget) {
         return receiveTargetDao.updateReceiveTarget(receiveTarget);
     }
+
+    public List<ReceiveTarget> selectReceive(String principal) {
+        return receiveTargetDao.selectReceive(principal);
+    }
+
+    public ReceiveTarget selectReceiveByid(int id) {
+        return receiveTargetDao.selectReceiveByid(id);
+    }
 }

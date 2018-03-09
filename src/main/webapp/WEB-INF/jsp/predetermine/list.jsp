@@ -25,6 +25,7 @@
   <script type="text/javascript" src="/static/js/page.js"></script>
   <script type="text/javascript" src="/static/bootstrap/js/bootstrap.js"></script>
   <script type="text/javascript" src="/static/js/common.js"></script>
+	  <script src="/static/js/predetermine/list.js"></script>
    <style>
    
    .container{
@@ -84,23 +85,27 @@
   
  
   <body>
-  <div class="container" style="height:630px;overflow-x:auto;">
+  <div class="container" style="height:630px">
   
     <input type="hidden" id="oneId">     <!-- 房间ID -->
-    <input type="hidden" id="twoId">    
+    <input type="hidden" id="twoId">
+      <form id="form22" action="/Predetermine/select.do"  method="post">
+          <input name="leiXin" id="leiXin" type="hidden" value="${leiXin}">
+          <input name="currentPage" id="currentPage" type="hidden" value="1">
     <div class="span4">
 	    <div class="row-fluid">
-		       <label class="labelroomnumber">团队/旅客：</label>
-			   <input id="txtnameid" name="txtname" class="textone roomnumberwidth" style="border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;" type="text" placeholder="请输入关键字" value="${txtname}">
+		       <label class="labelroomnumber">房间号：</label>
+			   <input id="txtnameid" name="roomNumber" class="textone roomnumberwidth" style="border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;" type="text" placeholder="请输入关键字" value="${predetermine.roomNumber}">
 			   <div class="input-append">  
-			      <button onclick="selectOne()" class="btn-success textone" style="margin-left:-4px;height:26px;"><li class="icon-search icon-white"></li>搜索</button>
+			      <button onclick="selectOne()" class="btn-success textone" style="margin-left:-4px;height:26px;">
+					  <li class="icon-search icon-white"></li>搜索</button>
 			   </div>
 	    </div>
     </div>
     <div class="span2">
-      <select id="stateId" style="width:80%;height:26px; float:left;margin-top:12px;" onchange="selectTwo()">
+      <select id="stateId" name="predetermineStateID" style="width:80%;height:26px; float:left;margin-top:12px;" onchange="selectTwo()">
         <c:forEach items="${listOne}" var="item">
-          <option value="${item.far_id}" <c:if test="${item.far_id==state}">selected="selected"</c:if>>
+          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==predetermine.predetermineStateID}">selected="selected"</c:if>>
             ${item.attributeDetailsName}
           </option>
         </c:forEach> 
@@ -123,38 +128,29 @@
       </div>
     </div>
     <br>
-    
-    
-    
     <div class="span12">
     <div class="tabbable" >  <!-- style="border:1px solid red"  -->
       <ul class="nav nav-tabs">
-        <li class="active" id="tabOneId"><a href="#tab1" data-toggle="tab">接待对象</a></li>
-        <li ><a href="#tab2" data-toggle="tab">旅客信息</a></li>
+        <li class="active" id="tabOneId" ><a id="leixin1" href="#tab1" onclick="gaiBian(1)" data-toggle="tab">接待对象</a></li>
+        <li ><a href="#tab2" id="leixin2" onclick="gaiBian(2)" data-toggle="tab">旅客信息</a></li>
       </ul>
       
       <div class="tab-content">
         <div class="tab-pane active" id="tab1">
           <div class="row-fluid">
-             <div class="span2">
-                  <label>接待对象：</label>
-			      <input id="teamNameId" class="widthone" style="height: 25px;"  type="text" readonly="readonly">
+              <input type="hidden" id="rId" name="receiveTargetId" value="${receiveTarget.receiveTargetId}" />
+                 <div class="span2">
+                     <label>负责人名字：</label>
+                     <input id="principalId" class="widthone" name="principal" value="${receiveTarget.principal}" style="height: 25px;"  type="text" readonly="readonly">
+                 </div>
+                  <div class="span2">
+                  <label>员工编号：</label>
+			      <input id="teamCodeId" class="widthone"name="teamCode" value="${receiveTarget.teamCode}" style="height: 25px;"  type="text" readonly="readonly">
              </div>
-              <div class="span2">
-                  <label>团队编号：</label>
-			      <input id="teamCodeId" class="widthone" style="height: 25px;"  type="text" readonly="readonly">
-             </div>
-              <div class="span2">
-                  <label>负责人：</label>
-			      <input id="principalId" class="widthone" style="height: 25px;"  type="text" readonly="readonly">
-             </div>
+
               <div class="span2">
                   <label>联系电话：</label>
-			      <input id="contactPhoneNUmberId" class="widthone" style="height: 25px;"  type="text" readonly="readonly">
-             </div>
-              <div class="span2">
-                  <label>登记时间：</label>
-			      <input id="registerTimeId" class="widthone" style="height: 25px;"  type="text" readonly="readonly">
+			      <input id="contactPhoneNUmberId" class="widthone"name="contactPhoneNUmber" value="${receiveTarget.contactPhoneNUmber}" style="height: 25px;"  type="text" readonly="readonly">
              </div>
              <div class="span2" style="margin-top:23px;text-align: center;">
                 <a href="#duixiang" data-toggle="modal" class="btn btn-info btn-small" onclick="selectTarget()"><li class="icon-plus icon-white"></li>选择对象</a>
@@ -163,35 +159,45 @@
         </div>
         <div class="tab-pane" id="tab2">
           <div class="row-fluid">
+              <input type="hidden" value="${passenger.pId}" name="pId" id="pId"/>
              <div class="span2">
                   <label>姓名：</label>
-			      <input id="nameId" class="widthone" style="height: 25px;" type="text" readonly="readonly">
+			      <input id="nameId" class="widthone" value="${passenger.name }" name="name"
+                         style="height: 25px;" type="text" readonly="readonly">
              </div>
               <div class="span2">
                  <label>证件类型：</label>
-                 <input id="papersTypeId" class="widthone" style="height: 25px;" type="text" readonly="readonly">
+                 <input id="papersTypeId" class="widthone" value="${passenger.papersName}"
+                        name="papersName" style="height: 25px;" type="text" readonly="readonly">
              </div>
               <div class="span2">
                   <label>证件号：</label>
-			      <input id="papersNumberId" class="widthone" style="height: 25px;"  type="text" readonly="readonly">
+			      <input id="papersNumberId" class="widthone"value="${passenger.papersNumber}"
+                         name="papersNumber" style="height: 25px;"  type="text" readonly="readonly">
              </div>
                <div class="span2">
                   <label>联系电话：</label>
-			      <input id="contactPhoneNumberId" name="commodityName" class="widthone" style="height: 25px;"  type="text" readonly="readonly">
+			      <input id="contactPhoneNumber"  value="${passenger.phoneNumber}"
+                         name="phoneNumber" class="widthone" style="height: 25px;"  type="text" readonly="readonly">
              </div>
               <div class="span2" style="margin-top:23px;;text-align: center;">
-                <a href="#lvke" data-toggle="modal" class="btn btn-info btn-small" onclick="souSuo()"><li class="icon-plus icon-white"></li>选择旅客</a>
+                <a href="#lvke" data-toggle="modal" class="btn btn-info btn-small"
+                   onclick="souSuo()"><li class="icon-plus icon-white"></li>选择旅客</a>
              </div>
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </div>
-  
+      </form>
   
     <div class="span12">
     <div class="dgvone">
-       <table class="table table-condensed table-bordered table-striped" id="tableid">
+       <table class="table table-condensed table-bordered table-striped" id="tableid3">
 	      <thead class="theadone">
 	        <tr>
 	          <th >选择</th>
@@ -207,61 +213,36 @@
 	        </tr>
 	      </thead>
 	      <tbody id="tbody">
-	        <c:forEach items="${list.result}" var="item">
+	        <c:forEach items="${list.datas}" var="item">
 		        <c:if test="${item.remind==0}" >
 		           <tr>
-			          <c:if test="${item.passengerID!=0}">
-				          <td><input type="checkbox" name="id" value="${item.id}"></td>
+				          <td><input type="checkbox" name="predetermineId" value="${item.predetermineId}"></td>
 				          <td>${item.roomNumber}</td>
 				          <td>${item.roomGuestRoomLevelName}</td>
 				          <td>${item.receiveTargeTypeName}</td>
 				          <td>${item.passengerName}</td>
-				          <td>${item.arriveTime}</td>
+				          <td><fmt:formatDate value="${item.arriveTime}" pattern="yyyy-MM-dd"/> </td>
 				          <td>${item.deposit}</td>
 				          <td>${item.predetermineDay}</td>
 				          <td>${item.passengerContactPhoneNumber}</td>
 				          <td>${item.predetermineStateName}</td>
-			          </c:if>
-			          <c:if test="${item.passengerID==0}">
-				          <td><input type="checkbox" name="id" value="${item.id}"></td>
-				          <td>${item.roomNumber}</td>
-				          <td>${item.roomGuestRoomLevelName}</td>
-				          <td>${item.receiveTeamName}</td>
-				          <td>${item.receivePrincipal}</td>
-				          <td>${item.arriveTime}</td>
-				          <td>${item.deposit}</td>
-				          <td>${item.predetermineDay}</td>
-				          <td>${item.receiveContactPhoneNUmber}</td>
-				          <td>${item.predetermineStateName}</td>
-			          </c:if>
+
+					   <%----------------------%>
+
 		           </tr>
 		        </c:if>
 		        <c:if test="${item.remind==1}" >
 		           <tr style="color:red;">
-			          <c:if test="${item.passengerID!=0}">
-				          <td><input type="checkbox" name="id" value="${item.id}"></td>
+				          <td><input type="checkbox" name="id" value="${item.predetermineId}"></td>
 				          <td>${item.roomNumber}</td>
 				          <td>${item.roomGuestRoomLevelName}</td>
-				          <td>${item.receiveTargeTypeName}</td>
+				          <td>${item.receivePrincipal}</td>
 				          <td>${item.passengerName}</td>
-				          <td>${item.arriveTime}</td>
+				          <td><fmt:formatDate value="${item.arriveTime}" pattern="yyyy-MM-dd"/> </td>
 				          <td>${item.deposit}</td>
 				          <td>${item.predetermineDay}</td>
 				          <td>${item.passengerContactPhoneNumber}</td>
 				          <td>${item.predetermineStateName}</td>
-			          </c:if>
-			          <c:if test="${item.passengerID==0}">
-				          <td><input type="checkbox" name="id" value="${item.id}"></td>
-				          <td>${item.roomNumber}</td>
-				          <td>${item.roomGuestRoomLevelName}</td>
-				          <td>${item.receiveTeamName}</td>
-				          <td>${item.receivePrincipal}</td>
-				          <td>${item.arriveTime}</td>
-				          <td>${item.deposit}</td>
-				          <td>${item.predetermineDay}</td>
-				          <td>${item.receiveContactPhoneNUmber}</td>
-				          <td>${item.predetermineStateName}</td>
-			          </c:if>
 		           </tr>
 		        </c:if>
 	        </c:forEach>
@@ -277,9 +258,11 @@
          <div class="row-fluid">
             <div class="span8">
 		      <label class="labelroomnumber">团队名称：</label>
-			   <input id="txtnameidTwo" name="txtname" class="textone" style="width:60%; border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;" type="text" placeholder="请输入关键字" value="${txtname}">
+			   <input id="txtnameidTwo" name="name" class="textone" style="width:60%; border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;"
+                      type="text" placeholder="请输入关键字" value="">
 			   <div class="input-append">  
-			      <button class="btn-success textone" style="margin-left:-4px;height:26px;" onclick="selectTarget()"><li class="icon-search icon-white"></li>搜索</button>
+			      <button class="btn-success textone" style="margin-left:-4px;height:26px;" onclick="selectTarget()">
+                      <li class="icon-search icon-white"></li>搜索</button>
 			   </div>
 	       </div>
 	       <div class="span4">
@@ -287,30 +270,17 @@
 	       </div>
 	    </div>
 	     <div class="dgvone" style="width:93%;">
-       <table class="table table-condensed table-bordered table-striped" id="tableid">
+       <table class="table table-condensed table-bordered table-striped" id="tableid2">
 	      <thead class="theadone">
 	        <tr>
 	          <th rowspan="2">选择</th>
-	          <th rowspan="2">对象类别</th>
-	          <th rowspan="2">团队名称</th>
-	          <th rowspan="2">团队编号</th>
-	          <th rowspan="2">负责人</th>
-	          <th rowspan="2">登记时间</th>
+                <th rowspan="2">员工名字</th>
+	          <th rowspan="2">员工编号</th>
 	          <th rowspan="2">电话号码</th>
 	        </tr>
 	      </thead>
 	      <tbody id="tbodyTwo">
-	        <c:forEach items="" var="item">
-		        <tr>
-		          <td><input type="radio" id="idTwo" value=""></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		        </tr>
-	        </c:forEach>
+
 	      </tbody>
 	    </table>
     </div>
@@ -322,9 +292,11 @@
          <div class="row-fluid">
 		   <div class="span8">
 		      <label class="labelroomnumber">旅客姓名：</label>
-			   <input id="txtnameidThree" name="txtname" class="textone" style="width:60%; border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;" type="text" placeholder="请输入关键字" value="${txtname}">
+			   <input id="txtnameidThree" name="passengerName" class="textone" style="width:60%; border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;" type="text" placeholder="请输入关键字" value="">
 			   <div class="input-append">  
-			      <button type="submit" class="btn-success textone" style="margin-left:-4px;height:26px;" onclick="souSuo()"><li class="icon-search icon-white"></li>搜索</button>
+			      <button type="submit" class="btn-success textone"
+						  style="margin-left:-4px;height:26px;" onclick="souSuo()">
+					  <li class="icon-search icon-white"></li>搜索</button>
 			   </div>
 	       </div>
 	       <div class="span4">
@@ -340,18 +312,11 @@
 	          <th >性别</th>
 	          <th >证件类型</th>
 	          <th >证件号码</th>
+                <th>联系电话</th>
 	        </tr>
 	      </thead>
 	      <tbody id="tbodyThree">
-	        <c:forEach items="" var="item">
-		        <tr>
-		          <td><input type="radio" name="idThree" value=""></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		        </tr>
-	        </c:forEach>
+
 	      </tbody>
 	    </table>
     </div>
@@ -373,21 +338,25 @@
  
  <script type="text/javascript">
 
-   
+     if(${leiXin==1}){
+         $('#leixin1').tab('show');
+     }else if(${leiXin==2}){
+         $('#leixin2').tab('show');
+     }
+
   /* 分页要用的 */
   $(".tcdPageCode").createPage({
      pageCount:${list.totalPage},
-     current:${list.currentPage},
+     current:${list.pageNo},
      backFn:function(p){
-
-
-
-//         访问路径的方式
      var txtname=document.getElementById("txtnameid").value;
      var state=document.getElementById("stateId").value;
-     location.href="${ctx}/Predetermine/tolist.do?currentPage="+p+"&txtname="+txtname+"&state="+state;
+     $("#currentPage").val(p);
+        $("#form22").submit();
      }
    });
+
+
   
  </script>
    

@@ -65,4 +65,10 @@ public interface RoomDao {
 
 
     int updateState(@Param("state")int state,@Param("roomId") int roomId);
+
+    /**
+     * 查询所有的房间
+     * @return
+     */
+    List<Room> selectRoom();
 }

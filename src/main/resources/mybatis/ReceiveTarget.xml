@@ -79,4 +79,19 @@
         </set>
         where receivetargetId=#{receivetargetId}
     </update>
+    <select id="selectReceive" resultMap="listMap">
+        SELECT receivetarget.*,targetTypeName.`attributeDetailsName` targetTypeName FROM receivetarget
+        INNER JOIN `attributedetails` targetTypeName ON receivetarget.targettypeid=targetTypeName.`attributedetailsId`
+        <where >
+            <if test="principal!=null and principal!=''">
+                and  principal LIKE CONCAT('%',#{principal},'%')
+            </if>
+        </where>
+    </select>
+    <select id="selectReceiveByid" resultMap="listMap">
+        SELECT receivetarget.*,targetTypeName.`attributeDetailsName` targetTypeName FROM receivetarget
+        INNER JOIN `attributedetails` targetTypeName ON receivetarget.targettypeid=targetTypeName.`attributedetailsId`
+        where receiveTargetId=#{receiveTargetId}
+    </select>
+
 </mapper>

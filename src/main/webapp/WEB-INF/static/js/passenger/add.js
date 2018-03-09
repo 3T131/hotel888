@@ -60,7 +60,7 @@ function verify(){
 }
 
 function deletefunction(){
-    parent.document.getElementById('Mainid').src='${ctx}/Passenger/tolist.do';
+    parent.document.getElementById('Mainid').src=getRootPath()+'/Passenger/tolist.do';
 }
 
 function onchangeOne(){

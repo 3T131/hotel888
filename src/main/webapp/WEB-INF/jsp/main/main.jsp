@@ -606,7 +606,7 @@
 			     document.getElementById("bigGuide").innerHTML=a+"";
 			     var s=document.getElementById("reservationsId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("smallGuide").innerHTML=s+"";
-			     document.getElementById('Mainid').src='${ctx}/Predetermine/tolist.do';
+			     document.getElementById('Mainid').src='${ctx}/Predetermine/select.do';
 			}
 			function personage(){
 			     var a=document.getElementById("stayManageId").getElementsByTagName('span')[0].innerHTML;

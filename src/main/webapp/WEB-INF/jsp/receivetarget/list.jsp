@@ -115,7 +115,7 @@
 	      <tbody id="tbody">
 	        <c:forEach items="${list.datas}" var="item">
 		        <tr>
-		          <td><input type="checkbox" name="id" value="${item.receivetargetId}"></td>
+		          <td><input type="checkbox" name="id" value="${item.receiveTargetId}"></td>
 		          <td>${item.targetTypeName}</td>
 		          <td>${item.teamName}</td>
 		          <td>${item.teamCode}</td>
@@ -187,7 +187,6 @@
        pageCount:${list.totalPage},
        current:${list.pageNo},
        backFn:function(p){
-           //        提交表单的方式
            var c = document.getElementById("currentPage");
            c.value=p;
            var f = document.getElementById("form22");

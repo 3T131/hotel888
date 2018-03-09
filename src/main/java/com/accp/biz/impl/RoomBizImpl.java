@@ -79,4 +79,8 @@ public class RoomBizImpl implements RoomBiz {
     public int updateRoom(Room room) {
         return roomDao.updateRoom(room);
     }
+
+    public List<Room> selectRoom() {
+        return roomDao.selectRoom();
+    }
 }

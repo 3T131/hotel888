@@ -19,12 +19,120 @@ public class Predetermine {
     private String predetermineDay; //'预定天数',
     private int remind; //'到时提示',
 
-//    -------------------------------------------------------
+    //    -------------------------------------------------------
     private Room room;//房间
     private ReceiveTarget Integer;//预定对象
     private Passenger passenger;//旅客
     private AttributeDetails payWay;//支付方式
     private AttributeDetails predetermineState;//预定状态
+    // -----------------------------------------------------
+    private String roomNumber; //房间号
+    private String receiveTeamName;//接待对象姓名
+    private String passengerName;//旅客姓名
+    private String roomGuestRoomLevelName;//房间类别
+    private String payWayName;//支付方式
+    private String predetermineStateName;//预定状态
+    private String receiveContactPhoneNUmber; //接待对象电话
+    private String passengerContactPhoneNumber;//旅客电话
+    private String receivePrincipal; //负责人
+    private String genderName;//性别
+    private String papersName;//证件类型
+
+    public String getGenderName() {
+        return genderName;
+    }
+
+    public void setGenderName(String genderName) {
+        this.genderName = genderName;
+    }
+
+    public String getPapersName() {
+        return papersName;
+    }
+
+    public void setPapersName(String papersName) {
+        this.papersName = papersName;
+    }
+
+    public String getReceivePrincipal() {
+        return receivePrincipal;
+    }
+
+    public void setReceivePrincipal(String receivePrincipal) {
+        this.receivePrincipal = receivePrincipal;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public String getReceiveTeamName() {
+        return receiveTeamName;
+    }
+
+    public void setReceiveTeamName(String receiveTeamName) {
+        this.receiveTeamName = receiveTeamName;
+    }
+
+    public String getPassengerName() {
+        return passengerName;
+    }
+
+    public void setPassengerName(String passengerName) {
+        this.passengerName = passengerName;
+    }
+
+    public String getRoomGuestRoomLevelName() {
+        return roomGuestRoomLevelName;
+    }
+
+    public void setRoomGuestRoomLevelName(String roomGuestRoomLevelName) {
+        this.roomGuestRoomLevelName = roomGuestRoomLevelName;
+    }
+
+    public String getPayWayName() {
+        return payWayName;
+    }
+
+    public void setPayWayName(String payWayName) {
+        this.payWayName = payWayName;
+    }
+
+    public String getPredetermineStateName() {
+        return predetermineStateName;
+    }
+
+    public void setPredetermineStateName(String predetermineStateName) {
+        this.predetermineStateName = predetermineStateName;
+    }
+
+    public String getReceiveContactPhoneNUmber() {
+        return receiveContactPhoneNUmber;
+    }
+
+    public void setReceiveContactPhoneNUmber(String receiveContactPhoneNUmber) {
+        this.receiveContactPhoneNUmber = receiveContactPhoneNUmber;
+    }
+
+    public String getPassengerContactPhoneNumber() {
+        return passengerContactPhoneNumber;
+    }
+
+    public void setPassengerContactPhoneNumber(String passengerContactPhoneNumber) {
+        this.passengerContactPhoneNumber = passengerContactPhoneNumber;
+    }
+
+    public ReceiveTarget getInteger() {
+        return Integer;
+    }
+
+    public void setInteger(ReceiveTarget integer) {
+        Integer = integer;
+    }
 
     public int getPredetermineId() {
         return predetermineId;

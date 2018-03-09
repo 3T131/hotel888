@@ -124,13 +124,13 @@
     <div class="span12" style="margin-top:12px;">
       <div class="row-fluid">
         <div class="span2">
-          <label>预订对象/旅客：</label>
-          <input name="commodityName" class="widthone" style="height: 26px;"  type="text" readonly="readonly" value="${name}">
+          <label>预订旅客：</label>
+          <input name="commodityName" class="widthone" style="height: 26px;"  type="text" readonly="readonly" value="${predetermine.passengerName}">
         </div>
         <div class="span2">
            <label>预订天数：</label>
            <input id="predetermineDayId" name="predetermineDay" class="widthone" 
-           style="height: 26px;"  type="text" onchange="onchangeOne()" value="${listList[0].predetermineDay}">
+           style="height: 26px;"  type="text" onchange="onchangeOne()" value="${predetermine.predetermineDay}">
            <div id="divOne" hidden>
 	          <label class="yansered" style="margin-top:12px;">*</label>
 	       </div>
@@ -140,7 +140,7 @@
            <div class="input-prepend">
 			  <span class="add-on" style="float:left;height: 15px;">&yen;</span>
 		      <input id="depositId" name="deposit" onchange="onchangeOne()"
-		      style="width:78%;height: 25px; float:left;" type="text" value="${zhengShu}">
+		      style="width:78%;height: 25px; float:left;" type="text" value="${predetermine.deposit}">
 		      <div id="divTwo" hidden>
 	             <label class="yansered" style="margin-top:7px;">*</label>
 	          </div>
@@ -150,7 +150,7 @@
            <label>支付方式</label>
            <select name="payWayID" style="height:26px;width:100%;"> 
 		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==listList[0].payWayID}" >selected="selected"</c:if>>
+			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==predetermine.payWayID}" >selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -159,7 +159,8 @@
          <div class="span3">
            <label>抵达时间：</label>
           <input id="arriveTimeId" name="arriveTime" style="height:26px;float:left;" id="date" class="Wdate" type="text" onchange="onchangeOne()"
-		       onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" value="${listList[0].arriveTime}"/>
+		       onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\'%y-%M-%d\'}'})"
+                 value="<fmt:formatDate value="${predetermine.arriveTime}" pattern="yyyy-MM-dd"/>" />
           <div id="divThree" hidden>
 	          <label class="yansered" style="margin-top:12px;">*</label>
 	      </div>
@@ -186,7 +187,7 @@
 	      <tbody id="tbodyOne">
 	        <c:forEach items="${roomSetPolist}" var="item">
 		        <tr>
-		          <td><input type="checkbox" name="idOne" value="${item.id}"></td>
+		          <td><input type="checkbox" name="idOne" value="${item.roomId}"></td>
 		          <td>${item.roomNumber}</td>
 		          <td>${item.guestRoomLevelName}</td>
 		          <td>${item.roomAmount}</td>
@@ -400,7 +401,7 @@
    }
    
    function lastStep(){
-     parent.document.getElementById('Mainid').src='${ctx}/Predetermine/tolist.do';
+     parent.document.getElementById('Mainid').src='${ctx}/Predetermine/select.do';
    }
    
    function deletefunction(){

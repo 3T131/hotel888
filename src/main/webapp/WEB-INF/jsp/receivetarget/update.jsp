@@ -163,7 +163,7 @@
     </div>
     
     <form action="${ctx}/ReceiveTarget/update.do" method="post" onsubmit="return verify()">
-        <input name="receivetargetId" value="${list.receivetargetId}" type="hidden">
+        <input name="receiveTargetId" value="${list.receiveTargetId}" type="hidden">
 	    <div class="span12">
 	      <div class="row-fluid">
 			  <div class="span5 ">

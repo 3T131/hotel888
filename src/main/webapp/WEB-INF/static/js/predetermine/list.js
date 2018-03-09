@@ -76,7 +76,6 @@ function deletefunction(){
 
 
 function souSuo(){
-    var tbody = document.getElementById("tbodyThree");
     var name=document.getElementById("txtnameidThree").value;
     var i=0;
     $("#tbodyThree").empty();
@@ -84,70 +83,62 @@ function souSuo(){
         cache:false,
         type: "POST",
         url:getRootPath()+ '/Predetermine/selectPassenger.do',
-        data:"txtname="+name,
+        data:"name="+name,
         async:false,
+        dataType:"json",
         success: function (result) {
-            for (var key in result) {
-                i++;
-                var item = result[key];
-                var tr = tbody.insertRow(-1);            // FireFox必须使用-1这个参数
+            if(result!=null){
+                var tr=' ';
+                for(var i=0,l=result.length;i<l;i++){
+                    tr+='  <tr>\n' +
+                        '        <td><input type="radio" name="idThree" value="'+result[i].pId +'"></td>\n' +
+                        '     <td>'+result[i].name +'</td>\n' +
+                        '          <td>'+result[i].genderName +'</td>\n' +
+                        '        <td>'+ result[i].papersName+'</td>\n' +
+                        '         <td>'+result[i].papersNumber +'</td>\n' +
+                        '        <td>'+ result[i].phoneNumber+'</td>\n' +
 
-                var tdcheckbox = tr.insertCell(-1);      // Table 有多少列就添加多少个这个
-                var tdName = tr.insertCell(-1);
-                var tdGender = tr.insertCell(-1);
-                var tdPapersName = tr.insertCell(-1);
-                var tdPapersNumber = tr.insertCell(-1);
+                        '       </tr>';
+                }
+                $("#tbodyThree").html(tr);
+            }
 
-                tdcheckbox.innerHTML = "<input type='radio' name='idThree' value='"+item.id+"'>";
-                tdName.innerHTML = item.name;
-                tdGender.innerHTML = item.genderName;
-                tdPapersName.innerHTML =item.papersName;         //中间这个是数据
-                tdPapersNumber.innerHTML =item.papersNumber;
-            }
-            if(i==0){
-                alert("很抱歉！没有查找到你要找的数据");
-            }
         },
         error: function(data) {
+            alert("访问错误")
         }
     });
 }
-
-
 function confirmfunction(){
     var chk_value=[];
     var table=document.getElementById("tbodyThree");
     var selectedIndex="";
     var name="";
     var papersType="";
-    var paperNumber="";
+    var rId="";
+    var phone="";
+    document.getElementById("rId").value=null;
+    document.getElementById("principalId").value=null;
+    document.getElementById("teamCodeId").value=null;
+    document.getElementById("contactPhoneNUmberId").value=null;
     $('input[name="idThree"]:checked').each(function(){
         chk_value.push($(this).val());
         selectedIndex=this.parentNode.parentNode.rowIndex;         // 获取选中的索引 单装他的变量不是数组，可以为数组
-        name=table.rows[selectedIndex-1].cells[1].innerHTML;     // 获取选中的索引的 单元格的值
+        rId=table.rows[selectedIndex-1].cells[0].innerHTML;// 获取选中的索引的 单元格的值
+        name=table.rows[selectedIndex-1].cells[1].innerHTML;
         papersType=table.rows[selectedIndex-1].cells[3].innerHTML;     // 获取选中的索引的 单元格的值
         papersNumber=table.rows[selectedIndex-1].cells[4].innerHTML;     // 获取选中的索引的 单元格的值
+        phone=table.rows[selectedIndex-1].cells[5].innerHTML;     // 获取选中的索引的 单元格的值
     });
-    $.ajax({
-        cache:false,
-        type: "POST",
-        url: getRootPath()+'${ctx}/Predetermine/confirmPassenger.do',
-        data:"id="+chk_value,
-        async:false,
-        success: function (result) {
-            document.getElementById("twoId").value=chk_value;
-            document.getElementById("contactPhoneNumberId").value=result;
-            document.getElementById("nameId").value=name;
-            document.getElementById("papersTypeId").value=papersType;
-            document.getElementById("papersNumberId").value=papersNumber;
-        },
-        error: function(data) {
-        }
-    });
-}
+    document.getElementById("nameId").value=name;
+    document.getElementById("papersTypeId").value=papersType;
+    document.getElementById("papersNumberId").value=papersNumber;
+    document.getElementById("contactPhoneNumber").value=phone;
 
+    $("#form22").submit();
+
+}
 function selectTarget(){
-    var tbody = document.getElementById("tbodyTwo");
     var name=document.getElementById("txtnameidTwo").value;
     var i=0;
     $("#tbodyTwo").empty();
@@ -155,63 +146,67 @@ function selectTarget(){
         cache:false,
         type: "POST",
         url: getRootPath()+'/Predetermine/selectTarget.do',
-        data:"txtname="+name,
+        data:"name="+name,
         async:false,
+        dataType:"json",
         success: function (result) {
-            for (var key in result) {
-                i++;
-                var item = result[key];
-                var tr = tbody.insertRow(-1);            // FireFox必须使用-1这个参数
-
-                var tdcheckbox = tr.insertCell(-1);      // Table 有多少列就添加多少个这个
-                var tdTargetTypeName = tr.insertCell(-1);
-                var tdTeamName = tr.insertCell(-1);
-                var tdTeamCode = tr.insertCell(-1);
-                var tdPrincipal = tr.insertCell(-1);
-                var tdRegisterTime = tr.insertCell(-1);
-                var tdContactPhoneNUmber=tr.insertCell(-1);
-
-                tdcheckbox.innerHTML = "<input type='radio' name='idTwo' value='"+item.id+"'>";
-                tdTargetTypeName.innerHTML = item.targetTypeName;
-                tdTeamName.innerHTML = item.teamName;
-                tdTeamCode.innerHTML =item.teamCode;         //中间这个是数据
-                tdPrincipal.innerHTML =item.principal;
-                tdRegisterTime.innerHTML =new Date(item.registerTime).Format("yyyy-MM-dd hh:mm:ss");
-                tdContactPhoneNUmber.innerHTML=item.contactPhoneNUmber;
+            if(result!=null){
+                var tr=' ';
+                for(var i=0,l=result.length;i<l;i++){
+                    tr+='  <tr>\n' +
+                        '        <td><input type="radio" name="idTwo" value="'+result[i].receiveTargetId +'"></td>\n' +
+                        '          <td>'+result[i].principal +'</td>\n' +
+                        '     <td>'+result[i].teamCode +'</td>\n' +
+                        '         <td>'+result[i].contactPhoneNUmber +'</td>\n' +
+                        '       </tr>';
+                }
+                $("#tbodyTwo").html(tr);
             }
-            if(i==0){
-                alert("很抱歉！没有查找到你要找的数据");
-            }
+
         },
         error: function(data) {
+            alert("访问错误")
         }
     });
+}
+function gaiBian(o){
+    $("#leiXin").val(o);
+    document.getElementById("rId").value=null;
+    document.getElementById("principalId").value=null;
+    document.getElementById("teamCodeId").value=null;
+    document.getElementById("contactPhoneNUmberId").value=null;
+    document.getElementById("nameId").value=null;
+    document.getElementById("papersTypeId").value=null;
+    document.getElementById("papersNumberId").value=null;
+    document.getElementById("contactPhoneNumber").value=null;
+        $("#form22").submit();
 }
 
 function confirmRarget(){
     var chk_value=[];
     var table=document.getElementById("tbodyTwo");
     var selectedIndex="";
-    var teamName="";
     var teamCode="";
     var principal="";
     var contactPhoneNUmber="";
-    var registerTime="";
+    document.getElementById("nameId").value=null;
+    document.getElementById("papersTypeId").value=null;
+    document.getElementById("papersNumberId").value=null;
+    document.getElementById("contactPhoneNumber").value=null;
     $('input[name="idTwo"]:checked').each(function(){
         chk_value.push($(this).val());
         selectedIndex=this.parentNode.parentNode.rowIndex;         // 获取选中的索引 单装他的变量不是数组，可以为数组
-        teamName=table.rows[selectedIndex-1].cells[2].innerHTML;     // 获取选中的索引的 单元格的值
-        teamCode=table.rows[selectedIndex-1].cells[3].innerHTML;     // 获取选中的索引的 单元格的值
-        principal=table.rows[selectedIndex-1].cells[4].innerHTML;     // 获取选中的索引的 单元格的值
-        contactPhoneNUmber=table.rows[selectedIndex-1].cells[6].innerHTML;     // 获取选中的索引的 单元格的值
-        registerTime=table.rows[selectedIndex-1].cells[5].innerHTML;     // 获取选中的索引的 单元格的值
+        teamCode=table.rows[selectedIndex-1].cells[2].innerHTML;     // 获取选中的索引的 单元格的值
+        principal=table.rows[selectedIndex-1].cells[1].innerHTML;     // 获取选中的索引的 单元格的值
+        contactPhoneNUmber=table.rows[selectedIndex-1].cells[3].innerHTML;     // 获取选中的索引的 单元格的值
     });
-    document.getElementById("oneId").value=chk_value;
-    document.getElementById("teamNameId").value=teamName;
-    document.getElementById("teamCodeId").value=teamCode;
+    document.getElementById("rId").value=chk_value;
     document.getElementById("principalId").value=principal;
+    document.getElementById("teamCodeId").value=teamCode;
     document.getElementById("contactPhoneNUmberId").value=contactPhoneNUmber;
-    document.getElementById("registerTimeId").value=registerTime;
+
+    $("#form22").submit();
+
 }
 
 
@@ -224,8 +219,7 @@ function selectOne(){
 }
 
 function selectTwo(){
-    var state=document.getElementById("stateId").value;
-    parent.document.getElementById("Mainid").src=getRootPath()+'/Predetermine/tolist.do?state='+state;
+    $("#form22").submit();
 }
 
 function arrangeRoom(){

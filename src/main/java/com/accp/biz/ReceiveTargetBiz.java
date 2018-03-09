@@ -46,4 +46,16 @@ public interface ReceiveTargetBiz {
      * @return
      */
     int updateReceiveTarget(ReceiveTarget receiveTarget);
+    /**
+     * ajax查询
+     */
+    List<ReceiveTarget> selectReceive(@Param("principal") String principal);
+
+    /**
+     * 根据id查询列表
+     * @param id
+     * @return
+     */
+    ReceiveTarget selectReceiveByid(@Param("receiveTargetId") int id);
+
 }
