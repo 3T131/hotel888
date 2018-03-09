@@ -36,6 +36,12 @@
             <if test="guestRoomLevelID!=null and guestRoomLevelID>0">
                 AND guestRoomLevelID = #{guestRoomLevelID}
             </if>
+            <if test="roomStateID!=null and roomStateID>0">
+                AND roomStateID = #{roomStateID}
+            </if>
+            <if test="roomNumber!=null and roomNumber!=''">
+                AND roomNumber = LIKE CONCAT('%',#{roomNumber},'%')
+            </if>
         </where>
     </select>
 

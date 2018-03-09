@@ -14,15 +14,17 @@ MySQL - 5.7.17-log : Database - grogshop
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`grogshop` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
+
+USE grogshop;
 /*Table structure for table `attribute` */
 
 DROP TABLE IF EXISTS `attribute`;
 
 CREATE TABLE `attribute` (
-  `attributeId` int(11) NOT NULL AUTO_INCREMENT COMMENT '属性ID',
-  `attributeName` varchar(30) DEFAULT NULL COMMENT '属性名称',
+  `attributeId` INT(11) NOT NULL AUTO_INCREMENT COMMENT '属性ID',
+  `attributeName` VARCHAR(30) DEFAULT NULL COMMENT '属性名称',
   PRIMARY KEY (`attributeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 /*Data for the table `attribute` */
 

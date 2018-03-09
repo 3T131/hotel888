@@ -158,7 +158,7 @@
 	          <th >房间号</th>
 	          <th style="width:12%;">接待员工编号</th>
 				<th >登记时间</th>
-				<th >总费用</th>
+				<th >房费</th>
 				<th>旅客</th>
 	          <th >换房次数</th>
 	          <th >换房费</th>
@@ -215,14 +215,14 @@
 						<td><fmt:formatDate value="${item.changRoomTime}" pattern="yyyy-MM-dd"/> </td>
 						<td>
 							<c:if test="${item.isBillID==68}">
-								<button class="btn btn-info btn-small" type="button" onclick="changroomfunction()"><li class="icon-refresh icon-white"></li>换房</button>
+								<button class="btn btn-info btn-small" type="button" onclick="changroomfunction(${item.stayRegisterId})"><li class="icon-refresh icon-white"></li>换房</button>
 								&nbsp;&nbsp;
-								<button class="btn btn-info btn-small" type="button" onclick="payfunction()"><li class="icon-heart icon-white"></li>结账</button>
+								<button class="btn btn-info btn-small" type="button" onclick="payfunction(${item.stayRegisterId})"><li class="icon-heart icon-white"></li>结账</button>
 							</c:if>
 							<c:if test="${item.isBillID==73}">
-								<button class="btn btn-info btn-small" type="button" onclick="changroomfunction()"><li class="icon-refresh icon-white"></li>换房</button>
+								<button class="btn btn-info btn-small" type="button" onclick="changroomfunction(${item.stayRegisterId})"><li class="icon-refresh icon-white"></li>换房</button>
 								&nbsp;&nbsp;
-								<button class="btn btn-info btn-small" type="button" onclick="tuiFangfunction()"><li class="icon-heart icon-white"></li>退房</button>
+								<button class="btn btn-info btn-small" type="button" onclick="tuiFangfunction(${item.stayRegisterId})"><li class="icon-heart icon-white"></li>退房</button>
 							</c:if>
 						</td>
 			          <td hidden>${item.isBillID}</td>
@@ -332,6 +332,8 @@
         <div class="tcdPageCode" style="text-align:center;"></div>
       </div>
     </div>
+
+
   </div>
   <script >
       if(${stayRegister.lvKeLeiXingId==55}){
@@ -342,11 +344,21 @@
 
           /* 分页要用的 */
           $(".tcdPageCode").createPage({
-              pageCount:${pager.totalPage},
-              current:${pager.pageNo},
-              backFn:function(p){
+              pageCount:${pager.totalPage},//总页数
+              current:${pager.pageNo},//当前页数
+              backFn:function(p){  //p是组件传过来的参数，p是跳转的下一页是第几页
+
+				  //访问路径的方式
                   document.getElementById("currentPage").value=p;
                   $("#formList").submit();
+
+                  //--------------------------------------------------
+                  //         访问路径的方式
+                  var txtname=document.getElementById("txtnameid").value;
+                  var state=document.getElementById("stateId").value;
+                  location.href="${ctx}/Predetermine/tolist.do?currentPage="+p
+					  +"&txtname="+txtname+"&state="+state;
+
               }
           });
 

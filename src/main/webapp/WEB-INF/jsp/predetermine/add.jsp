@@ -154,7 +154,7 @@
          <div class="span3">
            <label>抵达时间：</label>
           <input id="arriveTimeId" name="arriveTime" style="height:26px;float:left;" id="date" class="Wdate" type="text" onchange="onchangeOne()"
-		       onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" />
+		       onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\'%y-%M-%d\'}'})" />
           <div id="divThree">
 	          <label class="yansered" style="margin-top:12px;">*</label>
 	      </div>

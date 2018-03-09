@@ -12,9 +12,9 @@ public class StayRegister {
     private Integer stayRegisterId; //住宿登记ID
     private Date registerTime; //登记时间
     private Integer stayNumber; //住店天数/小时
-    private Float sumConst; //总费用
+    private Float sumConst; //住宿总费用
     private Float sumConst2;//总费用
-    private String changingRoomNumber; //换房次数
+    private Integer changingRoomNumber; //换房次数
     private Float changRoomMoney; //换房费
     private String remarks; //备注
     private Date payTime; //结账时间
@@ -59,10 +59,10 @@ public class StayRegister {
         if(rentOutTypeID==25){
             sumConst2=room.getStandardPrice()*this.stayNumber;
         }
-        if(this.changRoomMoney!=null){
-            sumConst2+=this.changRoomMoney;
+        if(this.depoit!=null&&this.depoit.getDepositMoney()!=null){
+            sumConst2-=this.depoit.getDepositMoney();
         }
-        sumConst2+=this.otherConsumer;
+        sumConst2+=this.getOtherConsumer();
         return sumConst2;
     }
 
@@ -89,18 +89,18 @@ public class StayRegister {
     }
 
     public void setConsumptionDetailsList(List<ConsumptionDetails> consumptionDetailsList) {
-        if(consumptionDetailsList!=null){
-            this.otherConsumer=0f;
-            for (ConsumptionDetails consumptionDetails:consumptionDetailsList){
-                this.otherConsumer=consumptionDetails.getConsumptionMoney()+otherConsumer;
-            }
-        }
         this.consumptionDetailsList = consumptionDetailsList;
 
     }
 
     public Float getOtherConsumer() {
-
+        if(consumptionDetailsList!=null&&consumptionDetailsList.size()>0
+                &&consumptionDetailsList.get(0).getConsumptionDetailsId()!=null){
+            this.otherConsumer=0f;
+            for (ConsumptionDetails consumptionDetails:consumptionDetailsList){
+                this.otherConsumer=consumptionDetails.getConsumptionMoney()+otherConsumer;
+            }
+        }
         return otherConsumer;
     }
 
@@ -151,6 +151,7 @@ public class StayRegister {
 
 
     public Integer getStayRegisterId() {
+
         return stayRegisterId;
     }
 
@@ -182,11 +183,11 @@ public class StayRegister {
         this.sumConst = sumConst;
     }
 
-    public String getChangingRoomNumber() {
+    public Integer getChangingRoomNumber() {
         return changingRoomNumber;
     }
 
-    public void setChangingRoomNumber(String changingRoomNumber) {
+    public void setChangingRoomNumber(Integer changingRoomNumber) {
         this.changingRoomNumber = changingRoomNumber;
     }
 

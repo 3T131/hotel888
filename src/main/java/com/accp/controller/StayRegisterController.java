@@ -41,7 +41,131 @@ public class StayRegisterController {
     @Resource
     public CommodityBiz commodityBiz;
 
+    /**
+     * 修改
+     * @param stayRegister
+     * @param passengerIds
+     * @return
+     */
+    @RequestMapping("/modify.do")
+    @ResponseBody
+    public String modify(StayRegister stayRegister,String[] passengerIds){
+        if(this.stayRegisterBiz.modifyStayRegister(stayRegister,passengerIds)){
+            return "<script language=\"javascript\">alert('保存成功！');window.location.href='/StayRegister/tolist.do'</script>";
+        }else{
+            return "<script language=\"javascript\">alert('保存失败！');window.location.href='/StayRegister/tolist.do?stayRegisterId="+stayRegister.getStayRegisterId()+"'</script>";
+        }
+    }
 
+    /**
+     * 跳转修改页面
+     * @param stayRegister
+     * @param model
+     * @return
+     */
+    @RequestMapping("/toModify.do")
+    public String toModify(StayRegister stayRegister,Model model){
+        StayRegister stayRegister1 = this.stayRegisterBiz.getStayRegister(stayRegister);
+        model.addAttribute("stayRegister2",stayRegister1);
+        model.addAttribute("listRentOutType",attributeDetailsBiz.listByAttributeName(5));
+        model.addAttribute("listBillUnit",attributeDetailsBiz.listByAttributeName(6));
+        model.addAttribute("listPayWay",attributeDetailsBiz.listByAttributeName(4));
+        model.addAttribute("isBillList",attributeDetailsBiz.listByAttributeName(17));
+        model.addAttribute("listReceiveTarget",receiveTargetBiz.listByParam(new ReceiveTarget()));
+        return "stayregister/modify";
+    }
+
+    /**
+     * 换房
+     * @param stayRegister
+     * @return
+     */
+    @RequestMapping("/confirmChangRoom.do")
+    @ResponseBody
+    public String confirmChangRoom(StayRegister stayRegister){
+        if(this.stayRegisterBiz.confirmChangRoom(stayRegister)){
+            return "<script language=\"javascript\">alert('换房成功！');window.location.href='/StayRegister/tolist.do'</script>";
+        }else{
+            return "<script language=\"javascript\">alert('换房失败！');window.location.href='/StayRegister/tolist.do'</script>";
+        }
+    }
+    /**
+     * ajax加载现有客房
+     * @return
+     */
+    @RequestMapping("/selectAjaxRoom.do")
+    @ResponseBody
+    public String selectAjaxRoom(Room room){
+        room.setRoomStateID(1);
+        return JSON.toJSONString(roomBiz.listByParam(room));
+    }
+
+    /**
+     * 跳转换行页面
+     * @param stayRegister
+     * @param model
+     * @return
+     */
+    @RequestMapping("/tochangroom.do")
+    public String toChangroom(StayRegister stayRegister,Model model){
+        StayRegister stayRegister1 = stayRegisterBiz.getStayRegister(stayRegister);
+        model.addAttribute("stayRegister",stayRegister1);
+        return "stayregister/changroom";
+    }
+
+    /**
+     * 退房成功
+     * @param stayRegister
+     * @return
+     */
+    @RequestMapping("/tuiFang.do")
+    @ResponseBody
+    public String tuiFang(StayRegister stayRegister){
+        if(stayRegisterBiz.tuiFang(stayRegister)){
+            return "<script language=\"javascript\">alert('退房成功！');window.location.href='/StayRegister/tolist.do'</script>";
+        }else{
+            return "<script language=\"javascript\">alert('退房失败！');window.location.href='/StayRegister/tolist.do'</script>";
+        }
+    }
+
+    /**
+     * 增加消费
+     * @param cids
+     * @param numbers
+     * @param stayRegister
+     * @param model
+     * @return
+     */
+    @RequestMapping("/consumption.do")
+    public String consumption(String[] cids,String[] numbers,StayRegister stayRegister,Model model){
+        consumptionDetailsBiz.addConsumptionDetails(cids,numbers,stayRegister.getStayRegisterId());
+        return this.toConsumtion(stayRegister,model);
+    }
+
+    /**
+     * 删除多行
+     * @param ids
+     * @param model
+     * @return
+     */
+    @RequestMapping("/delete.do")
+    @ResponseBody
+    public String delete(String [] ids,Model model){
+        if(stayRegisterBiz.deleteStayRegister(ids)){
+            return "<script language=\"javascript\">alert('删除成功！');window.location.href='/StayRegister/tolist.do'</script>";
+        }else{
+            return "<script language=\"javascript\">alert('删除失败！');window.location.href='/StayRegister/tolist.do'</script>";
+        }
+    }
+
+    /**
+     * 登记开房
+     * @param passengerIdRoomId
+     * @param commodityNumber
+     * @param stayRegister
+     * @param model
+     * @return
+     */
     @RequestMapping("/kaifang.do")
     @ResponseBody
     public String toArrangeRoom(String passengerIdRoomId
@@ -139,12 +263,18 @@ public class StayRegisterController {
         pager.setPageSize(5);//设置页面大小
         pager.setParams(stayRegister);//设置参数
         stayRegisterBiz.listByPager(pager);//调用biz的方法
-
         List<AttributeDetails> attributeDetailsList = attributeDetailsBiz.listByAttributeName(17);
         model.addAttribute("listOne",attributeDetailsList);
         model.addAttribute("pager",pager);
         return "stayregister/list";
     }
+
+    /**
+     * 跳转结账页面
+     * @param stayRegister
+     * @param model
+     * @return
+     */
     @RequestMapping("/topay.do")
     public String pay(StayRegister stayRegister,Model model){
         StayRegister stayRegister2 = stayRegisterBiz.getStayRegister(stayRegister);
@@ -154,6 +284,13 @@ public class StayRegisterController {
         model.addAttribute("stayRegister2",stayRegister2);
         return "stayregister/pay";
     }
+
+    /**
+     * 结账
+     * @param stayRegister
+     * @param model
+     * @return
+     */
     @RequestMapping("/pay.do")
     public String payDo(StayRegister stayRegister,Model model){
         StayRegister stayRegister2 = stayRegisterBiz.getStayRegister(stayRegister);
@@ -168,8 +305,6 @@ public class StayRegisterController {
             return "stayregister/pay";
         }
     }
-
-
     /**
      * 住宿登记
      * @param model
@@ -181,7 +316,6 @@ public class StayRegisterController {
         model.addAttribute("listNation", attributeDetailsBiz.listByAttributeName(9));
         model.addAttribute("listPassengerLevel", attributeDetailsBiz.listByAttributeName(13));
         model.addAttribute("listPapers", attributeDetailsBiz.listByAttributeName(10));
-
         model.addAttribute("listRentOutType",attributeDetailsBiz.listByAttributeName(5));
         model.addAttribute("listPassengerType",attributeDetailsBiz.listByAttributeName(7));
         model.addAttribute("listBillUnit",attributeDetailsBiz.listByAttributeName(6));
@@ -242,8 +376,11 @@ public class StayRegisterController {
      * @return
      */
     @RequestMapping("/toconsumption.do")
-    public String toConsumtion(@ModelAttribute("stayRegister") StayRegister stayRegister,Model model){
+    public String toConsumtion(StayRegister stayRegister,Model model){
+
         List<ConsumptionDetails> consumptionDetailsList = consumptionDetailsBiz.listByStayRegister(stayRegister.getStayRegisterId());
+        model.addAttribute("stayRegister",stayRegisterBiz.getStayRegister(stayRegister));
+        model.addAttribute("listCommodity",attributeDetailsBiz.listByAttributeName(3));
         model.addAttribute("consumptionDetailsList",consumptionDetailsList);
         return "stayregister/consumption";
     }

@@ -164,8 +164,9 @@
       </div>
     </div>
     
-    <input type="hidden" id="stayId" value="${stayId}">         <!-- 住宿ID -->
+    <input type="hidden" id="stayId" value="${stayRegister.stayRegisterId}">         <!-- 住宿ID -->
     <input type="hidden" id="roomId" >                          <!-- 房间ID -->
+		<input type="hidden" id="rentOutType" value="${stayRegister.rentOutTypeID}">
     <input id="LvKeLeiXingId" type="hidden" value="${LvKeLeiXingId}">
     
 		  <div class="span4" style="text-align:right;">
@@ -198,21 +199,32 @@
 	    <div class="span12">
 	      <div class="row-fluid">
 		     <div class="span3">
-		        <label>原房间号：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${list[0].roomNumber}"> 
-		     </div>
-		     <div class="span3">
 		        <label>新房间号：</label>
 		        <input id="newRoomNumberId" type="text" style="width:100%;height:27px;" readonly="readonly"> 
 		      </div>
-		     <div class="span3">
-		        <label>新房价/天：</label>
-		        <input id="roomPriceId" type="text" style="width:100%;height:27px;" readonly="readonly"> 
-		     </div>
+			  <c:if test="${stayRegister.rentOutTypeID==26}">
+				  <div class="span3">
+					  <label>新房价/天：</label>
+					  <input class="roomPriceId" type="text" style="width:100%;height:27px;" readonly="readonly">
+				  </div>
+			  </c:if>
+			  <c:if test="${stayRegister.rentOutTypeID==25}">
+				  <div class="span3">
+					  <label>新房价/小时：</label>
+					  <input class="roomPriceId" type="text" style="width:100%;height:27px;" readonly="readonly">
+				  </div>
+			  </c:if>
+			  <div class="span3">
+				  <label>补房费：</label>
+				  <input id="changRoomMoneyId" type="text" style="width:100%;height:27px;" readonly="readonly" >
+			  </div>
 		     <div class="span3">
 		        <label>换房时间：</label>
-		        <input id="changRoomTimeId" type="text" style="width:100%;height:27px;" readonly="readonly" value="${timestamp}"> 
+				 <jsp:useBean id="time" class="java.util.Date"/>
+		        <input id="changRoomTimeId" type="text" style="width:100%;height:27px;" readonly="readonly"
+					   value="<fmt:formatDate value="${time}" pattern="yyyy-MM-dd HH:mm:ss"/>">
 		     </div>
+
 		  </div>
 	    </div>
 	   
@@ -228,20 +240,20 @@
 	      <div class="row-fluid">
 		     <div class="span3">
 		        <label>原房间号：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${list[0].roomNumber}"> 
+		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${stayRegister.roomNumber}">
 		     </div>
 		     <div class="span3">
 		        <label>旅客姓名：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${lvKeName}">
+		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${stayRegister.passengerList[0].name}">
 		      </div>
 		     <div class="span3">
 		        <label>接待对象：</label>
 		        <input type="text" style="width:100%;height:27px;" readonly="readonly" 
-		        value="${list[0].receiveTargetID==2?'散客':list[0].receiveTeamName}"> 
+		        value="${stayRegister.receiveTarget.principal}"> 
 		     </div>
 		     <div class="span3">
                <label>出租方式：</label>
-		       <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${list[0].rentOutTypeName}"> 
+		       <input type="text" id="rentOutTypeId" style="width:100%;height:27px;" readonly="readonly" value="${stayRegister.rentOutType}">
              </div>
 		  </div>
 	   </div>
@@ -251,19 +263,33 @@
 	      <div class="row-fluid">
 		     <div class="span3">
 		        <label>登记时间：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${list[0].registerTime}"> 
+		        <input type="text" style="width:100%;height:27px;" readonly="readonly"
+					   value="<fmt:formatDate value="${stayRegister.registerTime}" pattern="yyyy-MM-dd HH:mm:ss"/>" >
 		     </div>
-		     <div class="span3">
-		        <label>房价/天：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${list[0].roomStandardPriceDay}">
-		      </div>
-		     <div class="span3">
-		        <label>天数：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${zhuDianTianShu}"> 
-		     </div>
+			  <c:if test="${stayRegister.rentOutTypeID==26}">
+				  <div class="span3">
+					  <label>房价/天：</label>
+					  <input type="text" class="fangJia" style="width:100%;height:27px;" readonly="readonly" value="${stayRegister.room.standardPriceDay}">
+				  </div>
+				  <div class="span3">
+					  <label>天数：</label>
+					  <input type="text" class="numberxx" style="width:100%;height:27px;" readonly="readonly" value="${stayRegister.stayNumber}">
+				  </div>
+			  </c:if>
+			  <c:if test="${stayRegister.rentOutTypeID==25}">
+				  <div class="span3">
+					  <label>房价/小时：</label>
+					  <input type="text" class="fangJia" style="width:100%;height:27px;" readonly="readonly" value="${stayRegister.room.standardPrice}">
+				  </div>
+				  <div class="span3">
+					  <label>小时：</label>
+					  <input type="text" class="numberxx" style="width:100%;height:27px;" readonly="readonly" value="${stayRegister.stayNumber}">
+				  </div>
+			  </c:if>
+
 		     <div class="span3">
                <label>住宿费：</label>
-		       <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${zhuSuFei}"> 
+		       <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${stayRegister.sumConst}">
              </div>
 		  </div>
 	    </div> 
@@ -273,16 +299,13 @@
 	      <div class="row-fluid">
 		     <div class="span3">
 		        <label>其他消费：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${shangPinXiaoFei}"> 
+		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${stayRegister.otherConsumer}">
 		     </div>
 		     <div class="span3">
 		        <label>押金：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${yaJin}"> 
+		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${stayRegister.depoit.depositMoney}">
 		     </div>
-		     <div class="span3">
-		        <label>本次需交换房费：</label>
-		        <input id="changRoomMoneyId" type="text" style="width:100%;height:27px;" readonly="readonly" value="${zhuSuFei}">
-		      </div>
+
 		       
 		  </div>
 	    </div> 
@@ -310,22 +333,12 @@
 	          <th >选择</th>
 	          <th >房间号</th>
 	          <th >客房等级</th>
-	          <th >房态</th>
 	          <th >床位数</th>
 	          <th >标准客房/天</th>
+			  <th >标准房价/小时</th>
 	        </tr>
 	      </thead>
-	      <tbody id="tbody">
-	        <c:forEach items="" var="item">
-		        <tr>
-		          <td><input type="radio" name="id" value="${item.id}"></td>
-		          <td>${item.roomNumber}</td>
-		          <td>${item.guestRoomLevelName}</td>
-		          <td>${item.roomName}</td>
-		          <td>${item.roomAmount}</td>
-		          <td>￥${item.standardPriceDay}</td>
-		        </tr>
-	        </c:forEach>
+	      <tbody id="tbody22">
 	      </tbody>
 	    </table>
     </div>
@@ -339,6 +352,18 @@
  
  
  <script type="text/javascript">
+     //项目绝对路径
+     function getRootPath(){
+         //获取当前网址，如： http://localhost:8083/proj/meun.jsp
+         var curWwwPath = window.document.location.href;
+         //获取主机地址之后的目录，如： proj/meun.jsp
+         var pathName = window.document.location.pathname;
+         var pos = curWwwPath.indexOf(pathName);
+         //获取主机地址，如： http://localhost:8083
+         var localhostPath = curWwwPath.substring(0, pos);
+         return(localhostPath );
+     }
+
     function verify(){
    }
    
@@ -347,64 +372,73 @@
      parent.document.getElementById('Mainid').src='${ctx}/StayRegister/tolist.do?LvKeLeiXingId='+LvKeLeiXingId;
    }
    
-     function selectRoom(){
-     var tbody = document.getElementById("tbody");
+function selectRoom(){
     var name=document.getElementById("txtnameid").value;
-    var i=0;
-    $("#tbody").empty();                              // 删除 tbody 所有行
-    $.ajax({                                                      
-          cache:false,                                             //是否使用缓存提交 如果为TRUE 会调用浏览器的缓存 而不会提交
-          type: "POST",                                           //上面3行都是必须要的
-          url: '${ctx}/StayRegister/changRoomSelectPassenger.do',       //地址 type 带参数
-          data:"roomNumber="+name,                         // IDCardValue 自定义的。相当于name把值赋予给 他可以在servlet 获取
-//        dataType:"json",                                       // json 数据类型提交 
-          async:false,                                          // 是否 异步 提交
-          success: function (result) {  
-            for (var key in result) { 
-                i++;               
-                var item = result[key];
-                var tr = tbody.insertRow(-1);            // FireFox必须使用-1这个参数
-               
-                var tdcheckbox = tr.insertCell(-1);      // Table 有多少列就添加多少个这个
-                var tdroomNumber = tr.insertCell(-1);
-                var tdguestRoomLevelName = tr.insertCell(-1);
-                var tdroomName = tr.insertCell(-1);
-                var tdroomAmount = tr.insertCell(-1);
-                var tdstandardPriceDay = tr.insertCell(-1);
-                
-                tdcheckbox.innerHTML = "<input type='radio' name='id' value='"+item.id+"'>";
-                tdroomNumber.innerHTML = item.roomNumber;
-                tdguestRoomLevelName.innerHTML = item.guestRoomLevelName;
-                tdroomName.innerHTML =item.roomName;         //中间这个是数据
-                tdroomAmount.innerHTML =item.roomAmount;
-                tdstandardPriceDay.innerHTML ='￥'+item.standardPriceDay;
+         $.ajax({
+             cache:false,
+             type: "POST",
+             url: getRootPath()+'/StayRegister/selectAjaxRoom.do',
+             data:"roomNumber="+name,
+             async:false,
+             dataType:"json",
+             success: function (data) {
+                var tr='';
+             	if(data!=null){
+                 for(var i=0,l=data.length;i<l;i++) {
+                     tr+='<tr>\n' +
+                         '<td><input type="radio" name="roomId" value="'+data[i].roomId+'"></td>\n' +
+                         '<td>'+data[i].roomNumber+'</td>\n' +
+                         '<td>'+data[i].guestRoomLevelName+'</td>\n' +
+                         '<td>'+data[i].roomAmount+'</td>\n' +
+                         '<td>'+data[i].standardPriceDay+'</td>\n' +
+                         '<td>'+data[i].standardPrice+'</td>\n' +
+                         '</tr>';
+
+				 }
+				 $("#tbody22").html(tr);
             }
-            if(i==0){
-              alert("很抱歉！没有查找到你要找的数据");
-            }               
           },
           error: function(data) {
-          
+          	alert("访问错误..")
            }
       });     
    }
    
    function changroomConfirmfunction(){
       var chk_value=[];
-      var table=document.getElementById("tbody");
+      var table=document.getElementById("tbody22");
       var selectedIndex="";
       var roomPrice=""; 
-      var roomNumber="";                                                     
-	  $('input[name="id"]:checked').each(function(){             // 遍历获取input被checked的
+      var roomNumber="";
+       var roomPriceDay="";
+       $('input[name="roomId"]:checked').each(function(){             // 遍历获取input被checked的
 	   	chk_value.push($(this).val());                             // 获取选中的ID
 	    selectedIndex=this.parentNode.parentNode.rowIndex;
 	    roomPrice=table.rows[selectedIndex-1].cells[5].innerHTML;
+           roomPriceDay=table.rows[selectedIndex-1].cells[4].innerHTML;
 	    roomNumber=table.rows[selectedIndex-1].cells[1].innerHTML;
 	  });
 	  if(chk_value!=""){
+	      var rentOutTypeId=$("#rentOutType").val();
+          var fangJia=$(".fangJia").val();
+          var numberxx=$(".numberxx").val();
+          var yuanJia=parseInt(numberxx)*parseFloat(fangJia);
+          var xianJia=null;
+	      if(rentOutTypeId==25){
+			  xianJia=parseInt(roomPrice)*parseFloat(numberxx);
+			$(".roomPriceId").val(roomPrice);
+		  }else if(rentOutTypeId==26){
+              xianJia=parseInt(roomPriceDay)*parseFloat(numberxx);
+              $(".roomPriceId").val(roomPriceDay);
+		  }
+          var caJia=xianJia-yuanJia;
+		  if(caJia<0){
+              caJia=0;
+		  }
+		$("#changRoomMoneyId").val(caJia);
         document.getElementById("roomId").value=chk_value;
         document.getElementById("newRoomNumberId").value=roomNumber;
-        document.getElementById("roomPriceId").value=roomPrice;
+
 	  }else{
 	  }
    }
@@ -417,13 +451,11 @@
      var id=document.getElementById("stayId").value;
      var roomId=document.getElementById("roomId").value;
      var changRoomMoney=document.getElementById("changRoomMoneyId").value;
-     var changRoomTime=document.getElementById("changRoomTimeId").value;
-     var LvKeLeiXingId=document.getElementById("LvKeLeiXingId").value;
-     parent.document.getElementById('Mainid').src='${ctx}/StayRegister/confirmChangRoom.do?id='+id+
-     '&roomId='+roomId+'&changRoomMoney='+changRoomMoney+'&changRoomTime='+changRoomTime+'&LvKeLeiXingId='+LvKeLeiXingId
+     parent.document.getElementById('Mainid').src=getRootPath()+'/StayRegister/confirmChangRoom.do?stayRegisterId='+id+
+     '&roomID='+roomId+'&changRoomMoney='+changRoomMoney;
    }
    
  </script>
-   
+  </div>
   </body>
 </html>

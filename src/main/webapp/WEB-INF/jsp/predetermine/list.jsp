@@ -379,6 +379,10 @@
      pageCount:${list.totalPage},
      current:${list.currentPage},
      backFn:function(p){
+
+
+
+//         访问路径的方式
      var txtname=document.getElementById("txtnameid").value;
      var state=document.getElementById("stateId").value;
      location.href="${ctx}/Predetermine/tolist.do?currentPage="+p+"&txtname="+txtname+"&state="+state;

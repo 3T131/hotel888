@@ -230,7 +230,7 @@
 					 <label>接待对象：</label>
 					 <select name="receiveTargetID" style="width:100%;height:27px;">
 						 <c:forEach items="${listReceiveTarget}" var="item">
-							 <option value="${item.receivetargetId}" <c:if test="${item.receivetargetId==1}">selected="selected"</c:if>>
+							 <option value="${item.receiveTargetId}" <c:if test="${item.receiveTargetId==1}">selected="selected"</c:if>>
 									 ${item.principal}
 							 </option>
 						 </c:forEach>

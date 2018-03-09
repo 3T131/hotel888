@@ -37,62 +37,54 @@ function deletefunction(){
     }
 }
 
-function ajaxSelect(){
+function ajaxConsumptionSelect(){
     var isBillID=document.getElementById("isBillID").value;
     if(isBillID==69){
         alert("很抱歉！该数据已经结账没法进行此操作！");
         $("#dd").removeAttr("href");
         return;
     }
-    var tbody = document.getElementById("tbodyTwo");
-    var name=document.getElementById("txtnameid").value;
+    var name=document.getElementById("commodityName").value;
     var cboid=document.getElementById("selectCboId").value;
-    var i=0;
-    $("#tbodyTwo").empty();
     $.ajax({
         cache:false,
         type: "POST",
-        url: '${ctx}/StayRegister/tianJiaShangPin.do',
-        data:"name="+name+"&cboid="+cboid,
+        url: getRootPath()+'/StayRegister/tianJiaShangPin.do',
+        data:"commodityName="+name+"&commodityTypeID="+cboid,
         async:false,
-        success: function (result) {
-            for (var key in result) {
-                i++;
-                var item = result[key];
-                var tr = tbody.insertRow(-1);            // FireFox必须使用-1这个参数
-
-                var tdcheckbox = tr.insertCell(-1);      // Table 有多少列就添加多少个这个
-                var tdCommodityName = tr.insertCell(-1);
-                var tdCommodityTypeName = tr.insertCell(-1);
-                var tdUOMName = tr.insertCell(-1);
-                var tdSalePrice = tr.insertCell(-1);
-                var tdNumber = tr.insertCell(-1);
-
-                tdcheckbox.innerHTML = "<input type='checkbox' name='idTwo' value='"+item.id+"'>";
-                tdCommodityName.innerHTML = item.commodityName;
-                tdCommodityTypeName.innerHTML = item.commodityTypeName;
-                tdUOMName.innerHTML =item.uOMName;         //中间这个是数据
-                tdSalePrice.innerHTML =item.salePrice;
-                tdNumber.innerHTML ="<input style='width:100%;border-color:green'>";
+        dataType:"json",
+        success: function (data) {
+            var tr='';
+            if(data!=null) {
+                for (var i = 0, l = data.length; i < l; i++) {
+                    tr+= ' <tr>\n' +
+                        '  <td><input type="checkbox" name="CommIds" value="' + data[i].commodityId + '"></td>\n' +
+                        '  <td>' + data[i].commodityName + '</td>\n' +
+                        '  <td>' + data[i].commodityType + '</td>\n' +
+                        '  <td>' + data[i].uOM + '</td>\n' +
+                        '  <td>' + data[i].salePrice + '</td>\n' +
+                        '  <td style="width:20%">' +
+                        '<input class="number2" value="1" type="text" style="width:50%;" >\n' +
+                        '</td>\n' +
+                        '  </tr>';
+                }
             }
-            if(i==0){
-                alert("很抱歉！没有查找到你要找的数据");
-            }
+            $("#tbodyComm").html(tr);
         },
         error: function(data) {
+            alert("访问错误")
         }
     });
 }
 
 function confirmFunction(){
     var chk_value=[];
-    var table=document.getElementById("tbodyTwo");
+    var table=document.getElementById("tbodyComm");
     var selectedIndex="";
     var Number=[];
     var i=0;
-    var LvKeLeiXingId=document.getElementById("LvKeLeiXingId").value;
     var consumptionStayRegisterID=document.getElementById("consumptionStayRegisterID").value;
-    $('input[name="idTwo"]:checked').each(function(){
+    $('input[name="CommIds"]:checked').each(function(){
         chk_value.push($(this).val());
         selectedIndex=this.parentNode.parentNode.rowIndex;
         Number.push(table.rows[selectedIndex-1].cells[5].childNodes[0].value);
@@ -118,8 +110,8 @@ function confirmFunction(){
         }
     }
     if(chk_value!=""){
-        parent.document.getElementById("Mainid").src='${ctx}/StayRegister/consumption.do?id='+chk_value
-            +'&Number='+Number+'&consumptionStayRegisterID='+consumptionStayRegisterID+'&LvKeLeiXingId='+LvKeLeiXingId;
+        parent.document.getElementById("Mainid").src=getRootPath()+'/StayRegister/consumption.do?cids='+chk_value
+            +'&numbers='+Number+'&stayRegisterId='+consumptionStayRegisterID;
     }else{
     }
 }

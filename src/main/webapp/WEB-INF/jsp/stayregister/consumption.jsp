@@ -174,7 +174,7 @@
         </div>
         <div class="span3">
           <label style="float:left;">旅客姓名：</label>
-          <label>${stayRegister.passengerName}</label>
+          <label>${stayRegister.passengerList[0].name}</label>
         </div>
       </div>
     </div>
@@ -182,7 +182,7 @@
     <div class="span3" style="text-align:right;">
       <div class="row-fluid">
 	      <div class="span12" style="margin-top: 10px;margin-bottom: 8px;">
-		   	 <a id="dd" href="#lvke" data-toggle="modal" class="btn btn-primary" onclick="ajaxSelect()">
+		   	 <a id="dd" href="#lvke" data-toggle="modal" class="btn btn-primary" onclick="ajaxConsumptionSelect()">
 		   	 <li class="icon-check icon-white"></li>添加消费</a>
 		  </div> 
 	  </div>
@@ -209,18 +209,19 @@
 	         <div class="row-fluid">
 			   <div class="span6">
 			      <label class="labelroomnumber">商品名称：</label>
-				   <input id="txtnameid" class="textone" style="width:40%; border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:27px;" type="text" placeholder="请输入关键字" value="${txtname}">
+				   <input id="commodityName" class="textone" style="width:40%; border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:27px;" type="text" placeholder="请输入关键字" value="${txtname}">
 				   <div class="input-append">  
-				      <button onclick="ajaxSelect()" type="button" class="btn-success textone" style="margin-left:-4px;height:27px;"><li class="icon-search icon-white"></li>搜索</button>
+				      <button onclick="ajaxConsumptionSelect()" type="button" class="btn-success textone" style="margin-left:-4px;height:27px;"><li class="icon-search icon-white"></li>搜索</button>
 				   </div>
 		       </div>
 		       <div class="span3">
-		         <select id="selectCboId" style="margin-top:10px;width:100%;" onchange=ajaxSelect()>
-		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==16}">selected="selected"</c:if>>
-			            ${item.attributeDetailsName}
-			          </option>
-			        </c:forEach> 
+		         <select id="selectCboId" style="margin-top:10px;width:100%;" onchange=ajaxConsumptionSelect()>
+					 <option value="0" selected > 全部</option>
+					 <c:forEach items="${listCommodity}" var="item">
+						 <option value="${item.attributeDetailsId}" >
+								 ${item.attributeDetailsName}
+						 </option>
+					 </c:forEach>
 			     </select>
 			     </div>
 		       <div class="span3" style="text-align: left;">
@@ -239,17 +240,8 @@
 	          <th style="width:20%">数量</th>
 	        </tr>
 	      </thead>
-	      <tbody id="tbodyTwo">
-	        <c:forEach items="${listAjax}" var="item">
-		        <tr>
-		          <td><input type="checkbox" name="idTwo" value="${item.id}"></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		          <td style="width:20%">><input style="width:100%;border-color:yellow"></td>
-		        </tr>
-	        </c:forEach>
+	      <tbody id="tbodyComm">
+
 	      </tbody>
 	    </table>
     </div>
@@ -279,7 +271,9 @@
 		          <td>${item.commodity.salePrice}</td>
 		          <td>${item.consumptionNumber}</td>
 		          <td>${item.consumptionMoney}</td>
-		          <td>${item.consumptionTime}</td>
+		          <td>
+					  <fmt:formatDate value="${item.consumptionTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				  </td>
 		        </tr>
 	        </c:forEach>
 	      </tbody>
@@ -296,13 +290,13 @@
 
  <script type="text/javascript">
      /* 分页要用的 */
-     $(".tcdPageCode").createPage({
-         pageCount:${list.totalPage},
-         current:${list.currentPage},
-         backFn:function(p){
-             location.href="${ctx}/StayRegister/toconsumption.do?currentPage="+p;
-         }
-     });
+     <%--$(".tcdPageCode").createPage({--%>
+         <%--pageCount:${list.totalPage},--%>
+         <%--current:${list.currentPage},--%>
+         <%--backFn:function(p){--%>
+             <%--location.href="${ctx}/StayRegister/toconsumption.do?currentPage="+p;--%>
+         <%--}--%>
+     <%--});--%>
  </script>
   </div>
   </body>

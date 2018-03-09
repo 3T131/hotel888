@@ -67,33 +67,8 @@ $(document).ready(function() {
         }
     }
 
-    function changroomfunction() {
-        var chk_value = [];
-        var table = document.getElementById("tbody");
-        var selectedIndex = "";
-        var lvKeName = "";
-        var LvKeLeiXingId = document.getElementById("LvKeLeiXingId").value
-        var TOF = 0;
-        $('input[name="id"]:checked').each(function () {
-            chk_value.push($(this).val());
-            selectedIndex = this.parentNode.parentNode.rowIndex;
-            lvKeName = table.rows[selectedIndex - 1].cells[5].innerHTML;
-            TOF = table.rows[selectedIndex - 1].cells[12].innerHTML;
-        });
-        if (TOF == 69) {
-            alert("很抱歉！该数据已经结账没法进行此操作！");
-            return;
-        }
-        if (chk_value != "") {
-            if (chk_value.toString().indexOf(",") > 0) {
-                alert("只能选择一个房间进行换房哦");
-            } else {
-                parent.document.getElementById('Mainid').src = '${ctx}/StayRegister/tochangroom.do?id=' +
-                    chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 55;
-            }
-        } else {
-            alert("请选择一条数据进行换房");
-        }
+    function changroomfunction(chk_value) {
+       parent.document.getElementById('Mainid').src = getRootPath()+'/StayRegister/tochangroom.do?stayRegisterId=' +chk_value
     }
 
     function teamChangroomfunction() {
@@ -240,9 +215,7 @@ $(document).ready(function() {
     }
 
 function tuiFangfunction(sId) {
-
-    parent.document.getElementById('Mainid').src = getRootPath()+'/StayRegister/topay.do?stayRegisterId=' + sId ;
-
+    parent.document.getElementById('Mainid').src = getRootPath()+'/StayRegister/tuiFang.do?stayRegisterId=' + sId ;
 }
 
     function volumeroomfunction() {
@@ -337,7 +310,7 @@ function tuiFangfunction(sId) {
             if (chk_value.toString().indexOf(",") > 0) {
                 alert("修改只能选择一条");
             } else {
-                parent.document.getElementById("Mainid").src = '${ctx}/ReceiveTarget/toupdate.do?id=' + chk_value;
+                parent.document.getElementById("Mainid").src = getRootPath()+'/StayRegister/toModify.do?stayRegisterId=' + chk_value;
             }
         } else {
             alert("请选择一条数据进行修改");
@@ -356,15 +329,18 @@ function tuiFangfunction(sId) {
         });
         if(TOF!=69){
             alert("该条记录未结账或未退房，不能删除")
-        }
-        if (chk_value != "") {
-            var flag = window.confirm("注意：您确定要永久删除该信息吗?");
-            if (flag) {
-                parent.document.getElementById("Mainid").src = '${ctx}/ReceiveTarget/delete.do?id=' + chk_value;
+            return;
+        }else{
+            if (chk_value != "") {
+                var flag = window.confirm("注意：您确定要永久删除该信息吗?");
+                if (flag) {
+                    parent.document.getElementById("Mainid").src = getRootPath()+'/StayRegister/delete.do?ids=' + chk_value;
+                }
+            } else {
+                alert("请选择一条或多条数据进行删除");
             }
-        } else {
-            alert("请选择一条或多条数据进行删除");
         }
+
 
     }
 

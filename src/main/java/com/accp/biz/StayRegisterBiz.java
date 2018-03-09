@@ -10,6 +10,35 @@ import java.util.Map;
 public interface StayRegisterBiz {
 
     /**
+     * 修改单条住宿登记
+     * @param stayRegister
+     * @param pId
+     * @return
+     */
+    boolean modifyStayRegister(StayRegister stayRegister,String[] pId);
+
+    /**
+     * 换房
+     * @param stayRegister
+     * @return
+     */
+    boolean confirmChangRoom(StayRegister stayRegister);
+
+    /**
+     * 退房
+     * @param stayRegister
+     * @return
+     */
+    boolean tuiFang(StayRegister stayRegister);
+
+    /**
+     * 删除多行
+     * @param ids
+     * @return
+     */
+    boolean deleteStayRegister(String[] ids);
+
+    /**
      * 新增开房记录（新增多条）
      * @param stayRegister
      * @param map 商品k 数量v

@@ -187,6 +187,7 @@
        pageCount:${list.totalPage},
        current:${list.pageNo},
        backFn:function(p){
+           //        提交表单的方式
            var c = document.getElementById("currentPage");
            c.value=p;
            var f = document.getElementById("form22");

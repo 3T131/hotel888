@@ -216,7 +216,7 @@
 				<div class="span3">
 					<label>出生日期：</label>
 					<input id="birthDateId" name="birthDate"  type="text" style="width:100%;height:27px;" class="Wdate"
-						   onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" onchange="onchangeOne()">
+						   onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\'%y-%M-%d\'}'})" onchange="onchangeOne()">
 				</div>
 				<div class="span3">
 					<label>证件类型：</label>
@@ -241,7 +241,7 @@
 					<label>登记时间：</label>
 					<input id="createDate" name="createDate"
 						   class="Wdate"
-						   onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})"
+						   onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\'%y-%M-%d\'}'})"
 						   type="text" style="width:100%;height:27px;"  >
 				</div>
 			</div>

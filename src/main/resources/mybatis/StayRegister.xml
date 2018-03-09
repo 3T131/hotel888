@@ -4,6 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accp.dao.StayRegisterDao">
 
+<!--删除StayRegisterDetails表有stayRegisterID的列-->
+    <delete id="deleteStayRegisterDetailsByStayRegisterID">
+        DELETE FROM stayregisterdetails WHERE stayRegisterID=#{stayRegisterID}
+    </delete>
+
+    <!--删除多行-->
+    <delete id="deleteStayRegister">
+        delete from stayregister WHERE stayregisterId IN
+        <foreach collection="array" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    
+    
     <!--新增旅客与登记关系-->
     <insert id="insertStayRegisterDetails">
         INSERT INTO `stayregisterdetails`(`stayregisterdetailsId`,`stayRegisterID`,`passengerID`)
@@ -35,7 +49,7 @@
       FROM stayregister
           <include refid="JOIN"/>
           <include refid="wherePager"/>
-     order by stayregister.remind desc
+     order by stayregister.remind desc,stayregister.registerTime desc
         limit #{qis},#{pageSize}
     </select>
 <!--查询总行数-->
@@ -72,7 +86,7 @@
 <!--连接的表-->
     <sql id="JOIN">
         LEFT JOIN  Predetermine ON stayregister.Predetermineid=Predetermine.Predetermineid
-        INNER JOIN  ReceiveTarget ON stayregister.receiveTargetId=ReceiveTarget.ReceiveTargetid
+        INNER JOIN  ReceiveTarget ON stayregister.receiveTargetID=ReceiveTarget.ReceiveTargetid
         INNER JOIN  room ON stayregister.roomId=room.roomid
         INNER JOIN  depoit ON stayregister.dpId=depoit.depoitId
         INNER JOIN  attributedetails rentOutType ON stayregister.rentOutTypeID=rentOutType.AttributeDetailsid
@@ -82,6 +96,7 @@
         INNER JOIN  attributedetails isBillON ON stayregister.isBillID=isBillON.AttributeDetailsid
         LEFT JOIN StayRegisterDetails ON StayRegisterDetails.stayRegisterID=stayregister.stayRegisterID
         LEFT JOIN passenger ON StayRegisterDetails.passengerID=passenger.pId
+
     </sql>
 <!--分页加的条件-->
     <sql id="wherePager">
@@ -115,7 +130,7 @@
            <id property="roomId" column="roomId"/>
        </association>
        <association property="receiveTarget" autoMapping="true" javaType="ReceiveTarget">
-           <id property="receivetargetId" column="receiveTargetId"/>
+           <id property="receiveTargetId" column="receiveTargetId"/>
        </association>
        <association property="depoit" autoMapping="true" javaType="Depoit">
            <id property="depoitId" column="depoitId"/>
@@ -157,11 +172,8 @@
             <if test="passengerTypeID!=null">
                 passengerTypeID=#{passengerTypeID},
             </if>
-            <if test="receivetargetId!=null">
-                receiveTargetID=#{receivetargetId},
-            </if>
-            <if test="deputyID!=null">
-                deputyID=#{deputyID},
+            <if test="receiveTargetID!=null">
+                receiveTargetID=#{receiveTargetID},
             </if>
             <if test="isBillID!=null">
                 isBillID=#{isBillID},
@@ -195,6 +207,12 @@
             </if>
             <if test="dpId!=null">
                 dpId=#{dpId},
+            </if>
+            <if test="sumConst!=null">
+                sumConst=#{sumConst},
+            </if>
+            <if test="changRoomTime!=null">
+                changRoomTime=#{changRoomTime},
             </if>
         </set>
     </sql>

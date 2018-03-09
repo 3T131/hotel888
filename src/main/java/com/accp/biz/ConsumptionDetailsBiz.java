@@ -6,6 +6,15 @@ import java.util.List;
 
 public interface ConsumptionDetailsBiz {
 
+
+    /**
+     * 新增行消费
+     * @param cid
+     * @param numbers
+     * @param stayRegisterId
+     * @return
+     */
+    boolean addConsumptionDetails(String[] cid,String[] numbers,int stayRegisterId);
     /**
      * 新增
      * @param consumptionDetails

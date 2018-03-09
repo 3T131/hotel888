@@ -552,6 +552,8 @@ function onchangeStayNumberId(){
     }
 }
 
+
+
 function onchangeOne(){
     //登记时间
     if(document.getElementById("registerTime").value!=""){
