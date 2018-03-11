@@ -216,10 +216,10 @@
 	        <c:forEach items="${list.datas}" var="item">
 		        <c:if test="${item.remind==0}" >
 		           <tr>
-				          <td><input type="checkbox" name="predetermineId" value="${item.predetermineId}"></td>
+				          <td><input type="checkbox" name="id" value="${item.predetermineId}"></td>
 				          <td>${item.roomNumber}</td>
 				          <td>${item.roomGuestRoomLevelName}</td>
-				          <td>${item.receiveTargeTypeName}</td>
+				          <td>${item.receivePrincipal}</td>
 				          <td>${item.passengerName}</td>
 				          <td><fmt:formatDate value="${item.arriveTime}" pattern="yyyy-MM-dd"/> </td>
 				          <td>${item.deposit}</td>

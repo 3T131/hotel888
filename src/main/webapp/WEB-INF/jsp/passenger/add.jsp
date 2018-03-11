@@ -159,7 +159,7 @@
     <div class="span11" style=" border: solid; border-color: #DDDDDD;">
     <div class="span9 margin-top-one">
       <div class="row-fluid">
-        <h3 style="text-align: center;">旅客新增</h3>
+        <h3 style="text-align: center;">旅客登记</h3>
         
       </div>
     </div>

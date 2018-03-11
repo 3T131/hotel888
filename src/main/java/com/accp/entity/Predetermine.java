@@ -18,8 +18,7 @@ public class Predetermine {
     private Float deposit; //'押金',
     private String predetermineDay; //'预定天数',
     private int remind; //'到时提示',
-
-    //    -------------------------------------------------------
+    //-------------------------------------------------------
     private Room room;//房间
     private ReceiveTarget Integer;//预定对象
     private Passenger passenger;//旅客

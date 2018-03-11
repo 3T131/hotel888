@@ -105,7 +105,7 @@
 						</a>
 						<ul class="submenu">
 							<li>
-								<a id="yingYeJinEId" onclick="dateView()">
+								<a id="yingYeJinEId" onclick="dateView()" href="#">
 									<i class="icon-double-angle-right"></i>
 									<span>营业金额</span>
 								</a>
@@ -126,22 +126,70 @@
 
 						<ul class="submenu">
 							<li>
-								<a id="roomSetId" onclick="roomSet()">
+								<a id="roomSetId" onclick="roomSet()" href="#">
+									<i class="icon-double-angle-right"></i>
+									<span>添加客房</span>
+								</a>
+							</li>
+							<li>
+								<a id="roomAddId" onclick="roomAdd()" href="#">
 									<i class="icon-double-angle-right"></i>
 									<span>客房设置</span>
 								</a>
 							</li>
 
+						</ul>
+					</li>
+
+					<li>
+						<a id="commodityManageId" onclick="commodityManage()" class="dropdown-toggle">
+							<i class="icon-home"></i>
+							<span class="menu-text">商品管理 </span>
+
+							<b class="arrow icon-angle-down"></b>
+						</a>
+
+						<ul class="submenu">
 							<li>
-								<a id="commoditySetId" onclick="commoditySet()">
+								<a id="commoditySetId" onclick="commoditySet()" href="#">
 									<i class="icon-double-angle-right"></i>
 									<span>商品设置</span>
+								</a>
+							</li>
+							<li>
+								<a id="commodityAddId" onclick="commodityAdd()" href="#">
+									<i class="icon-double-angle-right"></i>
+									<span>添加商品</span>
 								</a>
 							</li>
 
 						</ul>
 					</li>
-					
+
+					<li>
+						<a id="predetermineManageId" onclick="predetermineManage()" class="dropdown-toggle">
+							<i class="icon-move"></i>
+							<span class="menu-text">预定管理 </span>
+
+							<b class="arrow icon-angle-down"></b>
+						</a>
+
+						<ul class="submenu">
+							<li>
+								<a id="reservationsId" onclick="reservations()" href="#">
+									<i class="icon-double-angle-right"></i>
+									<span>预订设置</span>
+								</a>
+							</li>
+							<li>
+								<a id="predetermineAddId" onclick="reservationsPredetermine()" href="#">
+									<i class="icon-double-angle-right"></i>
+									<span>预订登记</span>
+								</a>
+							</li>
+
+						</ul>
+					</li>
 					
 					
 					<li>
@@ -154,21 +202,13 @@
 
 						<ul class="submenu">
 							<li>
-								<a id="reservationsId" onclick="reservations()">
-									<i class="icon-double-angle-right"></i>
-									<span>客房预订</span>
-								</a>
-							</li>
-
-							<li>
-								<a id="personageId" onclick="personage()">
+								<a id="personageId" onclick="personage()" href="#">
 									<i class="icon-double-angle-right"></i>
 									<span>住宿管理</span>
 								</a>
 							</li>
-
 							<li>
-								<a id="personage" onclick="stay()">
+								<a id="personage" onclick="stay()" href="#">
 									<i class="icon-double-angle-right"></i>
 									<span>登记住宿</span>
 								</a>
@@ -195,7 +235,7 @@
 						<ul class="submenu">
 
 							<li>
-								<a id="financeStatisticsId" onclick="financeStatistics()">
+								<a id="financeStatisticsId" onclick="financeStatistics()" href="#">
 									<i class="icon-double-angle-right"></i>
 									<span>财务统计 </span>
 								</a>
@@ -212,13 +252,17 @@
 
 							<b class="arrow icon-angle-down"></b>
 						</a>
-						
 						<ul class="submenu">
-
 							<li>
 								<a id="passengerInformationId" onclick="passengerInformation()" href="#">
 									<i class="icon-double-angle-right"></i>
 								<span>旅客信息 </span>	
+								</a>
+							</li>
+							<li>
+								<a id="passengerAddId" onclick="passengerAdd()" href="#">
+									<i class="icon-double-angle-right"></i>
+									<span>旅客登记</span>
 								</a>
 							</li>
 							<li>
@@ -227,9 +271,7 @@
 								<span>接待对象 </span>	
 								</a>
 							</li>
-
 						</ul>
-						
 					</li>
 
 					
@@ -563,6 +605,14 @@
 			function passengerManage(){
 			    
 			}
+
+            function passengerAdd(){
+                var a=document.getElementById("passengerManageId").getElementsByTagName('span')[0].innerHTML;
+                document.getElementById("bigGuide").innerHTML=a+"";
+                var s=document.getElementById("passengerAddId").getElementsByTagName('span')[0].innerHTML;
+                document.getElementById("smallGuide").innerHTML=s+"";
+                document.getElementById('Mainid').src='${ctx}/Passenger/toadd.do';
+            }
 			
 			function passengerInformation(){
 			     var a=document.getElementById("passengerManageId").getElementsByTagName('span')[0].innerHTML;
@@ -578,36 +628,67 @@
 			     document.getElementById("smallGuide").innerHTML=s+"";
 			     document.getElementById('Mainid').src='${ctx}/ReceiveTarget/tolist.do';
 			}
+
+			function commodityManage(){
+
+			}
+            function commoditySet(){
+                var a=document.getElementById("commodityManageId").getElementsByTagName('span')[0].innerHTML;
+                document.getElementById("bigGuide").innerHTML=a+"";
+                var s=document.getElementById("commoditySetId").getElementsByTagName('span')[0].innerHTML;
+                document.getElementById("smallGuide").innerHTML=s+"";
+                document.getElementById('Mainid').src='${ctx}/Commodity/tolist.do';
+            }
+            function commodityAdd(){
+                var a=document.getElementById("commodityManageId").getElementsByTagName('span')[0].innerHTML;
+                document.getElementById("bigGuide").innerHTML=a+"";
+                var s=document.getElementById("commodityAddId").getElementsByTagName('span')[0].innerHTML;
+                document.getElementById("smallGuide").innerHTML=s+"";
+                document.getElementById('Mainid').src='${ctx}/Commodity/toadd.do';
+            }
 			
 			function roomManage(){
 			    
 			}
+            function roomAdd(){
+                var a=document.getElementById("roomManageId").getElementsByTagName('span')[0].innerHTML;
+                document.getElementById("bigGuide").innerHTML=a+"";
+                var s=document.getElementById("roomAddId").getElementsByTagName('span')[0].innerHTML;
+                document.getElementById("smallGuide").innerHTML=s+"";
+                document.getElementById('Mainid').src='${ctx}/RoomSet/tolist.do';
+            }
+
 			function roomSet(){
 			     var a=document.getElementById("roomManageId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("bigGuide").innerHTML=a+"";
 			     var s=document.getElementById("roomSetId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("smallGuide").innerHTML=s+"";
-			     document.getElementById('Mainid').src='${ctx}/RoomSet/tolist.do';
+			     document.getElementById('Mainid').src='${ctx}/RoomSet/toadd.do';
 			}
-			function commoditySet(){
-			     var a=document.getElementById("roomManageId").getElementsByTagName('span')[0].innerHTML;
-			     document.getElementById("bigGuide").innerHTML=a+"";
-			     var s=document.getElementById("commoditySetId").getElementsByTagName('span')[0].innerHTML;
-			     document.getElementById("smallGuide").innerHTML=s+"";
-			     document.getElementById('Mainid').src='${ctx}/Commodity/tolist.do';
-			}
+
 			
 			
 			function stayManage(){
 			    
 			}
+            function predetermineManage(){
+
+            }
 			function reservations(){
-			     var a=document.getElementById("stayManageId").getElementsByTagName('span')[0].innerHTML;
+			     var a=document.getElementById("predetermineManageId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("bigGuide").innerHTML=a+"";
 			     var s=document.getElementById("reservationsId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("smallGuide").innerHTML=s+"";
 			     document.getElementById('Mainid').src='${ctx}/Predetermine/select.do';
 			}
+            function reservationsPredetermine(){
+                var a=document.getElementById("predetermineManageId").getElementsByTagName('span')[0].innerHTML;
+                document.getElementById("bigGuide").innerHTML=a+"";
+                var s=document.getElementById("predetermineAddId").getElementsByTagName('span')[0].innerHTML;
+                document.getElementById("smallGuide").innerHTML=s+"";
+                document.getElementById('Mainid').src='${ctx}/Predetermine/toadd.do';
+            }
+
 			function personage(){
 			     var a=document.getElementById("stayManageId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("bigGuide").innerHTML=a+"";

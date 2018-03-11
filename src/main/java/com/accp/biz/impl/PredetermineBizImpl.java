@@ -2,6 +2,7 @@ package com.accp.biz.impl;
 
 import com.accp.biz.PredetermineBiz;
 import com.accp.dao.PredetermineDao;
+import com.accp.dao.RoomDao;
 import com.accp.entity.Pager;
 import com.accp.entity.Passenger;
 import com.accp.entity.Predetermine;
@@ -14,6 +15,19 @@ import java.util.List;
 public class PredetermineBizImpl implements PredetermineBiz {
     @Resource
     private PredetermineDao predetermineDao;
+
+    @Resource
+    private RoomDao roomDao;
+
+    /**
+     * 新增
+     * @param predetermine
+     * @return
+     */
+    public boolean insertPredetermine(Predetermine predetermine) {
+        roomDao.updateState(4,predetermine.getRoomID());
+        return predetermineDao.insertPredetermine(predetermine)>0;
+    }
 
     /**
      * 分页查询&&根据房间号查询

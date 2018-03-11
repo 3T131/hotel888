@@ -28,7 +28,7 @@ CREATE TABLE `attribute` (
 
 /*Data for the table `attribute` */
 
-insert  into `attribute`(`attributeId`,`attributeName`) values (1,'房态'),(2,'客房等级'),(3,'商品类别'),(4,'支付方式'),(5,'出租方式'),(6,'结账单位'),(7,'旅客类别'),(8,'性别'),(9,'民族'),(10,'证件'),(11,'文化程度'),(12,'事由'),(13,'旅客级别'),(14,'对象类别'),(15,'计量单位'),(16,'预定状态'),(17,'结账');
+INSERT  INTO `attribute`(`attributeId`,`attributeName`) VALUES (1,'房态'),(2,'客房等级'),(3,'商品类别'),(4,'支付方式'),(5,'出租方式'),(6,'结账单位'),(7,'旅客类别'),(8,'性别'),(9,'民族'),(10,'证件'),(11,'文化程度'),(12,'事由'),(13,'旅客级别'),(14,'对象类别'),(15,'计量单位'),(16,'预定状态'),(17,'结账');
 
 /*Table structure for table `attributedetails` */
 

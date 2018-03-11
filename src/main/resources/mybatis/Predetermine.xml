@@ -3,6 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accp.dao.PredetermineDao">
+
+    <insert id="insertPredetermine">
+        INSERT INTO `predetermine`
+        (`predetermineId`,`roomID`,`predetermineTargetID`,`passengerID`,`payWayID`,
+        `predetermineStateID`,`arriveTime`,`deposit`,`predetermineDay`,`remind`)
+        VALUE(DEFAULT,#{roomID},#{predetermineTargetID},#{passengerID},#{payWayID}
+        ,66,#{arriveTime},#{deposit},#{predetermineDay},1);
+    </insert>
+
+    <!--修改预定状态-->
+    <update id="updateState">
+        update predetermine set predetermineStateID=#{state},remind=0 where predetermineId=#{id}
+    </update>
+
     <resultMap id="listMap" type="Predetermine">
         <result property="roomNumber" column="roomNumber"/>
         <result property="receiveTeamName" column="receiveTeamName"/>

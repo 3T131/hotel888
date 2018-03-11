@@ -31,6 +31,25 @@ public class StayRegisterBizImpl implements StayRegisterBiz {
     @Resource
     private DepoitDao depoitDao;
 
+    @Resource
+    private PredetermineDao predetermineDao;
+    /**
+     * 新增预定开房
+     * @return
+     */
+    public boolean addPredetermineKaiFang(StayRegister stayRegister, Map map, JSONArray jsonArray) {
+        //改变预定客房的状态
+        Predetermine predetermine = predetermineDao.selectById(stayRegister.getPredetermineID());
+        roomDao.updateState(1,predetermine.getRoomID());
+        predetermineDao.updateState(67,predetermine.getPredetermineId());
+        return this.insertStayRegisters(stayRegister,map,jsonArray);
+    }
+    /**
+     * 修改单条住宿登记
+     * @param stayRegister
+     * @param pId
+     * @return
+     */
     public boolean modifyStayRegister(StayRegister stayRegister, String[] pId) {
         int error=0;
         StayRegister stayRegister1 = this.getStayRegister(stayRegister);
