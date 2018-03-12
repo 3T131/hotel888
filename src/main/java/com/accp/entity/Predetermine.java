@@ -26,7 +26,6 @@ public class Predetermine {
     private AttributeDetails predetermineState;//预定状态
     // -----------------------------------------------------
     private String roomNumber; //房间号
-    private String receiveTeamName;//接待对象姓名
     private String passengerName;//旅客姓名
     private String roomGuestRoomLevelName;//房间类别
     private String payWayName;//支付方式
@@ -67,14 +66,6 @@ public class Predetermine {
 
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
-    }
-
-    public String getReceiveTeamName() {
-        return receiveTeamName;
-    }
-
-    public void setReceiveTeamName(String receiveTeamName) {
-        this.receiveTeamName = receiveTeamName;
     }
 
     public String getPassengerName() {

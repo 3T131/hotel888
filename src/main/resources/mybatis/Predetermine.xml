@@ -19,7 +19,6 @@
 
     <resultMap id="listMap" type="Predetermine">
         <result property="roomNumber" column="roomNumber"/>
-        <result property="receiveTeamName" column="receiveTeamName"/>
         <result property="passengerName" column="passengerName"/>
         <result property="roomGuestRoomLevelName" column="roomGuestRoomLevelName"/>
         <result property="payWayName" column="payWayName"/>
@@ -68,7 +67,6 @@
     <select id="list" resultMap="listMap">
         SELECT predetermine.*,
         roomNumber.`roomNumber` roomNumber,
-        receiveTeamName.`teamName` receiveTeamName,
         passengerName.`name` passengerName,
         roomState.`attributeDetailsName` roomGuestRoomLevelName, ##客房等级
         payWayName.`attributeDetailsName` payWayName,
@@ -113,7 +111,6 @@
     <select id="selectById" resultMap="listMap">
          SELECT predetermine.*,
         roomNumber.`roomNumber` roomNumber,
-        receiveTeamName.`teamName` receiveTeamName,
         passengerName.`name` passengerName,
         roomState.`attributeDetailsName` roomGuestRoomLevelName, ##客房等级
         payWayName.`attributeDetailsName` payWayName,

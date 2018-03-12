@@ -22,14 +22,14 @@ public class ReceiveTargetController {
 
     /**
      * 查询列表
-     * @param teamName
+     * @param principal
      * @param model
      * @param receiveTarget
      * @param currentPage
      * @return
      */
     @RequestMapping(value = "/tolist.do")
-    public  String list(@ModelAttribute("teamName")String teamName,
+    public  String list(@ModelAttribute("principal")String principal,
                         Model model,
                         @ModelAttribute("receiveTarget")ReceiveTarget receiveTarget,
                         @RequestParam(name = "currentPage",defaultValue = "1")Integer currentPage){
@@ -37,7 +37,7 @@ public class ReceiveTargetController {
         pager.setPageNo(currentPage);
         pager.setPageSize(5);//设置分页数
         pager.setParams(receiveTarget);//设置参数
-        receiveTarget.setTeamName(teamName);
+        receiveTarget.setPrincipal(principal);
         receiveTargetBiz.list(pager);
         model.addAttribute("list",pager);
         return "receivetarget/list";

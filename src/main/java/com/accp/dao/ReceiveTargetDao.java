@@ -46,7 +46,7 @@ public interface ReceiveTargetDao {
      * @param receivetargetId
      * @return
      */
-    ReceiveTarget queryByid(@Param("receivetargetId") int receivetargetId);
+    ReceiveTarget queryByid(@Param("receiveTargetId") int receivetargetId);
 
     /**
      * 修改
