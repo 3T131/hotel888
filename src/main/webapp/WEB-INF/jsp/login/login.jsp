@@ -45,17 +45,17 @@
         <h4>用户登录</h4>
       </div>
       <div class="modal-body">
-          <form id="form1" class="form-horizontal" action="${ctx}/Login/tomain.do" method="post">
+          <form id="form1" class="form-horizontal" action="${ctx}/user/login.do" method="post">
             <div class="control-group">
               <label class="control-label">用户名</label>
               <div class="controls">
-                <input name="userName" type="text">
+                <input name="contactPhoneNUmber" type="text">
               </div>
             </div>
              <div class="control-group">
               <label class="control-label">密码</label>
               <div class="controls">
-                <input name="password" type="password">
+                <input name="teamCode" type="password">
               </div>
             </div>
           </form>

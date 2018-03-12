@@ -4,8 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accp.dao.ReceiveTargetDao">
 
-
-
+    <!--登录-->
+    <select id="selectLogin" resultMap="listMap">
+         SELECT receivetarget.*,targetTypeName.`attributeDetailsName` targetTypeName FROM receivetarget
+        INNER JOIN `attributedetails` targetTypeName ON receivetarget.targettypeid=targetTypeName.`attributedetailsId`
+        where contactPhoneNUmber=#{contactPhoneNUmber}
+        and teamCode=#{teamCode}
+    </select>
 
     <!--别名-->
     <resultMap id="listMap" type="ReceiveTarget">
