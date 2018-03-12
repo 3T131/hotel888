@@ -10,6 +10,12 @@ import java.util.Map;
 public interface StayRegisterBiz {
 
     /**
+     * 新增预定开房
+     * @return
+     */
+    boolean addPredetermineKaiFang(StayRegister stayRegister, Map map, JSONArray jsonArray);
+
+    /**
      * 修改单条住宿登记
      * @param stayRegister
      * @param pId

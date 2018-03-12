@@ -24,7 +24,9 @@
   <script src="/static/bootstrap/js/jquery-3.1.1.min.js"></script>
   <script src="/static/bootstrap/js/bootstrap.js"></script>
   <script type="text/javascript" src="/static/js/page.js"></script>
-  <script type="text/javascript" src="/static/My97DatePicker/WdatePicker.js"></script>
+      <script type="text/javascript" src="/static/js/page.js"></script>
+  <script type="text/javascript" src="/static/js/predetermine/add.js"></script>
+      <script type="text/javascript" src="/static/My97DatePicker/WdatePicker.js"></script>
    <style>
    
    .container{
@@ -89,7 +91,7 @@
  
  
   <body>
-  <div class="container" style="height:630px;overflow-x:auto;border: solid; border-color: #DDDDDD;">
+  <div class="container" style="height:630px;">
     
     <input id="lvkeorteamId" type="hidden" value="${id}" >  <!-- 是团队还是旅客的ID -->
     <input id="teamId" type="hidden" value="${type}" >  <!-- 是团队还是旅客 -->
@@ -100,7 +102,7 @@
       </div>
     </div>
     
-    <form id="form1"  method="post">
+    <form id="form12" action="${ctx}/Predetermine/add.do"  method="post">
     <div class="span12" >
       <div class="row-fluid">
         <div class="span1">
@@ -110,21 +112,27 @@
             <button class="btn btn-warning btn-small" type="button" onclick="lastStep()"><li class="icon-remove icon-white"></li>取消</button>
         </div>
          <div class="span2">
-            <button href="#xuanzhe" data-toggle="modal" class="btn btn-info btn-small" onclick="selectRoom()"><li class="icon-plus icon-white"></li>选择房间</button>
+            <button href="#lvke" data-toggle="modal" class="btn btn-info btn-small" onclick="souSuo()" ><li class="icon-plus icon-white"></li>选择旅客</button>
         </div>
       </div>
     </div>
-    
-    
+        <input id="roomId22" value="" name="roomID" type="hidden" >
+    <input type="hidden" value="" id="pId" name="passengerID"/>
     <div class="span12" style="margin-top:12px;">
       <div class="row-fluid">
-        <div class="span2">
-          <label>预订对象/旅客：</label>
-          <input name="commodityName" class="widthone" style="height: 26px;"  type="text" readonly="readonly" value="${name}">
-        </div>
+          <div class="span2">
+              <label>接待对象:</label>
+              <select name="predetermineTargetID" style="height:26px;width:100%;">
+                  <c:forEach items="${listReceiveTarget}" var="item">
+                      <option value="${item.receiveTargetId}" <c:if test="${item.receiveTargetId==1}">selected="selected"</c:if>>
+                              ${item.principal}
+                      </option>
+                  </c:forEach>
+              </select>
+          </div>
         <div class="span2">
            <label>预订天数：</label>
-           <input id="predetermineDayId" name="predetermineDay" class="widthone" 
+           <input value="2" id="predetermineDayId" name="predetermineDay" class="widthone"
            style="height: 26px;"  type="text" onchange="onchangeOne()">
            <div id="divOne">
 	          <label class="yansered" style="margin-top:12px;">*</label>
@@ -134,7 +142,7 @@
            <label>押金：</label>
            <div class="input-prepend">
 			  <span class="add-on" style="float:left;height: 15px;">&yen;</span>
-		      <input id="depositId" name="deposit" onchange="onchangeOne()"
+		      <input value="200" id="depositId" name="deposit" onchange="onchangeOne()"
 		      style="width:78%;height: 25px; float:left;" type="text" >
 		      <div id="divTwo">
 	             <label class="yansered" style="margin-top:7px;">*</label>
@@ -143,7 +151,7 @@
         </div>
         <div class="span2">
            <label>支付方式</label>
-           <select name="payWayID" style="height:26px;width:100%;"> 
+           <select name="payWayID" style="height:26px;width:100%;">
 		            <c:forEach items="${listOne}" var="item">
 			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==21}" >selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
@@ -153,95 +161,210 @@
         </div>
          <div class="span3">
            <label>抵达时间：</label>
-          <input id="arriveTimeId" name="arriveTime" style="height:26px;float:left;" id="date" class="Wdate" type="text" onchange="onchangeOne()"
-		       onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" />
+             <jsp:useBean id="time" class="java.util.Date"/>
+          <input  value="<fmt:formatDate value="${time}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+                  name="arriveTime" style="height:26px;float:left;" id="date" class="Wdate" type="text" onchange="onchangeOne()"
+		       onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\'%y-%M-%d\'}'})" />
           <div id="divThree">
 	          <label class="yansered" style="margin-top:12px;">*</label>
 	      </div>
         </div>
+
       </div>
     </div>
+
     </form>
-    
-    
-  
-  
-    <div class="span12">
-    <div class="dgvone">
-       <table class="table table-condensed table-bordered table-striped" id="tableidOne">
-	      <thead class="theadone">
-	        <tr>
-	          <th >选择</th>
-	          <th >房间号</th>
-	          <th >客房等级</th>
-	          <th >床位数</th>
-	          <th >标准客房/天</th>
-	         
-	      </thead>
-	      <tbody id="tbodyOne">
-	        <c:forEach items="" var="item">
-		        <tr>
-		          <td><input type="checkbox" name="idOne" value=""></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		        </tr>
-	        </c:forEach>
-	      </tbody>
-	    </table>
-    </div>
-    </div>
-    
-    
-     <div class="modal hide fade" id="xuanzhe" style="margin-top:10px;">
-       <div class="span5" style="width:98%;height:480px; overflow-x:auto;">
-	    <div class="row-fluid">
-		   <div class="span8">
-		      <label class="labelroomnumber">房间号：</label>
-			   <input id="txtnameid" name="txtname" class="textone" style="width:60%; border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;" type="text" placeholder="请输入关键字" value="${txtname}">
-			   <div class="input-append">  
-			      <button onclick="selectRoom()" class="btn-success textone" style="margin-left:-4px;height:26px;"><li class="icon-search icon-white"></li>搜索</button>
-			   </div>
-	       </div>
-	       <div class="span4">
-	          <button data-dismiss="modal" class="btn btn-info btn-small textone" type="button" onclick="confirmfunction()"><li class="icon-plus icon-white"></li>确定选择</button>
-	       </div>
-	    </div>
-	   <div class="dgvone" style="width:93%; margin-top:10px;">
-       <table class="table table-condensed table-bordered table-striped" id="tableid">
-	      <thead class="theadone">
-	        <tr>
-	          <th >选择</th>
-	          <th >房间号</th>
-	          <th >客房等级</th>
-	          <th >房态</th>
-	          <th >床位数</th>
-	          <th >标准客房/天</th>
-	        </tr>
-	      </thead>
-	      <tbody id="tbodyTwo">
-	        <c:forEach items="" var="item">
-		        <tr>
-		          <td><input type="checkbox" name="idTwo" ></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		          <td></td>
-		        </tr>
-	        </c:forEach>
-	      </tbody>
-	    </table>
-    </div>
-    </div>
-    </div>
-    
-    
-    
-    
-    
-    <div class="span11">
+      <div class="span12">
+          <div class="row-fluid">
+              <div class="span2">
+                  <label>预订对象/旅客：</label>
+                  <input id="pName" name="commodityName" class="widthone" style="height: 26px;"  type="text" readonly="readonly" value="${name}">
+              </div>
+              <div class="span2">
+                  <label>房间号：</label>
+                  <input id="roomNumber" type="text" style="width:100%;height:27px;" readonly="readonly">
+              </div>
+              <div class="span2">
+                  <label>标准房价/天：</label>
+                  <input id="biaoZhunFangJiaId" type="text" style="width:100%;height:27px;" readonly="readonly">
+              </div>
+              <div class="span2">
+                  <label>钟点房间/小时：</label>
+                  <input id="zhongDianFangId" type="text" style="width:100%;height:27px;" readonly="readonly">
+              </div>
+              <div class="span2">
+                  <label>床位数：</label>
+                  <input id="roomAmount" type="text" style="width:100%;height:27px;" readonly="readonly">
+              </div>
+              <div class="span2">
+                  <label>房间类型 ：</label>
+                  <input id="guestRoomLevel" type="text" style="width:100%;height:27px;" readonly="readonly">
+              </div>
+
+          </div>
+      </div>
+
+      <div class="span12">
+          <fieldset>
+              <legend>房态：</legend>
+          </fieldset>
+      </div>
+
+      <div class="span12" style="margin-top:-17px;">
+          <div class="row-fluid">
+              <button class="btn btn-info btn-small" type="button" onclick="allroomfunction()">所有房间</button>
+              <button class="btn btn-info btn-small" type="button" onclick="onefunction()">单人普通房</button>
+              <button class="btn btn-info btn-small" type="button" onclick="twofunction()">单人标准间</button>
+              <button class="btn btn-info btn-small" type="button" onclick="threefunction()">二人普通房</button>
+              <button class="btn btn-info btn-small" type="button" onclick="fourfunction()">二人标准间</button>
+              <button class="btn btn-info btn-small" type="button" onclick="fivefunction()">豪华间</button>
+              <button class="btn btn-info btn-small" type="button" onclick="sixfunction()">会议室</button>
+              <button class="btn btn-info btn-small" type="button" onclick="sevenfunction()">总统套房</button>
+          </div>
+      </div>
+
+      <div class="span12" id="dynamicid" style="height:270px;overflow-x:auto;">
+          <div class="row-fluid" id="div1">
+              <c:forEach items="${listRoom}" var="item">
+                  <c:if test="${item.roomStateID==1}">
+                      <button onclick="suibian(this)" style="width:95px;;height:93px;border: 3px solid #666666;  float:left;margin:2px; background:#99FF99;">
+                          <input style="display: none;" value="${item.roomId}" />
+                          <input style="display: none;" value="${item.roomStateID}" />
+                          <label>${item.roomNumber}</label>
+                          <label style="margin-top:-5px;">${item.roomName}</label>
+                          <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
+                          <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
+                          <input style="display: none;" value="${item.standardPrice}" />
+                          <input style="display: none;" value="${item.firstPrice}" />
+                          <input style="display: none;" value="${item.firstDuration}" />
+                      </button>
+                  </c:if>
+                  <c:if test="${item.roomStateID==2}">
+                      <button onclick="suibian(this)" style="width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#DDDDDD;">
+                          <input style="display: none;" value="${item.roomId}" />
+                          <input style="display: none;" value="${item.roomStateID}" />
+                          <label>${item.roomNumber}</label>
+                          <label style="margin-top:-5px;">${item.roomName}</label>
+                          <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
+                          <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
+                          <input style="display: none;" value="${item.standardPrice}" />
+                          <input style="display: none;" value="${item.firstPrice}" />
+                          <input style="display: none;" value="${item.firstDuration}" />
+                      </button>
+                  </c:if>
+                  <c:if test="${item.roomStateID==4}">
+                      <button onclick="suibian(this)" style="width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#99FFFF;">
+                          <input style="display: none;" value="${item.roomId}" />
+                          <input style="display: none;" value="${item.roomStateID}" />
+                          <label>${item.roomNumber}</label>
+                          <label style="margin-top:-5px;">${item.roomName}</label>
+                          <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
+                          <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
+                          <input style="display: none;" value="${item.standardPrice}" />
+                          <input style="display: none;" value="${item.firstPrice}" />
+                          <input style="display: none;" value="${item.firstDuration}" />
+                      </button>
+                  </c:if>
+                  <c:if test="${item.roomStateID==5}">
+                      <button onclick="suibian(this)" style="width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#BBBB00;">
+                          <input style="display: none;" value="${item.roomId}" />
+                          <input style="display: none;" value="${item.roomStateID}" />
+                          <label>${item.roomNumber}</label>
+                          <label style="margin-top:-5px;">${item.roomName}</label>
+                          <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
+                          <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
+                          <input style="display: none;" value="${item.standardPrice}" />
+                          <input style="display: none;" value="${item.firstPrice}" />
+                          <input style="display: none;" value="${item.firstDuration}" />
+                      </button>
+                  </c:if>
+                  <c:if test="${item.roomStateID==6}">
+                      <button onclick="suibian(this)" style="width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#FF7744;">
+                          <input style="display: none;" value="${item.roomId}" />
+                          <input style="display: none;" value="${item.roomStateID}" />
+                          <label>${item.roomNumber}</label>
+                          <label style="margin-top:-5px;">${item.roomName}</label>
+                          <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
+                          <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
+                          <input style="display: none;" value="${item.standardPrice}" />
+                          <input style="display: none;" value="${item.firstPrice}" />
+                          <input style="display: none;" value="${item.firstDuration}" />
+                      </button>
+                  </c:if>
+                  <c:if test="${item.roomStateID==7}">
+                      <button onclick="suibian(this)"  style="width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#FF0088;">
+                          <input style="display: none;" value="${item.roomId}" />
+                          <input style="display: none;" value="${item.roomStateID}" />
+                          <label>${item.roomNumber}</label>
+                          <label style="margin-top:-5px;">${item.roomName}</label>
+                          <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
+                          <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
+                          <input style="display: none;" value="${item.standardPrice}" />
+                          <input style="display: none;" value="${item.firstPrice}" />
+                          <input style="display: none;" value="${item.firstDuration}" />
+                      </button>
+                  </c:if>
+                  <c:if test="${item.roomStateID==65}">
+                      <button onclick="suibian(this)" style="width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#FF00FF;">
+                          <input style="display: none;" value="${item.roomId}" />
+                          <input style="display: none;" value="${item.roomStateID}" />
+                          <label>${item.roomNumber}</label>
+                          <label style="margin-top:-5px;">${item.roomName}</label>
+                          <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
+                          <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
+                          <input style="display: none;" value="${item.standardPrice}" />
+                          <input style="display: none;" value="${item.firstPrice}" />
+                          <input style="display: none;" value="${item.firstDuration}" />
+                      </button>
+                  </c:if>
+              </c:forEach>
+          </div>
+      </div>
+
+
+      <div class="modal hide fade" id="lvke" style="text-align: center;">
+          <div class="span5" style="width:98%;height:480px; overflow-x:auto;">
+              <div class="row-fluid">
+                  <div class="span8">
+                      <label class="labelroomnumber">旅客姓名：</label>
+                      <input id="txtnameidThree" name="passengerName" class="textone" style="width:60%; border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;" type="text" placeholder="请输入关键字" value="">
+                      <div class="input-append">
+                          <button type="submit" class="btn-success textone"
+                                  style="margin-left:-4px;height:26px;" onclick="souSuo()">
+                              <li class="icon-search icon-white"></li>搜索</button>
+                      </div>
+                  </div>
+                  <div class="span4">
+                      <button class="btn btn-info btn-small textone" type="button" onclick="confirmfunction()" data-dismiss="modal"><li class="icon-plus icon-white"></li>确定选择</button>
+                  </div>
+              </div>
+              <div class="dgvone" style="width:93%;">
+                  <table class="table table-condensed table-bordered table-striped" id="tableid">
+                      <thead class="theadone">
+                      <tr>
+                          <th >选择</th>
+                          <th >姓名</th>
+                          <th >性别</th>
+                          <th >证件号码</th>
+                          <th>联系电话</th>
+                      </tr>
+                      </thead>
+                      <tbody id="tbodyThree">
+
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+
+
+
+
+
+
+
+
+      <div class="span11">
       <div class="row-fluid">
         <div class="tcdPageCode" style="text-align:center;"></div>
       </div>

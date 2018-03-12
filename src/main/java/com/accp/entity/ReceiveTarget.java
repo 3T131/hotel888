@@ -9,10 +9,9 @@ import java.util.Date;
 public class ReceiveTarget {
 
     private Integer receiveTargetId; //'接待对象ID',
-    private Integer targetTypeID; //'Integer',
-    private String principal; //'负责人',
-    private String teamName; //'团队名称',
-    private String teamCode; //'团队编号',
+    private Integer targetTypeID; //'员工类型',
+    private String principal; //'员工姓名',
+    private String teamCode; //'密码',
     private Date registerTime;//'登记时间',
     private String contactPhoneNUmber; //'联系电话',
 
@@ -49,14 +48,6 @@ public class ReceiveTarget {
 
     public void setPrincipal(String principal) {
         this.principal = principal;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
     }
 
     public String getTeamCode() {

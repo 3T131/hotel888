@@ -72,13 +72,13 @@
   <div class="container" >
     <div class="span5">
 	    <div class="row-fluid">
-		    <label  class="labelroomnumber">团队名称：</label>
+		    <label  class="labelroomnumber">员工名称：</label>
 		    <form  id="form22" action="${ctx}/ReceiveTarget/tolist.do" method="post" style="float: left;">
                 <input id="currentPage" type="hidden" name="currentPage" value="${list.pageNo}">
-                <input id="txtnameid" name="teamName" class="textone roomnumberwidth"
+                <input id="txtnameid" name="principal" class="textone roomnumberwidth"
                       style="border-radius:0px; border-top-left-radius:4px;
                       border-bottom-left-radius:4px;height:26px;" type="text"
-                      placeholder="请输入关键字" value="${receiveTarget.teamName}">
+                      placeholder="请输入关键字" value="${receiveTarget.principal}">
 			   <div class="input-append">  
 			      <button type="submit" class="btn-success textone" style="margin-left:-4px;height:26px;"><li class="icon-search icon-white"></li>搜索</button>
 			   </div>
@@ -104,10 +104,8 @@
 	      <thead class="theadone">
 	        <tr>
 	          <th >选择</th>
-	          <th >对象类别</th>
-	          <th >团队名称</th>
-	          <th >团队编号</th>
-	          <th >负责人</th>
+	          <th >员工类别</th>
+	          <th >员工名称</th>
 	          <th >登记时间</th>
 	          <th >联系电话</th>
 	        </tr>
@@ -117,8 +115,6 @@
 		        <tr>
 		          <td><input type="checkbox" name="id" value="${item.receiveTargetId}"></td>
 		          <td>${item.targetTypeName}</td>
-		          <td>${item.teamName}</td>
-		          <td>${item.teamCode}</td>
 		          <td>${item.principal}</td>
 		          <td><fmt:formatDate value="${item.registerTime}" pattern="yyyy-MM-dd" /></td>
 		          <td>${item.contactPhoneNUmber}</td>

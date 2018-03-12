@@ -166,8 +166,8 @@
         <input name="receiveTargetId" value="${list.receiveTargetId}" type="hidden">
 	    <div class="span12">
 	      <div class="row-fluid">
-			  <div class="span5 ">
-			   	  <label class="labelroomnumber">对象类别：</label>
+			  <div class="span4 ">
+			   	  <label class="labelroomnumber">员工类别：</label>
 			      <select name="targetTypeID" class="cboone inputone">
 		            <c:forEach items="${listOne}" var="item">
 			          <option value="${item.attributeDetailsId}" <c:if test="${item.attributeDetailsId==list.targetTypeID}" >selected="selected"</c:if>>
@@ -176,36 +176,25 @@
 			        </c:forEach> 
 		          </select>
 			  </div>
-			  <div class="span5">
-			   	  <label class="labelroomnumber" style="margin-right:16px;">负责人：</label>
+			  <div class="span4">
+			   	  <label class="labelroomnumber" style="margin-right:16px;">员工姓名：</label>
 			      <input id="principalId" name="principal" class="textone inputone" 
 			      style="height:26px;" type="text" onchange="onchangeOne()"  value="${list.principal}">
 			      <div id="divOne" hidden>
 			         <label class="yansered" style="margin-top:18px;">*</label>
 			      </div>
-			  </div> 
-		  </div>
-	    </div>
-	    <div class="span12">
-	      <div class="row-fluid">
-		      <div class="span5">
-			   	  <label class="labelroomnumber">团队名称：</label>
-                  <input id="teamNameId" name="teamName" class="textone inputone"
-                   style="height:26px;" type="text" onchange="onchangeOne()" value="${list.teamName}">
-			      <div id="divTwo" hidden>
-			         <label class="yansered" style="margin-top:18px;">*</label>
-			      </div>
-			  </div> 
-			  <div class="span5">
-			   	  <label class="labelroomnumber">团队编号：</label>
-                  <input id="teamCodeId" name="teamCode" class="textone inputone" value="${list.teamCode}"
-                  style="height:26px;" type="text" onchange="onchangeOne()" onblur="YZ(this.value)">
-			      <div id="divThree" hidden>
-			         <label class="yansered" style="margin-top:18px;">*</label>
-			      </div>
+			  </div>
+			  <div class="span4">
+				  <label class="labelroomnumber">密码：</label>
+				  <input id="teamCodeId" name="teamCode" class="textone inputone" value="${list.teamCode}"
+						 style="height:26px;" type="text" onchange="onchangeOne()" onblur="YZ(this.value)">
+				  <div id="divThree" hidden>
+					  <label class="yansered" style="margin-top:18px;">*</label>
+				  </div>
 			  </div>
 		  </div>
 	    </div>
+
 	    <div class="span12">
 	      <div class="row-fluid">
 	        <div class="span5">

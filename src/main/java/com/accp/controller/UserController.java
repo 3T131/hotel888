@@ -1,6 +1,9 @@
 package com.accp.controller;
 
+import com.accp.biz.ReceiveTargetBiz;
 import com.accp.biz.UserBiz;
+import com.accp.dao.ReceiveTargetDao;
+import com.accp.entity.ReceiveTarget;
 import com.accp.entity.Users;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +15,9 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("user")
 public class UserController {
+
     @Resource
-    private UserBiz userBiz;
+    private ReceiveTargetBiz receiveTargetBiz;
 
     /**
      * 跳转登录页面
@@ -26,16 +30,16 @@ public class UserController {
 
     /**
      * 用户登录
-     * @param users
+     * @param receiveTarget
      * @param session
      * @param model
      * @return
      */
     @RequestMapping("/login.do")
-    public String doLogin(Users users, HttpSession session, Model model){
-        Users user = userBiz.login(users);
-        if(user!=null){
-            session.setAttribute("userSession",user);
+    public String doLogin(ReceiveTarget receiveTarget, HttpSession session, Model model){
+        ReceiveTarget receiveTarget1 = receiveTargetBiz.selectLogin(receiveTarget);
+        if(receiveTarget1!=null){
+            session.setAttribute("userSession",receiveTarget1);
             return "main/main";
         }
         model.addAttribute("error","用户名或密码错误");

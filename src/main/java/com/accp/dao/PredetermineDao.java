@@ -8,6 +8,22 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface PredetermineDao {
+
+    /**
+     * 新增
+     * @param predetermine
+     * @return
+     */
+    int insertPredetermine(Predetermine predetermine);
+
+    /**
+     * 修改预定状态
+     * @param state
+     * @param id
+     * @return
+     */
+    int updateState(@Param("state") int state,@Param("id") int id);
+
     /**
      * 分页查询&&模糊查询
      * @param pager

@@ -9,6 +9,13 @@ import java.util.List;
 public interface ReceiveTargetDao {
 
     /**
+     * 登录
+     * @param receiveTarget
+     * @return
+     */
+    ReceiveTarget selectLogin(ReceiveTarget receiveTarget);
+
+    /**
      * 动态查询所有
      * @param receiveTarget
      * @return
@@ -46,7 +53,7 @@ public interface ReceiveTargetDao {
      * @param receivetargetId
      * @return
      */
-    ReceiveTarget queryByid(@Param("receivetargetId") int receivetargetId);
+    ReceiveTarget queryByid(@Param("receiveTargetId") int receivetargetId);
 
     /**
      * 修改

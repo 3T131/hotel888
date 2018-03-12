@@ -8,6 +8,13 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface PredetermineBiz {
+
+    /**
+     * 新增
+     * @param predetermine
+     * @return
+     */
+    boolean insertPredetermine(Predetermine predetermine);
     /**
      * 分页查询&&模糊查询
      * @param pager

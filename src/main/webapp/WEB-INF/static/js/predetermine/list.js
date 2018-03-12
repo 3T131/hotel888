@@ -19,27 +19,7 @@ $('#duixiang').modal().css({
 $('#duixiang').modal('hide');
 
 function addfunction(){
-    var classone=document.getElementById("tabOneId").className;
-    var one=document.getElementById("oneId").value;
-    var two=document.getElementById("twoId").value;
-    var lvKeName=document.getElementById("nameId").value;
-    var teamName=document.getElementById("teamNameId").value;
-    if(classone == "active"){
-        if(one == ""){
-            alert("你还没有添加对象信息哦！")
-        }else{
-            parent.document.getElementById('Mainid').src=getRootPath()+'/Predetermine/toadd.do?id='+one+
-                '&name='+teamName+'&type=1';
-        }
-    }else{
-        if(two == "" ){
-            alert("你还没有添加旅客信息哦！")
-        }else{
-            parent.document.getElementById('Mainid').src=getRootPath()+'/Predetermine/toadd.do?id='+two+
-                '&name='+lvKeName+'&type=2';
-        }
-    }
-
+    parent.document.getElementById('Mainid').src=getRootPath()+'/Predetermine/toadd.do';
 }
 
 function updatefunction(){
@@ -230,15 +210,12 @@ function arrangeRoom(){
         chk_value.push($(this).val());
     });
     if(chk_value!=""){
-        var flag=window.confirm("注意：房间已安排成功，是否转到，住宿登记界面，便于登记旅客信息");
-        if(flag){
-            parent.document.getElementById("Mainid").src=getRootPath()+'/Predetermine/arrangeRoom.do?id='
-                +chk_value+'&tiaoZhuang='+1;
-        }else{
-            parent.document.getElementById("Mainid").src=getRootPath()+'/Predetermine/arrangeRoom.do?id='
-                +chk_value+'&tiaoZhuang='+2;
-        }
+       if(chk_value.toString().indexOf(",")>0){
+           alert("请选择一条数据进行安排房间");
+       }else{
+           parent.document.getElementById("Mainid").src=getRootPath()+'/Predetermine/toPredeterRoom.do?predetermineId='+chk_value;
+       }
     }else{
-        alert("请选择一条或多条数据进行安排房间");
+        alert("请选择一条数据进行安排房间");
     }
 }

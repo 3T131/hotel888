@@ -217,56 +217,28 @@
 		  </div>
 	    </div>
 	    <!--  ———————————————————————————————————————————————————————————————————————————————————————— -->
-	    <div class="span12">
-	      <div class="row-fluid">
-		     <div class="span4">
-		        <label class="floatont">团队编码：</label>
-		        <label class="yanseblue">${list[0].receiveTeamCode}</label>
-		     </div>
-		     <div class="span4">
-		        <label class="floatont">负责人：</label>
-		        <label class="yanseblue">${list[0].receivePrincipal}</label>
-		     </div>
-		     <div class="span4">
-		        <label class="floatont">团队电话：</label> <!-- 团队 -->
-		        <label class="yanseblue">${list[0].receiveTargetID==2?"":list[0].receiveContactPhoneNUmber}</label>
-		     </div>
-		  </div>
-	    </div>
 	    <!--  ———————————————————————————————————————————————————————————————————————————————————————— -->
 	    <div class="span12">
 	      <div class="row-fluid">
-	         <div class="span4">
+	         <div class="span3">
 		        <label class="floatont">旅客姓名：</label>
 		        <label class="yanseblue">${list[0].passengerName}</label>
 		     </div>
-		     <div class="span4">
-		        <label class="floatont">旅客性别：</label>
-		        <label class="yanseblue">${list[0].passengerGenderName}</label>
-		     </div>
-		     <div class="span4">
-		        <label class="floatont">证件类型：</label>
-		        <label class="yanseblue">${list[0].passengerPapersName}</label>
-		     </div>
+			  <div class="span3">
+				  <label class="floatont">证件号码：</label>
+				  <label class="yanseblue">${list[0].passengerPapersNumber}</label>
+			  </div>
+			  <div class="span3">
+				  <label class="floatont">旅客电话：</label>
+				  <label class="yanseblue">${list[0].pssengerContactPhoneNumber}</label>
+			  </div>
+			  <div class="span3">
+				  <label class="floatont">旅客类别：</label>
+				  <label class="yanseblue">${list[0].passengerTypeName}</label>
+			  </div>
 		  </div>
 	    </div>
-	    <!--  ———————————————————————————————————————————————————————————————————————————————————————— -->
-	    <div class="span12">
-	      <div class="row-fluid">
-	         <div class="span4">
-		        <label class="floatont">证件号码：</label>
-		        <label class="yanseblue">${list[0].passengerPapersNumber}</label>
-		     </div>
-		     <div class="span4">
-		        <label class="floatont">旅客电话：</label>
-		        <label class="yanseblue">${list[0].pssengerContactPhoneNumber}</label>
-		     </div>
-		     <div class="span4">
-		        <label class="floatont">旅客类别：</label>
-		        <label class="yanseblue">${list[0].passengerTypeName}</label>
-		     </div>
-		  </div>
-	    </div>
+
 	    <!--  ———————————————————————————————————————————————————————————————————————————————————————— -->
 	    <div class="span12">
 	      <div class="row-fluid">
@@ -382,7 +354,7 @@
 	      </fieldset>
 	    </div>
 	   <div class="span12">
-       <table class="table table-condensed table-bordered table-striped" id="tableid">
+       <table class="table table-condensed table-bordered table-striped" id="tableid1">
 	      <thead class="theadone">
 	        <tr>
 	          <th rowspan="2">接待对象</th>
@@ -416,7 +388,7 @@
 	    
 	    <div class="dgvone">
 	    <div class="span12">
-       <table class="table table-condensed table-bordered table-striped" id="tableid">
+       <table class="table table-condensed table-bordered table-striped" id="tableid2">
 	      <thead class="theadone">
 	        <tr>
 	          <th >商品名称</th>
@@ -444,8 +416,7 @@
 	    </table>
     </div>
     </div>
-    </div>
-	    
+
 	
 		  
     </form>
@@ -483,6 +454,6 @@
      document.getElementById("btn1").style.display="block"; //隐藏
    }
  </script>
-   
+  </div>
   </body>
 </html>

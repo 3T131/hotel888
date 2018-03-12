@@ -42,6 +42,40 @@ public class StayRegisterController {
     public CommodityBiz commodityBiz;
 
     /**
+     * 新增预定开房
+     * @return
+     */
+    @RequestMapping("/predetermineKaiFang.do")
+    @ResponseBody
+    public  String predetermineKaiFang(String passengerIdRoomId
+            ,String commodityNumber
+            ,StayRegister stayRegister){
+        int dId = depoitBiz.insertDepoit(stayRegister.getDepoit());
+        stayRegister.setDpId(dId);
+        Map map = new HashMap();
+        if(commodityNumber!=""){
+            try {
+                map = JSON.parseObject(commodityNumber, Map.class);
+            }catch (Exception e){
+                System.out.println("格式错误！");
+            }
+        }
+        JSONArray jsonArray=new JSONArray();
+        if(passengerIdRoomId!=""){
+            try {
+                jsonArray = JSON.parseArray(passengerIdRoomId);
+            }catch (Exception e){
+                System.out.println("格式错误！");
+            }
+        }
+        if(stayRegisterBiz.addPredetermineKaiFang(stayRegister,map,jsonArray)){
+            return "<script language=\"javascript\">alert('操作成功！');window.location.href='/Predetermine/select.do'</script>";
+        }else{
+            return "<script language=\"javascript\">alert('操作失败！请稍候再试..');window.location.href='/Predetermine/select.do'</script>";
+        }
+    }
+
+    /**
      * 修改
      * @param stayRegister
      * @param passengerIds
@@ -53,10 +87,9 @@ public class StayRegisterController {
         if(this.stayRegisterBiz.modifyStayRegister(stayRegister,passengerIds)){
             return "<script language=\"javascript\">alert('保存成功！');window.location.href='/StayRegister/tolist.do'</script>";
         }else{
-            return "<script language=\"javascript\">alert('保存失败！');window.location.href='/StayRegister/tolist.do?stayRegisterId="+stayRegister.getStayRegisterId()+"'</script>";
+            return "<script language=\"javascript\">alert('保存失败！请稍候再试..');window.location.href='/StayRegister/tolist.do?stayRegisterId="+stayRegister.getStayRegisterId()+"'</script>";
         }
     }
-
     /**
      * 跳转修改页面
      * @param stayRegister
@@ -86,7 +119,7 @@ public class StayRegisterController {
         if(this.stayRegisterBiz.confirmChangRoom(stayRegister)){
             return "<script language=\"javascript\">alert('换房成功！');window.location.href='/StayRegister/tolist.do'</script>";
         }else{
-            return "<script language=\"javascript\">alert('换房失败！');window.location.href='/StayRegister/tolist.do'</script>";
+            return "<script language=\"javascript\">alert('换房失败！请稍候再试..');window.location.href='/StayRegister/tolist.do'</script>";
         }
     }
     /**
@@ -124,7 +157,7 @@ public class StayRegisterController {
         if(stayRegisterBiz.tuiFang(stayRegister)){
             return "<script language=\"javascript\">alert('退房成功！');window.location.href='/StayRegister/tolist.do'</script>";
         }else{
-            return "<script language=\"javascript\">alert('退房失败！');window.location.href='/StayRegister/tolist.do'</script>";
+            return "<script language=\"javascript\">alert('退房失败！请稍候再试..');window.location.href='/StayRegister/tolist.do'</script>";
         }
     }
 
@@ -154,7 +187,7 @@ public class StayRegisterController {
         if(stayRegisterBiz.deleteStayRegister(ids)){
             return "<script language=\"javascript\">alert('删除成功！');window.location.href='/StayRegister/tolist.do'</script>";
         }else{
-            return "<script language=\"javascript\">alert('删除失败！');window.location.href='/StayRegister/tolist.do'</script>";
+            return "<script language=\"javascript\">alert('删除失败！请稍候再试..');window.location.href='/StayRegister/tolist.do'</script>";
         }
     }
 
@@ -192,7 +225,7 @@ public class StayRegisterController {
         if(stayRegisterBiz.insertStayRegisters(stayRegister,map,jsonArray)){
             return "<script language=\"javascript\">alert('操作成功！');window.location.href='/StayRegister/tolist.do'</script>";
         }else{
-            return "<script language=\"javascript\">alert('操作失败！');window.location.href='/StayRegister/toStay.do'</script>";
+            return "<script language=\"javascript\">alert('操作失败！请稍候再试..');window.location.href='/StayRegister/toStay.do'</script>";
         }
     }
 
