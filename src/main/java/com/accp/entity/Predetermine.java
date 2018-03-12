@@ -1,6 +1,8 @@
 package com.accp.entity;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -14,6 +16,7 @@ public class Predetermine {
     private int passengerID; //'旅客ID',
     private int payWayID; //'支付方式 ID',
     private int predetermineStateID; //'预定状态ID',
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date arriveTime; //'抵达时间',
     private Float deposit; //'押金',
     private String predetermineDay; //'预定天数',

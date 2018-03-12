@@ -83,4 +83,22 @@ public class RoomBizImpl implements RoomBiz {
     public List<Room> selectRoom() {
         return roomDao.selectRoom();
     }
+    /**
+     * 根据房间号查询
+     */ /**
+     * 根据房间号查询
+     */
+    public List<Room> roomBynumber(String roomNumber) {
+        return roomDao.roomBynumber(roomNumber);
+    }
+
+    public Room queryRoom(String roomNumber) {
+        return roomDao.queryRoom(roomNumber);
+    }
+
+    public int updateState(int state, int roomId) {
+
+        return roomDao.updateState(state,roomId);
+    }
+
 }

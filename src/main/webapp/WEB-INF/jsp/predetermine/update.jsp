@@ -102,15 +102,18 @@
       </div>
     </div>
     
-    <form id="form1"  method="post">
-    <div class="span12" >
+    <form id="form1" action="/Predetermine/update.do"  method="post">
+        <input  id="roomid" name="roomId" value="${roomSetPolist.roomId}" type="hidden" />
+        <input type="hidden" name="roomStateID" value="${roomSetPolist.roomStateID}"/>
+        <input type="hidden" name="predetermineId" value="${predetermine.predetermineId}"/>
+        <div class="span12" >
       <div class="row-fluid">
         <div class="span1">
-            <button class="btn btn-info btn-small" type="button" onclick="addfunction()"><li class="icon-plus icon-white"></li>修改</button>
+            <button class="btn btn-info btn-small" type="submit"  ><li class="icon-plus icon-white"></li>修改</button>
         </div>
-        <div class="span1">
-           <button class="btn btn-danger btn-small" type="button" onclick="deletefunction()"><li class="icon-remove icon-white"></li>删除</button>
-        </div>
+        <%--<div class="span1">--%>
+           <%--<button class="btn btn-danger btn-small" type="button" onclick="deletefunction()"><li class="icon-remove icon-white"></li>删除</button>--%>
+        <%--</div>--%>
          <div class="span1">
             <button class="btn btn-warning btn-small" type="button" onclick="lastStep()"><li class="icon-remove icon-white"></li>取消</button>
         </div>
@@ -124,7 +127,11 @@
     <div class="span12" style="margin-top:12px;">
       <div class="row-fluid">
         <div class="span2">
-          <label>预订旅客：</label>
+            <input type="hidden" name="roomID" value="${predetermine.roomID}">
+            <input type="hidden" name="predetermineTargetID" value="${predetermine.predetermineTargetID}">
+            <input type="hidden" name="predetermineStateID" value="${predetermine.predetermineStateID}">
+            <input type="hidden" name="remind" value="${predetermine.remind}">
+            <label>预订旅客：</label>
           <input name="commodityName" class="widthone" style="height: 26px;"  type="text" readonly="readonly" value="${predetermine.passengerName}">
         </div>
         <div class="span2">
@@ -168,36 +175,67 @@
       </div>
     </div>
     </form>
+
+      <div class="span12" style="margin-top:12px;">
+          <div class="row-fluid">
+              <div class="span2">
+                  <label>房间号：</label>
+                  <input id="roomNumberId" name="roomNumber" class="widthone"
+                         style="height: 26px;"  type="text" onchange="onchangeOne()" value="${roomSetPolist.roomNumber}" readonly="readonly">
+                  <div id="divOne1" hidden>
+                      <label class="yansered" style="margin-top:12px;">*</label>
+                  </div>
+              </div>
+              <div class="span2">
+                  <label>客房等级：</label>
+                  <input type="hidden"  value="${roomSetPolist.guestRoomLevelID}"/>
+
+                  <input id="guestRoomLevelNameId" name="guestRoomLevelName" class="widthone"
+                         style="height: 26px;"  type="text" onchange="onchangeOne()" value="${roomSetPolist.guestRoomLevelName}" readonly="readonly">
+                  <div id="divOne2" hidden>
+                      <label class="yansered" style="margin-top:12px;">*</label>
+                  </div>
+              </div>
+              <div class="span2">
+                  <label>床位数：</label>
+                  <div class="input-prepend">
+                      <span class="add-on" style="float:left;height: 15px;">&yen;</span>
+                      <input id="roomAmountId" name="roomAmount" onchange="onchangeOne()"
+                             style="width:78%;height: 25px; float:left;" type="text" value="${roomSetPolist.roomAmount}" readonly="readonly">
+                      <div id="divTwo3" hidden>
+                          <label class="yansered" style="margin-top:7px;">*</label>
+                      </div>
+                  </div>
+              </div>
+              <div class="span2">
+                  <label>标准客房/天</label>
+                  <div class="input-prepend">
+                      <span class="add-on" style="float:left;height: 15px;">&yen;</span>
+                      <input id="standardPriceDayId" name="standardPriceDay" onchange="onchangeOne()"
+                             style="width:78%;height: 25px; float:left;" type="text" value="${roomSetPolist.standardPriceDay}" readonly="readonly">
+                      <div id="divTwo2" hidden>
+                          <label class="yansered" style="margin-top:7px;">*</label>
+                      </div>
+                  </div>
+              </div>
+              <div class="span3">
+                  <label>标准房价/小时：</label>
+                  <div class="input-prepend">
+                      <span class="add-on" style="float:left;height: 15px;">&yen;</span>
+                      <input id="standardPriceId" name="deposit" onchange="onchangeOne()"
+                             style="width:78%;height: 25px; float:left;" type="text" value="${roomSetPolist.standardPrice}" readonly="readonly">
+                      <div id="divTwo1" hidden>
+                          <label class="yansered" style="margin-top:7px;">*</label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
     
     
   
   
-    <div class="span12">
-    <div class="dgvone">
-       <table class="table table-condensed table-bordered table-striped" id="tableid">
-	      <thead class="theadone">
-	        <tr>
-	          <th >选择</th>
-	          <th >房间号</th>
-	          <th >客房等级</th>
-	          <th >床位数</th>
-	          <th >标准客房/天</th>
-	         
-	      </thead>
-	      <tbody id="tbodyOne">
-	        <c:forEach items="${roomSetPolist}" var="item">
-		        <tr>
-		          <td><input type="checkbox" name="idOne" value="${item.roomId}"></td>
-		          <td>${item.roomNumber}</td>
-		          <td>${item.guestRoomLevelName}</td>
-		          <td>${item.roomAmount}</td>
-		          <td>${item.standardPriceDay}</td>
-		        </tr>
-	        </c:forEach>
-	      </tbody>
-	    </table>
-    </div>
-    </div>
+
     
     
      <div class="modal hide fade" id="xuanzhe" style="margin-top:10px;">
@@ -224,7 +262,9 @@
 	          <th >房态</th>
 	          <th >床位数</th>
 	          <th >标准客房/天</th>
-	        </tr>
+                <th >标准房价/小时</th>
+
+            </tr>
 	      </thead>
 	      <tbody id="tbodyTwo">
 	        <c:forEach items="" var="item">
@@ -284,35 +324,29 @@
           type: "POST",                                           //上面3行都是必须要的
           url: '${ctx}/Predetermine/selectRoom.do',       //地址 type 带参数
           data:"roomNumber="+name,                         // IDCardValue 自定义的。相当于name把值赋予给 他可以在servlet 获取
-//        dataType:"json",                                       // json 数据类型提交 
+          dataType:"json",                                       // json 数据类型提交
           async:false,                                          // 是否 异步 提交
-          success: function (result) {  
-            for (var key in result) { 
-                i++;               
-                var item = result[key];
-                var tr = tbody.insertRow(-1);            // FireFox必须使用-1这个参数
-               
-                var tdcheckbox = tr.insertCell(-1);      // Table 有多少列就添加多少个这个
-                var tdroomNumber = tr.insertCell(-1);
-                var tdguestRoomLevelName = tr.insertCell(-1);
-                var tdroomName = tr.insertCell(-1);
-                var tdroomAmount = tr.insertCell(-1);
-                var tdstandardPriceDay = tr.insertCell(-1);
-                
-                tdcheckbox.innerHTML = "<input type='checkbox' name='idTwo' value='"+item.id+"'>";
-                tdroomNumber.innerHTML = item.roomNumber;
-                tdguestRoomLevelName.innerHTML = item.guestRoomLevelName;
-                tdroomName.innerHTML =item.roomName;         //中间这个是数据
-                tdroomAmount.innerHTML =item.roomAmount;
-                tdstandardPriceDay.innerHTML ='￥'+item.standardPriceDay;
-            }
-            if(i==0){
-              alert("很抱歉！没有查找到你要找的数据");
-            }               
+          success: function (result) {
+              if(result!=null){
+                  var tr=' ';
+                  for(var i=0,l=result.length;i<l;i++){
+                      tr+='  <tr>\n' +
+                          '        <td><input type="radio" name="idTwo" value="'+result[i].roomId +'"></td>\n' +
+                          '     <td>'+result[i].roomNumber +'</td>\n' +
+                          '          <td>'+result[i].guestRoomLevelName +'</td>\n' +
+                          '        <td>'+ result[i].roomName+'</td>\n' +
+                          '         <td>'+result[i].roomAmount +'</td>\n' +
+                          '        <td>'+ result[i].standardPriceDay+'</td>\n' +
+                          '        <td>'+ result[i].standardPrice+'</td>\n' +
+                          '       </tr>';
+                  }
+                  $("#tbodyTwo").html(tr);
+              }
+
           },
-          error: function(data) {
-          
-           }
+        error: function(data) {
+            alert("访问错误")
+        }
       });     
    }
    
@@ -327,7 +361,8 @@
       var roomNumber=[];
       var roomLevel=[];
       var roomAmount=[];
-      var roomPrice=[]; 
+      var roomPrice=[];
+      var roomStant=[];
       $('#tbodyOne').empty();
 	  $('input[name="idTwo"]:checked').each(function(){             // 遍历获取input被checked的
 	   	chk_value.push($(this).val());                             // 获取选中的ID
@@ -337,22 +372,15 @@
 	    roomLevel.push(table.rows[selectedIndex-1].cells[2].innerHTML);
 	    roomAmount.push(table.rows[selectedIndex-1].cells[4].innerHTML);
 	    roomPrice.push(table.rows[selectedIndex-1].cells[5].innerHTML);
-	  });
-   	 for(var i=0;i<chk_value.length;i++){
-        var tr = tableOne.insertRow(-1);            // FireFox必须使用-1这个参数
-       
-        var tdcheckbox = tr.insertCell(-1);      // Table 有多少列就添加多少个这个
-        var tdroomNumber = tr.insertCell(-1);
-        var tdguestRoomLevelName = tr.insertCell(-1);
-        var tdroomAmount = tr.insertCell(-1);
-        var tdstandardPriceDay = tr.insertCell(-1);
-        
-        tdcheckbox.innerHTML = "<input type='radio' name='idOne' value='"+chk_value[i]+"'>";
-        tdroomNumber.innerHTML = roomNumber[i];
-        tdguestRoomLevelName.innerHTML = roomLevel[i];
-        tdroomAmount.innerHTML =roomAmount[i];
-        tdstandardPriceDay.innerHTML =roomPrice[i];
-	 }
+	    roomStant.push(table.rows[selectedIndex-1].cells[6].innerHTML);
+
+      });
+       document.getElementById("roomid").value=chk_value;
+       document.getElementById("roomNumberId").value=roomNumber;
+       document.getElementById("guestRoomLevelNameId").value=roomLevel;
+       document.getElementById("roomAmountId").value=roomAmount;
+       document.getElementById("standardPriceDayId").value=roomPrice;
+       document.getElementById("standardPriceId").value=roomStant;
    }
    
    

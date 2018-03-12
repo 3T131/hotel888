@@ -71,4 +71,15 @@ public interface RoomDao {
      * @return
      */
     List<Room> selectRoom();
+    /**
+     * ajax根据房间号查询
+     */
+    List<Room> roomBynumber(@Param("roomNumber")String roomNumber);
+
+    /**
+     * 查询单条的房间
+     * @param roomNumber
+     * @return
+     */
+    Room queryRoom(@Param("roomNumber")String roomNumber);
 }

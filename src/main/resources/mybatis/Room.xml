@@ -5,7 +5,7 @@
 <mapper namespace="com.accp.dao.RoomDao">
     <!--别名的配置-->
 <resultMap id="roomList" type="Room">
-    <result property="roomName" column="roomName"></result>
+    <result property="roomName" column="roomName"/>
     <result property="guestRoomLevelName" column="guestRoomLevelName"/>
 </resultMap>
     <!--按id数组查询集合-->
@@ -20,7 +20,28 @@
             #{item}
         </foreach>
     </select>
+    <select id="roomBynumber" resultMap="roomList">
+        SELECT room.*,roomName.attributeDetailsName roomName,
+        guestRoomLevelName.attributeDetailsName guestRoomLevelName
+        FROM room
+        INNER JOIN attributedetails roomName ON room.`roomStateID`=roomName.attributedetailsId
+        INNER JOIN attributedetails guestRoomLevelName ON room.guestRoomLevelID =guestRoomLevelName.attributedetailsId
+        <where>
+            <if test="roomNumber!=null and roomNumber!=''">
+                and roomNumber like concat('%',#{roomNumber},'%')
+            </if>
+        </where>
+        and   roomName.`attributedetailsId`=1
 
+    </select>
+    <select id="queryRoom" resultMap="roomList">
+        SELECT room.*,roomName.attributeDetailsName roomName,
+        guestRoomLevelName.attributeDetailsName guestRoomLevelName
+        FROM room
+        INNER JOIN attributedetails roomName ON room.`roomStateID`=roomName.attributedetailsId
+        INNER JOIN attributedetails guestRoomLevelName ON room.guestRoomLevelID =guestRoomLevelName.attributedetailsId
+        where roomNumber=#{roomNumber}
+    </select>
     <!--修改房屋状态-->
     <update id="updateState">
         UPDATE room set roomStateID=#{state} WHERE roomId=#{roomId}
@@ -91,6 +112,7 @@
         FROM room
         INNER JOIN attributedetails roomName ON room.`roomStateID`=roomName.attributedetailsId
         INNER JOIN attributedetails guestRoomLevelName ON room.guestRoomLevelID =guestRoomLevelName.attributedetailsId
+
     </select>
     <!--根据id查询客房-->
     <select id="roomById" resultMap="roomList">
@@ -99,6 +121,7 @@
         INNER JOIN attributedetails guestRoomLevelName ON room.guestRoomLevelID =guestRoomLevelName.attributedetailsId
         where roomId=#{roomId}
     </select>
+
     <!--修改客房信息-->
     <update id="updateRoom" >
         update room

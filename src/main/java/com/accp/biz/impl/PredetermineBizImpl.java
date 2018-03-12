@@ -45,5 +45,9 @@ public class PredetermineBizImpl implements PredetermineBiz {
         return predetermineDao.selectById(predetermineId);
     }
 
+    public int update(Predetermine predetermine) {
+        return predetermineDao.update(predetermine);
+    }
+
 
 }

@@ -4,10 +4,7 @@ import com.accp.biz.AttributeDetailsBiz;
 import com.accp.biz.PredetermineBiz;
 import com.accp.biz.ReceiveTargetBiz;
 import com.accp.biz.RoomBiz;
-import com.accp.entity.Pager;
-import com.accp.entity.Passenger;
-import com.accp.entity.Predetermine;
-import com.accp.entity.ReceiveTarget;
+import com.accp.entity.*;
 import com.alibaba.fastjson.JSON;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/Predetermine")
@@ -40,7 +39,6 @@ public class PredetermineController {
 
     /**
      * ajax查询旅客
-     *
      * @return
      */
     @RequestMapping("/selectPassenger.do")
@@ -49,6 +47,21 @@ public class PredetermineController {
         return JSON.toJSONString(predetermineBiz.listByPassenger(name));
     }
 
+    /**
+     * ajax查询客房
+     * @return
+     */
+@RequestMapping("/selectRoom.do")
+@ResponseBody
+public String selectRoom(String roomNumber){
+    List<Room> roomList = roomBiz.roomBynumber(roomNumber);
+
+    return JSON.toJSONString(roomList);
+}
+    /**
+     * ajax查询对象
+     * @return
+     */
     @RequestMapping("/selectTarget.do")
     @ResponseBody
     public String selectTarget(String name) {
@@ -64,21 +77,36 @@ public class PredetermineController {
     @RequestMapping("/delete.do")
     public String delete(String[] id) {
         predetermineBiz.delete(id);
-        return "redirect:tolist.do";
+        return "redirect:select.do";
     }
 
     /**
-     * 修改客房登记
+     *去 修改客房登记
      * @param model
      * @param id
      * @return
      */
     @RequestMapping("/toupdate.do")
-    public String toupdate(@ModelAttribute("predetermine")Predetermine predetermine, Model model, int id){
+    public String toupdate(Predetermine predetermine, Model model, int id, HttpServletRequest request){
+        predetermine.setRoomNumber(request.getParameter("roomNumber"));
         model.addAttribute("listOne",attributeDetailsBiz.listByAttributeName(4));
-        model.addAttribute("predetermine",predetermineBiz.selectById(id));
-        model.addAttribute("roomSetPolist",roomBiz.selectRoom());
+        model.addAttribute("predetermine",predetermineBiz.selectById(id));//查询预订
+        model.addAttribute("roomSetPolist",roomBiz.queryRoom(predetermine.getRoomNumber()));//查询房间
         return "predetermine/update";
+    }
+
+    /**
+     * 修改
+     * @return
+     */
+    @RequestMapping("update.do")
+    public String update(@ModelAttribute("predetermine")Predetermine predetermine,@ModelAttribute("roomSetPolist")Room roomSetPolist
+                        ){
+        predetermine.setRoomID(roomSetPolist.getRoomId());
+            predetermineBiz.update(predetermine);
+
+            roomBiz.updateState(4,roomSetPolist.getRoomId());
+        return "redirect:select.do";
     }
     @RequestMapping("/select.do")
     public String select(@RequestParam(required = false) Integer leiXin,
